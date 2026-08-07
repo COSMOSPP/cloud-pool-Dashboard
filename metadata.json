@@ -1,0 +1,6 @@
+{
+  "name": "Cloud OS 驾驶舱",
+  "description": "基于云原生架构的资源监控与运营数据大屏",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
