@@ -1,54 +1,74 @@
 import { motion } from 'motion/react';
 
 export function TopologyMap() {
-  // 节点配置与位置（基于 3D Isometric 菱形网格坐标）
+  // 节点配置与位置（自然舒展比例）
   const nodes = [
-    { id: 'core', label: '内网核心', layer: '核心层 (1)', type: 'tower', x: 50, y: 20 },
-    { id: 'sw-storage', label: '存储交换机', layer: '汇聚层', type: 'glass-cube', x: 26, y: 44 },
-    { id: 'sw-compute', label: '计算交换机', layer: '汇聚层', type: 'matrix-cube', x: 74, y: 44 },
-    { id: 'gw-storage', label: '存储网关', layer: '接入层', type: 'cylinder-stack', x: 14, y: 70 },
-    { id: 'node-compute', label: '计算节点', layer: '接入层', type: 'arch-block', x: 38, y: 74 },
-    { id: 'node-network', label: '网络节点', layer: '接入层', type: 'molecular-mesh', x: 62, y: 74 },
-    { id: 'node-mgmt', label: '管理节点', layer: '接入层', type: 'hourglass-crystal', x: 86, y: 70 },
+    // 前四层 (L1 - L4)
+    { id: 'core', label: '内网核心', layer: 'L1 核心层', type: 'tower', x: 50, y: 8 },
+    { id: 'sw-storage', label: '存储交换机', layer: 'L2 汇聚层', type: 'glass-cube', x: 31, y: 21 },
+    { id: 'sw-compute', label: '计算交换机', layer: 'L2 汇聚层', type: 'matrix-cube', x: 69, y: 21 },
+    { id: 'acc-storage', label: '存储接入', layer: 'L3 接入层', type: 'cylinder-stack', x: 29, y: 34 },
+    { id: 'acc-compute', label: '计算接入', layer: 'L3 接入层', type: 'arch-block', x: 71, y: 34 },
+    { id: 'gw-storage', label: '存储网关', layer: 'L4 支撑层', type: 'cylinder-stack', x: 16, y: 48 },
+    { id: 'node-compute', label: '计算节点', layer: 'L4 支撑层', type: 'arch-block', x: 38, y: 48 },
+    { id: 'node-network', label: '网络节点', layer: 'L4 支撑层', type: 'molecular-mesh', x: 62, y: 48 },
+    { id: 'node-mgmt', label: '管理节点', layer: 'L4 支撑层', type: 'hourglass-crystal', x: 84, y: 48 },
+
+    // 后三层 (L5 - L7)
+    { id: 'sw-biz-mgmt', label: '业务管理交换机', layer: 'L5 业务管理', type: 'glass-cube', x: 50, y: 63 },
+    { id: 'sw-mgmt-agg', label: '管理汇聚交换机', layer: 'L6 管理汇聚', type: 'matrix-cube', x: 50, y: 76 },
+    { id: 'net-ops-mgmt', label: '运营管理网', layer: 'L7 运营管理', type: 'cloud-network', x: 50, y: 89 },
   ];
 
   // 连线配置
   const connections = [
+    // L1 -> L2
     { source: 'core', target: 'sw-storage' },
     { source: 'core', target: 'sw-compute' },
-    { source: 'sw-storage', target: 'gw-storage' },
-    { source: 'sw-compute', target: 'node-compute' },
-    { source: 'sw-compute', target: 'node-network' },
-    { source: 'sw-compute', target: 'node-mgmt' },
-    { source: 'sw-storage', target: 'node-compute', dashed: true },
+
+    // L2 -> L3
+    { source: 'sw-storage', target: 'acc-storage' },
+    { source: 'sw-compute', target: 'acc-compute' },
+
+    // L3 -> L4
+    { source: 'acc-storage', target: 'gw-storage' },
+    { source: 'acc-compute', target: 'node-compute' },
+    { source: 'acc-compute', target: 'node-network' },
+    { source: 'acc-compute', target: 'node-mgmt' },
+    { source: 'acc-storage', target: 'node-compute', dashed: true },
+
+    // L4 -> L5 (业务管理交换机)
+    { source: 'gw-storage', target: 'sw-biz-mgmt' },
+    { source: 'node-compute', target: 'sw-biz-mgmt' },
+    { source: 'node-network', target: 'sw-biz-mgmt' },
+    { source: 'node-mgmt', target: 'sw-biz-mgmt' },
+
+    // L5 -> L6 (管理汇聚交换机)
+    { source: 'sw-biz-mgmt', target: 'sw-mgmt-agg' },
+
+    // L6 -> L7 (运营管理网)
+    { source: 'sw-mgmt-agg', target: 'net-ops-mgmt' },
+  ];
+
+  // 7层半透明 3D 浮空光环圆盘 (自然舒展开阔，层次递进 1->0 柔和透明)
+  const ringPlatforms = [
+    { layerIndex: 1, name: 'L1 核心层', cx: 500, cy: 45, rx: 140, ry: 22, color: '#38bdf8' },
+    { layerIndex: 2, name: 'L2 汇聚层', cx: 500, cy: 118, rx: 230, ry: 30, color: '#0ea5e9' },
+    { layerIndex: 3, name: 'L3 接入层', cx: 500, cy: 190, rx: 300, ry: 36, color: '#0284c7' },
+    { layerIndex: 4, name: 'L4 支撑层', cx: 500, cy: 269, rx: 390, ry: 44, color: '#0369a1' },
+    { layerIndex: 5, name: 'L5 业务管理', cx: 500, cy: 353, rx: 300, ry: 36, color: '#6366f1' },
+    { layerIndex: 6, name: 'L6 管理汇聚', cx: 500, cy: 425, rx: 230, ry: 30, color: '#8b5cf6' },
+    { layerIndex: 7, name: 'L7 运营管理', cx: 500, cy: 498, rx: 140, ry: 22, color: '#a855f7' },
   ];
 
   return (
-    <div className="relative w-full h-full min-h-[460px] flex items-center justify-center p-2 overflow-hidden select-none">
+    <div className="relative w-full h-full min-h-[560px] flex items-center justify-center p-2 overflow-hidden select-none">
       
-      {/* 极简深色微发光背景 */}
-      <div className="absolute inset-0 bg-[#030a17] bg-[radial-gradient(ellipse_at_center,_rgba(6,182,212,0.08)_0%,_transparent_75%)] pointer-events-none" />
+      {/* 极简深色微发光背景 + 科技风底纹 */}
+      <div className="absolute inset-0 bg-[#030a17] bg-[radial-gradient(ellipse_at_center,_rgba(6,182,212,0.12)_0%,_transparent_75%)] pointer-events-none" />
 
-      {/* 背景 边角科技装饰标识 */}
-      <div className="absolute top-3 left-4 flex items-center gap-2 pointer-events-none z-10">
-        <div className="w-2 h-2 rounded-full bg-emerald-400 animate-ping" />
-        <span className="text-[10px] font-mono font-bold text-cyan-300 tracking-wider bg-[#041229]/80 px-2 py-0.5 rounded border border-cyan-500/30">
-          网络拓扑架构 // 运行中
-        </span>
-      </div>
-
-      <div className="absolute top-3 right-4 flex items-center gap-3 text-[10px] text-slate-400 pointer-events-none z-10 bg-[#041229]/80 px-2.5 py-0.5 rounded border border-[#1e3a5f]">
-        <span>出口带宽: <strong className="text-cyan-300">100 Gbps</strong></span>
-        <span>平均延迟: <strong className="text-emerald-400">0.8 ms</strong></span>
-      </div>
-
-      <div className="absolute bottom-3 left-4 text-[9px] text-slate-500 pointer-events-none z-10 space-y-0.5">
-        <div>节点坐标: <span className="text-cyan-400/80">东经 121.4737°, 北纬 31.2304°</span></div>
-        <div>集群节点: <span className="text-cyan-400/80">7 正常 / 0 异常</span></div>
-      </div>
-
-      {/* SVG 画布：渲染大菱形平台、连接轨线、能量粒线条 */}
-      <svg className="absolute inset-0 w-full h-full pointer-events-none" preserveAspectRatio="none">
+      {/* SVG 画布：渲染科技背景网格、7层 3D 半透明发光圆盘盘面、连接轨线、能量粒子 */}
+      <svg className="absolute inset-0 w-full h-full pointer-events-none" viewBox="0 0 1000 560" preserveAspectRatio="none">
         <defs>
           <linearGradient id="iso-line-grad" x1="0%" y1="0%" x2="100%" y2="100%">
             <stop offset="0%" stopColor="#38bdf8" stopOpacity="0.9" />
@@ -61,29 +81,92 @@ export function TopologyMap() {
             <stop offset="100%" stopColor="#38bdf8" stopOpacity="0.5" />
           </linearGradient>
 
+          {/* 圆环盘面 1 到 0 渐变透明 */}
+          <radialGradient id="ring-surface-grad" cx="50%" cy="50%" r="50%">
+            <stop offset="0%" stopColor="#06b6d4" stopOpacity="0.32" />
+            <stop offset="45%" stopColor="#0284c7" stopOpacity="0.12" />
+            <stop offset="85%" stopColor="#0369a1" stopOpacity="0.02" />
+            <stop offset="100%" stopColor="#030a17" stopOpacity="0" />
+          </radialGradient>
+
           <filter id="cyan-glow" x="-30%" y="-30%" width="160%" height="160%">
-            <feGaussianBlur stdDeviation="4" result="blur" />
+            <feGaussianBlur stdDeviation="3.5" result="blur" />
             <feComposite in="SourceGraphic" in2="blur" operator="over" />
           </filter>
+
+          {/* 科技背景点阵 Pattern */}
+          <pattern id="dot-grid" x="0" y="0" width="30" height="30" patternUnits="userSpaceOnUse">
+            <circle cx="15" cy="15" r="0.8" fill="#1e3a5f" opacity="0.6" />
+          </pattern>
         </defs>
 
-        {/* 强化：多重 3D 主体大菱形底盘框线与交叉射线 */}
-        <polygon 
-          points="50%,6% 96%,52% 50%,96% 4%,52%" 
-          fill="rgba(6, 182, 212, 0.04)" 
-          stroke="rgba(56, 189, 248, 0.35)" 
-          strokeWidth="1.5" 
-          strokeDasharray="8 6"
-        />
-        <polygon 
-          points="50%,12% 90%,52% 50%,90% 10%,52%" 
-          fill="rgba(2, 132, 199, 0.03)" 
-          stroke="rgba(14, 165, 233, 0.2)" 
-          strokeWidth="1"
-        />
-        {/* 菱形对角科技交叉分割线 */}
-        <line x1="50%" y1="6%" x2="50%" y2="96%" stroke="rgba(56, 189, 248, 0.12)" strokeWidth="1" strokeDasharray="4 4" />
-        <line x1="4%" y1="52%" x2="96%" y2="52%" stroke="rgba(56, 189, 248, 0.12)" strokeWidth="1" strokeDasharray="4 4" />
+        {/* 背景 科技点阵底纹 */}
+        <rect width="100%" height="100%" fill="url(#dot-grid)" opacity="0.7" />
+
+        {/* 背景 中轴与四角科技装饰射线 */}
+        <line x1="500" y1="20" x2="500" y2="540" stroke="rgba(56, 189, 248, 0.15)" strokeWidth="1" strokeDasharray="6 6" />
+        <line x1="100" y1="280" x2="900" y2="280" stroke="rgba(56, 189, 248, 0.1)" strokeWidth="1" strokeDasharray="6 6" />
+
+        {/* ==================== 7层 3D 半透明发光圆盘 (舒展大方, 1到0 透明过度) ==================== */}
+        {ringPlatforms.map((ring) => {
+          // 渐变透明度过度系数 (从顶层 0.85 递减至底层 0.5)
+          const fadeOpacity = Math.max(0.5, 0.88 - (ring.layerIndex - 1) * 0.06);
+
+          return (
+            <g key={`ring-platform-${ring.layerIndex}`} opacity={fadeOpacity}>
+              {/* 3D 盘面底座发光 */}
+              <ellipse
+                cx={ring.cx}
+                cy={ring.cy}
+                rx={ring.rx}
+                ry={ring.ry}
+                fill="url(#ring-surface-grad)"
+              />
+
+              {/* 3D 盘面下沿厚度 (Lip Edge) */}
+              <path
+                d={`M ${ring.cx - ring.rx},${ring.cy} A ${ring.rx} ${ring.ry} 0 0 0 ${ring.cx + ring.rx},${ring.cy} L ${ring.cx + ring.rx},${ring.cy + 6} A ${ring.rx} ${ring.ry} 0 0 1 ${ring.cx - ring.rx},${ring.cy + 6} Z`}
+                fill="rgba(2, 132, 199, 0.28)"
+                stroke="rgba(56, 189, 248, 0.45)"
+                strokeWidth="0.9"
+              />
+
+              {/* 盘面霓虹发光外圈 */}
+              <ellipse
+                cx={ring.cx}
+                cy={ring.cy}
+                rx={ring.rx}
+                ry={ring.ry}
+                fill="none"
+                stroke={ring.color}
+                strokeWidth="1.6"
+                strokeDasharray={ring.layerIndex % 2 === 0 ? "12 6" : "none"}
+                filter="url(#cyan-glow)"
+                opacity="0.75"
+              />
+
+              {/* 盘面内圈虚线 */}
+              <ellipse
+                cx={ring.cx}
+                cy={ring.cy}
+                rx={ring.rx * 0.72}
+                ry={ring.ry * 0.72}
+                fill="none"
+                stroke="rgba(125, 211, 252, 0.28)"
+                strokeWidth="0.8"
+                strokeDasharray="4 4"
+              />
+
+              {/* 侧边层级 Tag (L1 - L7) */}
+              <g transform={`translate(${ring.cx - ring.rx - 46}, ${ring.cy - 9})`}>
+                <rect x="0" y="0" width="40" height="18" rx="3" fill="#041229" stroke={ring.color} strokeWidth="1" opacity="0.85" />
+                <text x="20" y="12" fill="#7dd3fc" fontSize="9" fontWeight="bold" textAnchor="middle" fontFamily="sans-serif">
+                  {`L${ring.layerIndex} 层`}
+                </text>
+              </g>
+            </g>
+          );
+        })}
 
         {/* 渲染等距连接线 */}
         {connections.map((conn, idx) => {
@@ -97,7 +180,7 @@ export function TopologyMap() {
                 x1={`${s.x}%`} y1={`${s.y + 2}%`}
                 x2={`${t.x}%`} y2={`${t.y - 2}%`}
                 stroke={isGold ? "url(#iso-line-gold)" : "url(#iso-line-grad)"}
-                strokeWidth={conn.dashed ? "1.5" : "2.5"}
+                strokeWidth={conn.dashed ? "1.5" : "2"}
                 strokeDasharray={conn.dashed ? "5 5" : "none"}
                 strokeOpacity={conn.dashed ? 0.4 : 0.8}
                 filter="url(#cyan-glow)"
@@ -109,9 +192,9 @@ export function TopologyMap() {
               {/* 能量流珠 */}
               {!conn.dashed && (
                 <motion.circle
-                  r="3.5"
+                  r="3"
                   fill={isGold ? "#fef08a" : "#7dd3fc"}
-                  filter="drop-shadow(0 0 6px #38bdf8)"
+                  filter="drop-shadow(0 0 5px #38bdf8)"
                   initial={{ cx: `${s.x}%`, cy: `${s.y + 2}%`, opacity: 0 }}
                   animate={{ 
                     cx: [`${s.x}%`, `${t.x}%`], 
@@ -133,30 +216,30 @@ export function TopologyMap() {
           className="absolute -translate-x-1/2 -translate-y-1/2 flex flex-col items-center z-30 group cursor-pointer"
           style={{ left: `${node.x}%`, top: `${node.y}%` }}
         >
-          {/* Top Title Tag (胶囊/菱形文字框，完美匹配参考图) */}
+          {/* Top Title Tag (清晰明快) */}
           <motion.div 
-            className="mb-2 z-40"
-            initial={{ opacity: 0, y: -10 }}
+            className="mb-1.5 z-40"
+            initial={{ opacity: 0, y: -8 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: idx * 0.1 }}
+            transition={{ delay: idx * 0.08 }}
           >
-            <div className="relative px-3 py-0.5 bg-[#051329]/90 border border-cyan-400/50 rounded-sm shadow-[0_0_12px_rgba(6,182,212,0.4)] backdrop-blur">
-              <span className="text-[12px] font-extrabold text-cyan-200 tracking-wider whitespace-nowrap">
+            <div className="relative px-2.5 py-0.3 bg-[#051329]/95 border border-cyan-400/50 rounded-sm shadow-[0_0_10px_rgba(6,182,212,0.4)] backdrop-blur">
+              <span className="text-[11px] font-extrabold text-cyan-200 tracking-wider whitespace-nowrap">
                 {node.label}
               </span>
               {/* 装饰小角 */}
-              <div className="absolute -top-[2px] -left-[2px] w-1.5 h-1.5 border-t border-l border-cyan-300" />
-              <div className="absolute -bottom-[2px] -right-[2px] w-1.5 h-1.5 border-b border-r border-cyan-300" />
+              <div className="absolute -top-[1.5px] -left-[1.5px] w-1.2 h-1.2 border-t border-l border-cyan-300" />
+              <div className="absolute -bottom-[1.5px] -right-[1.5px] w-1.2 h-1.2 border-b border-r border-cyan-300" />
             </div>
           </motion.div>
 
-          {/* 3D Base Pedestal + 3D Volumetric Icon */}
+          {/* 3D Base Pedestal + 3D Volumetric Icon (自然大气比例 scale-84) */}
           <motion.div 
-            className="relative flex items-center justify-center"
+            className="relative flex items-center justify-center scale-[0.84]"
             initial={{ scale: 0 }}
-            animate={{ scale: 1 }}
-            transition={{ type: 'spring', stiffness: 220, damping: 18, delay: idx * 0.08 }}
-            whileHover={{ y: -6 }}
+            animate={{ scale: 0.84 }}
+            transition={{ type: 'spring', stiffness: 220, damping: 18, delay: idx * 0.06 }}
+            whileHover={{ scale: 0.92, y: -4 }}
           >
             {/* 3D Iso Rhombus Base Platform (菱形双层底座) */}
             <div className="relative w-28 h-20 flex items-center justify-center">
@@ -339,6 +422,25 @@ export function TopologyMap() {
                         <polygon points="15,22 28,4 2,4" fill="#38bdf8" opacity="0.9" stroke="#7dd3fc" strokeWidth="1" />
                         <polygon points="15,22 28,40 2,40" fill="#0284c7" opacity="0.9" stroke="#38bdf8" strokeWidth="1" />
                         <circle cx="15" cy="22" r="3" fill="#fff" filter="drop-shadow(0 0 5px #fff)" />
+                      </g>
+                    </svg>
+                  </div>
+                )}
+
+                {/* 8. 3D 运营云网 (Cloud Network) */}
+                {node.type === 'cloud-network' && (
+                  <div className="w-14 h-14 relative flex items-center justify-center">
+                    <svg className="w-full h-full overflow-visible" viewBox="0 0 60 60">
+                      <g transform="translate(10, 8)">
+                        <ellipse cx="20" cy="28" rx="18" ry="8" fill="rgba(6,182,212,0.3)" stroke="#38bdf8" strokeWidth="1" />
+                        <path
+                          d="M 10,22 C 6,22 4,18 7,14 C 4,10 9,6 14,8 C 17,4 25,4 27,8 C 31,6 35,10 33,14 C 36,18 33,22 28,22 Z"
+                          fill="url(#bldg-front)"
+                          stroke="#7dd3fc"
+                          strokeWidth="1.5"
+                          filter="drop-shadow(0 0 6px #0ea5e9)"
+                        />
+                        <circle cx="20" cy="14" r="3" fill="#34d399" />
                       </g>
                     </svg>
                   </div>

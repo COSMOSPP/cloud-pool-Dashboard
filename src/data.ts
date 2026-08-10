@@ -99,7 +99,7 @@ export const hostResourceStats = [
 export const resourceAllocationData = [
   { name: 'CPU', percent: 44.85, total: '4,290 核', allocated: '1,924 核', color: '#38bdf8' },
   { name: '内存', percent: 45.89, total: '11.65 TB', allocated: '5.34 TB', color: '#a855f7' },
-  { name: '块存储', percent: 46.10, total: '453.49 TB', allocated: '209.08 TB', color: '#14b8a6' },
+  { name: '块存储', percent: 46.10, total: '453.49 TB', allocated: '209.08 TB', cloudDisk: '160.50 TB', other: '48.58 TB', color: '#14b8a6' },
 ];
 
 export const loadTrendSeries = [
@@ -174,7 +174,7 @@ export interface DepartmentNode {
 export const organizationTree: DepartmentNode[] = [
   {
     id: 'org-root',
-    name: '云操作系统中心',
+    name: '江苏省',
     level: 1,
     code: 'HQ-001',
     scaleFactor: 1.0,
@@ -283,11 +283,11 @@ export function getAllDepartments(nodes: DepartmentNode[] = organizationTree): D
   return list;
 }
 
-// 获取部门完整路径（如 ["云操作系统中心", "研发中心", "前端平台组"]）
+// 获取部门完整路径（如 ["江苏省", "研发中心", "前端平台组"]）
 export function getDepartmentPath(deptId: string, nodes: DepartmentNode[] = organizationTree): string[] {
   const all = getAllDepartments(nodes);
   const target = all.find((d) => d.id === deptId);
-  if (!target) return ['云操作系统中心'];
+  if (!target) return ['江苏省'];
 
   const path: string[] = [target.name];
   let current = target;
