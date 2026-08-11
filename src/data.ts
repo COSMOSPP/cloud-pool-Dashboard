@@ -357,10 +357,10 @@ export function getDepartmentAppsData(deptName: string): ApplicationResourceItem
   // 默认（研发中心及其下属团队）
   return [
     { id: 1, name: '代码托管平台 GitLab', vms: 8, cpu: '32 核', cpuPercent: 45, mem: '64 GB', memPercent: 60, disk: '500 GB', diskPercent: 80 },
-    { id: 2, name: '持续集成流水线 CI/CD', vms: 15, cpu: '120 核', cpuPercent: 85, mem: '256 GB', memPercent: 70, disk: '2000 GB', diskPercent: 40 },
+    { id: 2, name: '持续集成流水线 CI/CD', vms: 15, cpu: '120 核', cpuPercent: 89, mem: '256 GB', memPercent: 70, disk: '2000 GB', diskPercent: 40 },
     { id: 3, name: '统一身份认证中心 SSO', vms: 6, cpu: '24 核', cpuPercent: 35, mem: '48 GB', memPercent: 42, disk: '300 GB', diskPercent: 28 },
     { id: 4, name: '微服务 API 网关服务', vms: 10, cpu: '40 核', cpuPercent: 62, mem: '80 GB', memPercent: 65, disk: '400 GB', diskPercent: 45 },
-    { id: 5, name: '分布式缓存服务 Redis', vms: 12, cpu: '48 核', cpuPercent: 58, mem: '192 GB', memPercent: 84, disk: '600 GB', diskPercent: 52 },
+    { id: 5, name: '分布式缓存服务 Redis', vms: 12, cpu: '48 核', cpuPercent: 58, mem: '192 GB', memPercent: 88, disk: '600 GB', diskPercent: 52 },
     { id: 6, name: '实时日志检索分析 ELK', vms: 7, cpu: '28 核', cpuPercent: 48, mem: '112 GB', memPercent: 68, disk: '1500 GB', diskPercent: 72 },
   ];
 }
