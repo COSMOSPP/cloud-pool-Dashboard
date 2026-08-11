@@ -15,3 +15,21 @@
   box-shadow: none !important;
   -webkit-tap-highlight-color: transparent;
 }
+
+/* 无缝循环自动上下滚动动画 */
+@keyframes autoScrollVertical {
+  0% {
+    transform: translateY(0);
+  }
+  100% {
+    transform: translateY(-50%);
+  }
+}
+
+.animate-auto-scroll {
+  animation: autoScrollVertical 20s linear infinite;
+}
+
+.animate-auto-scroll:hover {
+  animation-play-state: paused;
+}

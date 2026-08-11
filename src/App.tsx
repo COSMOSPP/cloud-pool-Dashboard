@@ -419,19 +419,13 @@ export default function App() {
           >
             {/* 上半部分 (等高对齐): 左侧(资源使用率 + 告警统计) 与 右侧(虚拟机负载趋势) 高度完全一致 */}
             <div className="flex-1 flex gap-2.5 min-h-0">
-              {/* 上半部分-左侧栏 (28% 宽度): 资源使用率 + 告警统计 */}
-              <div className="w-[28%] flex flex-col gap-2.5 shrink-0">
+              {/* 上半部分-左侧栏 (23% 宽度): 资源使用率 + 告警统计 */}
+              <div className="w-[23%] flex flex-col gap-2.5 shrink-0">
                 {/* 1. 资源使用率 (1/2 高度): 参考一级模块 3D 科技圆环 3 环图样式，存储无需切页点 */}
                 <motion.div variants={fadeUp} className="flex-1 flex">
                   <Panel 
                     title="资源使用率" 
                     className="w-full"
-                    action={
-                      <span className="px-2 py-0.5 rounded-full bg-emerald-500/15 text-emerald-400 text-[9px] border border-emerald-500/30 flex items-center gap-1">
-                        <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
-                        运行正常
-                      </span>
-                    }
                   >
                     {(() => {
                       const scale = selectedDept.scaleFactor ?? 0.15;
@@ -648,7 +642,7 @@ export default function App() {
                       <div className="flex justify-between items-center text-xs">
                         <span className="font-bold text-slate-200">网络流量监控 (Gbps)</span>
                         <div className="flex gap-2 text-[9px] text-slate-400 font-mono">
-                          <span className="flex items-center gap-1"><span className="w-2 h-2 rounded-full bg-cyan-400"></span>流入</span>
+                          <span className="flex items-center gap-1"><span className="w-2 h-2 rounded-full bg-emerald-400"></span>流入</span>
                           <span className="flex items-center gap-1"><span className="w-2 h-2 rounded-full bg-blue-400"></span>流出</span>
                         </div>
                       </div>
@@ -658,7 +652,7 @@ export default function App() {
                             <XAxis dataKey="time" axisLine={false} tickLine={false} tick={{ fill: '#64748b', fontSize: 9 }} />
                             <YAxis axisLine={false} tickLine={false} tick={{ fill: '#64748b', fontSize: 9 }} />
                             <Tooltip contentStyle={{ backgroundColor: '#061022', borderColor: '#1e3a5f', fontSize: '11px' }} />
-                            <Line type="monotone" dataKey="netIn" stroke="#38bdf8" strokeWidth={2} dot={false} name="流入" />
+                            <Line type="monotone" dataKey="netIn" stroke="#34d399" strokeWidth={2} dot={false} name="流入" />
                             <Line type="monotone" dataKey="netOut" stroke="#60a5fa" strokeWidth={2} dot={false} name="流出" />
                           </LineChart>
                         </ResponsiveContainer>
@@ -671,46 +665,50 @@ export default function App() {
 
             {/* 下半部分 (等高对齐): 虚拟机 CPU TOP10 + 虚拟机 内存 TOP10 + 应用资源情况，三者高度一致 */}
             <div className="flex-1 flex gap-2.5 min-h-0">
-              {/* 1. 虚拟机 CPU TOP10 (隐藏滚动条，平滑滚动) */}
+              {/* 1. 虚拟机 CPU TOP10 (自动循环无缝动态滚动) */}
               <motion.div variants={fadeUp} className="w-[23%] flex shrink-0">
                 <Panel title="虚拟机 CPU TOP10" className="w-full">
-                  <div className="flex flex-col gap-1 h-full py-0.5 text-[9px] overflow-y-auto [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden">
-                    {vmTop10Data.cpu.map((item) => (
-                      <div key={item.rank} className="bg-[#061836]/60 border border-[#1e3a5f]/60 rounded px-1.5 py-1 flex flex-col gap-0.5 hover:border-cyan-400/50 transition-all shrink-0">
-                        <div className="flex justify-between items-center">
-                          <span className="flex items-center gap-1 truncate text-slate-200 font-medium" title={item.name}>
-                            <span className="px-1 py-0.1 rounded bg-blue-500/20 text-cyan-300 font-mono text-[8.5px] border border-cyan-500/30">{item.rank}</span>
-                            <span className="truncate text-[9px]">{item.name}</span>
-                          </span>
-                          <span className="font-mono font-bold text-cyan-300 shrink-0 ml-1 text-[9px]">{item.value}%</span>
+                  <div className="h-full overflow-hidden relative">
+                    <div className="flex flex-col gap-1 text-[9px] animate-auto-scroll">
+                      {[...vmTop10Data.cpu, ...vmTop10Data.cpu].map((item, idx) => (
+                        <div key={`${item.rank}-${idx}`} className="bg-[#061836]/60 border border-[#1e3a5f]/60 rounded px-1.5 py-1 flex flex-col gap-0.5 hover:border-cyan-400/50 transition-all shrink-0">
+                          <div className="flex justify-between items-center">
+                            <span className="flex items-center gap-1 truncate text-slate-200 font-medium" title={item.name}>
+                              <span className="px-1 py-0.1 rounded bg-blue-500/20 text-cyan-300 font-mono text-[8.5px] border border-cyan-500/30">{item.rank}</span>
+                              <span className="truncate text-[9px]">{item.name}</span>
+                            </span>
+                            <span className="font-mono font-bold text-cyan-300 shrink-0 ml-1 text-[9px]">{item.value}%</span>
+                          </div>
+                          <div className="h-1.5 w-full bg-[#020917] rounded-full overflow-hidden border border-[#1e3a5f]/40 relative">
+                            <div className="h-full rounded-full bg-gradient-to-r from-[#0066ff] via-[#0099ff] to-[#00d2ff] transition-all duration-500" style={{ width: `${item.value}%` }} />
+                          </div>
                         </div>
-                        <div className="h-1 w-full bg-[#020917] rounded-full overflow-hidden border border-[#1e3a5f]/40 relative">
-                          <div className="h-full rounded-full bg-gradient-to-r from-[#0066ff] via-[#0099ff] to-[#00d2ff] transition-all duration-500" style={{ width: `${item.value}%` }} />
-                        </div>
-                      </div>
-                    ))}
+                      ))}
+                    </div>
                   </div>
                 </Panel>
               </motion.div>
 
-              {/* 2. 虚拟机 内存 TOP10 (隐藏滚动条，平滑滚动) */}
+              {/* 2. 虚拟机 内存 TOP10 (自动循环无缝动态滚动) */}
               <motion.div variants={fadeUp} className="w-[23%] flex shrink-0">
                 <Panel title="虚拟机 内存 TOP10" className="w-full">
-                  <div className="flex flex-col gap-1 h-full py-0.5 text-[9px] overflow-y-auto [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden">
-                    {vmTop10Data.memory.map((item) => (
-                      <div key={item.rank} className="bg-[#061836]/60 border border-[#1e3a5f]/60 rounded px-1.5 py-1 flex flex-col gap-0.5 hover:border-cyan-400/50 transition-all shrink-0">
-                        <div className="flex justify-between items-center">
-                          <span className="flex items-center gap-1 truncate text-slate-200 font-medium" title={item.name}>
-                            <span className="px-1 py-0.1 rounded bg-blue-500/20 text-cyan-300 font-mono text-[8.5px] border border-cyan-500/30">{item.rank}</span>
-                            <span className="truncate text-[9px]">{item.name}</span>
-                          </span>
-                          <span className="font-mono font-bold text-cyan-300 shrink-0 ml-1 text-[9px]">{item.value}%</span>
+                  <div className="h-full overflow-hidden relative">
+                    <div className="flex flex-col gap-1 text-[9px] animate-auto-scroll" style={{ animationDuration: '24s' }}>
+                      {[...vmTop10Data.memory, ...vmTop10Data.memory].map((item, idx) => (
+                        <div key={`${item.rank}-${idx}`} className="bg-[#061836]/60 border border-[#1e3a5f]/60 rounded px-1.5 py-1 flex flex-col gap-0.5 hover:border-cyan-400/50 transition-all shrink-0">
+                          <div className="flex justify-between items-center">
+                            <span className="flex items-center gap-1 truncate text-slate-200 font-medium" title={item.name}>
+                              <span className="px-1 py-0.1 rounded bg-blue-500/20 text-cyan-300 font-mono text-[8.5px] border border-cyan-500/30">{item.rank}</span>
+                              <span className="truncate text-[9px]">{item.name}</span>
+                            </span>
+                            <span className="font-mono font-bold text-cyan-300 shrink-0 ml-1 text-[9px]">{item.value}%</span>
+                          </div>
+                          <div className="h-1.5 w-full bg-[#020917] rounded-full overflow-hidden border border-[#1e3a5f]/40 relative">
+                            <div className="h-full rounded-full bg-gradient-to-r from-[#0066ff] via-[#0099ff] to-[#00d2ff] transition-all duration-500" style={{ width: `${item.value}%` }} />
+                          </div>
                         </div>
-                        <div className="h-1 w-full bg-[#020917] rounded-full overflow-hidden border border-[#1e3a5f]/40 relative">
-                          <div className="h-full rounded-full bg-gradient-to-r from-[#0066ff] via-[#0099ff] to-[#00d2ff] transition-all duration-500" style={{ width: `${item.value}%` }} />
-                        </div>
-                      </div>
-                    ))}
+                      ))}
+                    </div>
                   </div>
                 </Panel>
               </motion.div>
@@ -882,12 +880,6 @@ export default function App() {
                 <Panel 
                   title="资源使用率" 
                   className="w-full"
-                  action={
-                    <span className="px-2 py-0.5 rounded-full bg-emerald-500/15 text-emerald-400 text-[9px] border border-emerald-500/30 flex items-center gap-1">
-                      <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
-                      运行正常
-                    </span>
-                  }
                 >
                   {(() => {
                     const scale = selectedDept.scaleFactor ?? 0.2;
@@ -1089,21 +1081,21 @@ export default function App() {
                     <div className="bg-[#061836]/60 border border-[#1e3a5f]/60 rounded-md p-2.5 flex flex-col justify-between">
                       <div className="text-xs font-bold text-slate-200 flex items-center justify-between">
                         <span>虚拟机 内存使用率 (%)</span>
-                        <span className="text-[10px] text-purple-400 font-mono">均值: 68%</span>
+                        <span className="text-[10px] text-cyan-400 font-mono">均值: 68%</span>
                       </div>
                       <div className="flex-1 min-h-[110px] mt-2">
                         <ResponsiveContainer width="100%" height="100%">
                           <AreaChart data={loadTrendSeries} margin={{ top: 10, right: 10, left: -25, bottom: 0 }}>
                             <defs>
                               <linearGradient id="subMemGrad" x1="0" y1="0" x2="0" y2="1">
-                                <stop offset="5%" stopColor="#a855f7" stopOpacity={0.5}/>
-                                <stop offset="95%" stopColor="#a855f7" stopOpacity={0}/>
+                                <stop offset="5%" stopColor="#0099ff" stopOpacity={0.5}/>
+                                <stop offset="95%" stopColor="#0099ff" stopOpacity={0}/>
                               </linearGradient>
                             </defs>
                             <XAxis dataKey="time" axisLine={false} tickLine={false} tick={{ fill: '#64748b', fontSize: 9 }} />
                             <YAxis axisLine={false} tickLine={false} tick={{ fill: '#64748b', fontSize: 9 }} />
                             <Tooltip contentStyle={{ backgroundColor: '#061022', borderColor: '#1e3a5f', fontSize: '11px' }} />
-                            <Area type="monotone" dataKey="memory" stroke="#a855f7" strokeWidth={2} fill="url(#subMemGrad)" />
+                            <Area type="monotone" dataKey="memory" stroke="#0099ff" strokeWidth={2} fill="url(#subMemGrad)" />
                           </AreaChart>
                         </ResponsiveContainer>
                       </div>
@@ -1137,7 +1129,7 @@ export default function App() {
                         <span className="font-bold text-slate-200">网络流量监控 (Gbps)</span>
                         <div className="flex gap-2 text-[9px] text-slate-400 font-mono">
                           <span className="flex items-center gap-1"><span className="w-2 h-2 rounded-full bg-emerald-400"></span>流入</span>
-                          <span className="flex items-center gap-1"><span className="w-2 h-2 rounded-full bg-purple-400"></span>流出</span>
+                          <span className="flex items-center gap-1"><span className="w-2 h-2 rounded-full bg-blue-400"></span>流出</span>
                         </div>
                       </div>
                       <div className="flex-1 min-h-[110px] mt-2">
@@ -1147,7 +1139,7 @@ export default function App() {
                             <YAxis axisLine={false} tickLine={false} tick={{ fill: '#64748b', fontSize: 9 }} />
                             <Tooltip contentStyle={{ backgroundColor: '#061022', borderColor: '#1e3a5f', fontSize: '11px' }} />
                             <Line type="monotone" dataKey="netIn" stroke="#34d399" strokeWidth={2} dot={false} name="流入" />
-                            <Line type="monotone" dataKey="netOut" stroke="#c084fc" strokeWidth={2} dot={false} name="流出" />
+                            <Line type="monotone" dataKey="netOut" stroke="#60a5fa" strokeWidth={2} dot={false} name="流出" />
                           </LineChart>
                         </ResponsiveContainer>
                       </div>
@@ -1458,7 +1450,7 @@ export default function App() {
                           </div>
 
                           {/* 圆环下方内容模块（统一 2 行布局，块存储支持切页点） */}
-                          <div className="w-full text-[9.5px] border-t border-[#1e3a5f]/60 pt-1.5 mt-auto">
+                          <div className="w-full text-[9.5px] pt-1.5 mt-auto">
                             {!isStorageCard || storagePage === 0 ? (
                               <div className="space-y-1">
                                 <div className="flex justify-between items-center">
@@ -1548,11 +1540,11 @@ export default function App() {
                       <div className="flex-1 min-h-[70px] mt-1">
                         <ResponsiveContainer width="100%" height="100%">
                           <AreaChart data={loadTrendSeries} margin={{ top: 5, right: 5, left: -28, bottom: 0 }}>
-                            <defs><linearGradient id="loadMemGrad" x1="0" y1="0" x2="0" y2="1"><stop offset="5%" stopColor="#a855f7" stopOpacity={0.4}/><stop offset="95%" stopColor="#a855f7" stopOpacity={0}/></linearGradient></defs>
+                            <defs><linearGradient id="loadMemGrad" x1="0" y1="0" x2="0" y2="1"><stop offset="5%" stopColor="#0099ff" stopOpacity={0.4}/><stop offset="95%" stopColor="#0099ff" stopOpacity={0}/></linearGradient></defs>
                             <XAxis dataKey="time" axisLine={false} tickLine={false} tick={{ fill: '#64748b', fontSize: 8 }} />
                             <YAxis axisLine={false} tickLine={false} tick={{ fill: '#64748b', fontSize: 8 }} />
                             <Tooltip contentStyle={{ backgroundColor: '#061022', borderColor: '#1e3a5f', fontSize: '10px' }} />
-                            <Area type="monotone" dataKey="memory" stroke="#a855f7" strokeWidth={1.5} fill="url(#loadMemGrad)" />
+                            <Area type="monotone" dataKey="memory" stroke="#0099ff" strokeWidth={1.5} fill="url(#loadMemGrad)" />
                           </AreaChart>
                         </ResponsiveContainer>
                       </div>
@@ -1584,7 +1576,7 @@ export default function App() {
                         <span className="font-bold text-slate-300 truncate">网络流量监控</span>
                         <div className="flex gap-1.5 text-[8px] text-slate-400">
                           <span className="flex items-center gap-0.5"><span className="w-1.5 h-1.5 rounded-full bg-emerald-400"></span>流入</span>
-                          <span className="flex items-center gap-0.5"><span className="w-1.5 h-1.5 rounded-full bg-purple-400"></span>流出</span>
+                          <span className="flex items-center gap-0.5"><span className="w-1.5 h-1.5 rounded-full bg-blue-400"></span>流出</span>
                         </div>
                       </div>
                       <div className="h-20 min-h-[55px]">
@@ -1594,7 +1586,7 @@ export default function App() {
                             <YAxis axisLine={false} tickLine={false} tick={{ fill: '#64748b', fontSize: 8 }} />
                             <Tooltip contentStyle={{ backgroundColor: '#061022', borderColor: '#1e3a5f', fontSize: '10px' }} />
                             <Line type="monotone" dataKey="netIn" stroke="#34d399" strokeWidth={1.5} dot={false} name="流入" />
-                            <Line type="monotone" dataKey="netOut" stroke="#c084fc" strokeWidth={1.5} dot={false} name="流出" />
+                            <Line type="monotone" dataKey="netOut" stroke="#60a5fa" strokeWidth={1.5} dot={false} name="流出" />
                           </LineChart>
                         </ResponsiveContainer>
                       </div>
