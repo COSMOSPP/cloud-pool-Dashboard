@@ -97,39 +97,9 @@ export const hostResourceStats = [
 ];
 
 export const resourceAllocationData = [
-  { 
-    name: 'CPU', 
-    percent: 44.85, 
-    total: '4,290 核', 
-    allocated: '1,924 核', 
-    subTitle1: '宿主机核数',
-    subVal1: '2,400 核',
-    subTitle2: '超分比例',
-    subVal2: '1.78 : 1',
-    color: '#38bdf8' 
-  },
-  { 
-    name: '内存', 
-    percent: 45.89, 
-    total: '11.65 TB', 
-    allocated: '5.34 TB', 
-    subTitle1: '宿主机物理',
-    subVal1: '6.80 TB',
-    subTitle2: '预留/缓存',
-    subVal2: '1.46 TB',
-    color: '#a855f7' 
-  },
-  { 
-    name: '块存储', 
-    percent: 46.10, 
-    total: '453.49 TB', 
-    allocated: '209.08 TB', 
-    subTitle1: '云硬盘',
-    subVal1: '160.50 TB',
-    subTitle2: '其他占用',
-    subVal2: '48.58 TB',
-    color: '#14b8a6' 
-  },
+  { name: 'CPU', percent: 44.85, total: '4,290 核', allocated: '1,924 核', color: '#38bdf8' },
+  { name: '内存', percent: 45.89, total: '11.65 TB', allocated: '5.34 TB', color: '#a855f7' },
+  { name: '块存储', percent: 46.10, total: '453.49 TB', allocated: '209.08 TB', cloudDisk: '160.50 TB', other: '48.58 TB', color: '#14b8a6' },
 ];
 
 export const loadTrendSeries = [

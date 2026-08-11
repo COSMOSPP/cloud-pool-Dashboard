@@ -954,7 +954,7 @@ export default function App() {
               </motion.div>
 
               {/* 模块 2: 资源分配率 (一级全域 3环图样式) */}
-              <motion.div variants={fadeUp} className="flex-[1.05] flex">
+              <motion.div variants={fadeUp} className="flex-[1] flex">
                 <Panel title="资源分配率" className="w-full">
                   <div className="grid grid-cols-3 gap-2 h-full py-0.5">
                     {resourceAllocationData.map((res, i) => (
@@ -962,9 +962,9 @@ export default function App() {
                         key={i}
                         className="bg-[#061836]/80 border border-[#1e3a5f]/80 rounded-md p-2 flex flex-col justify-between items-center hover:border-cyan-400/60 transition-all text-center group"
                       >
-                        {/* 3D 科技圆环（顶对齐保持一致） */}
-                        <div className="w-full flex justify-center items-start pt-1 shrink-0">
-                          <div className="relative w-16 h-16 flex items-center justify-center shrink-0">
+                        {/* 3D 科技圆环（自然垂直居中与适度留白） */}
+                        <div className="flex-1 flex flex-col items-center justify-center w-full py-1">
+                          <div className="relative w-15 h-15 flex items-center justify-center shrink-0">
                             <svg className="w-full h-full transform -rotate-90" viewBox="0 0 36 36">
                               <path
                                 className="text-[#041126]"
@@ -984,17 +984,17 @@ export default function App() {
                               />
                             </svg>
                             <div className="absolute inset-0 flex flex-col items-center justify-center">
-                              <span className="text-[12px] font-black font-mono text-slate-100 tracking-tight group-hover:scale-105 transition-transform">
+                              <span className="text-[11.5px] font-black font-mono text-slate-100 tracking-tight group-hover:scale-105 transition-transform">
                                 {res.percent}%
                               </span>
-                              <span className="text-[9px] font-bold text-cyan-300 tracking-wider">
+                              <span className="text-[8.5px] font-bold text-cyan-300 tracking-wider">
                                 {res.name}
                               </span>
                             </div>
                           </div>
                         </div>
 
-                        {/* 圆环下方内容模块（全对称 4 行规范对齐） */}
+                        {/* 圆环下方内容模块（结构紧凑均衡） */}
                         <div className="w-full space-y-1 text-[9.5px] border-t border-[#1e3a5f]/60 pt-1.5 mt-auto">
                           <div className="flex justify-between items-center">
                             <span className="text-slate-400">总量</span>
@@ -1004,16 +1004,12 @@ export default function App() {
                             <span className="text-slate-400">分配量</span>
                             <span className="font-mono font-bold text-cyan-300">{res.allocated}</span>
                           </div>
-                          <div className="pt-1 mt-1 border-t border-[#1e3a5f]/40 space-y-1">
-                            <div className="flex justify-between items-center">
-                              <span className="text-slate-400">{res.subTitle1}</span>
-                              <span className="font-mono font-bold text-slate-200">{res.subVal1}</span>
+                          {(res as any).cloudDisk && (
+                            <div className="flex justify-between items-center text-[8.5px] text-slate-400 border-t border-[#1e3a5f]/40 pt-1 mt-0.5">
+                              <span>云硬盘 <strong className="text-slate-200 font-mono font-normal">{(res as any).cloudDisk}</strong></span>
+                              <span>其他 <strong className="text-slate-200 font-mono font-normal">{(res as any).other}</strong></span>
                             </div>
-                            <div className="flex justify-between items-center">
-                              <span className="text-slate-400">{res.subTitle2}</span>
-                              <span className="font-mono font-bold text-slate-200">{res.subVal2}</span>
-                            </div>
-                          </div>
+                          )}
                         </div>
                       </div>
                     ))}
