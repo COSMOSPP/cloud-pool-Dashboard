@@ -1,10 +1,10 @@
 import { motion } from 'motion/react';
 
 export function TopologyMap() {
-  // 节点配置与位置（铺满饱满比例）
+  // 节点配置与位置（自然舒展比例）
   const nodes = [
     // 前四层 (L1 - L4)
-    { id: 'core', label: '内网核心', layer: 'L1 核心层', type: 'tower', x: 50, y: 8 },
+    { id: 'core', label: '内网核心', layer: 'L1 核心层', type: 'cloud-network', x: 50, y: 8 },
     { id: 'sw-storage', label: '存储交换机', layer: 'L2 汇聚层', type: 'glass-cube', x: 26, y: 21 },
     { id: 'sw-compute', label: '计算交换机', layer: 'L2 汇聚层', type: 'matrix-cube', x: 74, y: 21 },
     { id: 'acc-storage', label: '存储接入', layer: 'L3 接入层', type: 'cylinder-stack', x: 22, y: 34 },
@@ -79,6 +79,11 @@ export function TopologyMap() {
           <linearGradient id="iso-line-gold" x1="0%" y1="0%" x2="100%" y2="100%">
             <stop offset="0%" stopColor="#fbbf24" stopOpacity="0.9" />
             <stop offset="100%" stopColor="#38bdf8" stopOpacity="0.5" />
+          </linearGradient>
+
+          <linearGradient id="bldg-front" x1="0%" y1="0%" x2="0%" y2="100%">
+            <stop offset="0%" stopColor="#38bdf8" />
+            <stop offset="100%" stopColor="#0284c7" />
           </linearGradient>
 
           {/* 圆环盘面 1 到 0 渐变透明 */}
@@ -266,13 +271,13 @@ export function TopologyMap() {
             </div>
           </motion.div>
 
-          {/* 3D Base Pedestal + 3D Volumetric Icon (饱满舒展比例 scale-105) */}
+          {/* 3D Base Pedestal + 3D Volumetric Icon (精致比例 scale-84) */}
           <motion.div 
-            className="relative flex items-center justify-center scale-[1.05]"
+            className="relative flex items-center justify-center scale-[0.84]"
             initial={{ scale: 0 }}
-            animate={{ scale: 1.05 }}
+            animate={{ scale: 0.84 }}
             transition={{ type: 'spring', stiffness: 220, damping: 18, delay: idx * 0.06 }}
-            whileHover={{ scale: 1.15, y: -4 }}
+            whileHover={{ scale: 0.92, y: -4 }}
           >
             {/* 3D Iso Rhombus Base Platform (菱形双层底座) */}
             <div className="relative w-28 h-20 flex items-center justify-center">
