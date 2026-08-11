@@ -1,4 +1,5 @@
 import { motion } from 'motion/react';
+import userCloudIcon from '../assets/cloud-icon-user.png';
 
 export function TopologyMap() {
   // 节点配置与位置（自然舒展比例）
@@ -313,109 +314,14 @@ export function TopologyMap() {
 
               {/* ---------------- 3D 实体图形 (根据 type 精细绘制 3D 几何组件) ---------------- */}
               <div className="absolute top-[-12px] flex items-center justify-center pointer-events-none">
-                {/* 1. 3D 拟真晶体玻璃云 (Glass Cloud - 完美匹配参考图) */}
+                {/* 1. 用户专属 3D 2.5D 云图标 (匹配用户最新参考图) */}
                 {node.type === 'glass-cloud' && (
-                  <div className="w-20 h-20 relative flex items-center justify-center -mt-3">
-                    <svg className="w-full h-full overflow-visible" viewBox="0 0 100 80">
-                      <defs>
-                        {/* 玻璃云 3D 侧面挤压厚度渐变 */}
-                        <linearGradient id="gc-side-grad" x1="0%" y1="0%" x2="100%" y2="100%">
-                          <stop offset="0%" stopColor="#93c5fd" stopOpacity="0.85" />
-                          <stop offset="35%" stopColor="#3b82f6" stopOpacity="0.75" />
-                          <stop offset="75%" stopColor="#1d4ed8" stopOpacity="0.85" />
-                          <stop offset="100%" stopColor="#1e3a8a" stopOpacity="0.95" />
-                        </linearGradient>
-
-                        {/* 玻璃云正面透明玻璃体渐变 */}
-                        <linearGradient id="gc-front-glass" x1="15%" y1="0%" x2="85%" y2="100%">
-                          <stop offset="0%" stopColor="#f0f9ff" stopOpacity="0.85" />
-                          <stop offset="25%" stopColor="#bae6fd" stopOpacity="0.55" />
-                          <stop offset="65%" stopColor="#3b82f6" stopOpacity="0.35" />
-                          <stop offset="100%" stopColor="#1d4ed8" stopOpacity="0.6" />
-                        </linearGradient>
-
-                        {/* 内部高感深蓝发光核 (对应参考图中心的浓郁蓝光) */}
-                        <radialGradient id="gc-inner-core" cx="45%" cy="38%" r="42%">
-                          <stop offset="0%" stopColor="#2563eb" stopOpacity="0.95" />
-                          <stop offset="50%" stopColor="#1d4ed8" stopOpacity="0.85" />
-                          <stop offset="85%" stopColor="#0284c7" stopOpacity="0.4" />
-                          <stop offset="100%" stopColor="#0284c7" stopOpacity="0" />
-                        </radialGradient>
-
-                        {/* 高亮白边缘描边渐变 */}
-                        <linearGradient id="gc-rim-specular" x1="0%" y1="0%" x2="100%" y2="100%">
-                          <stop offset="0%" stopColor="#ffffff" stopOpacity="0.95" />
-                          <stop offset="40%" stopColor="#e0f2fe" stopOpacity="0.8" />
-                          <stop offset="100%" stopColor="#60a5fa" stopOpacity="0.5" />
-                        </linearGradient>
-                      </defs>
-
-                      {/* 底部投影 */}
-                      <ellipse cx="50" cy="66" rx="30" ry="8" fill="#000" opacity="0.45" filter="blur(4px)" />
-
-                      <g filter="url(#cyan-glow)">
-                        {/* 3D 侧面立体向右上挤压层 (Depth Layers) */}
-                        {[
-                          { dx: 8, dy: -8, op: 0.35 },
-                          { dx: 7, dy: -7, op: 0.45 },
-                          { dx: 6, dy: -6, op: 0.55 },
-                          { dx: 5, dy: -5, op: 0.65 },
-                          { dx: 4, dy: -4, op: 0.75 },
-                          { dx: 3, dy: -3, op: 0.85 },
-                          { dx: 2, dy: -2, op: 0.9 },
-                          { dx: 1, dy: -1, op: 0.95 },
-                        ].map((layer, index) => (
-                          <path
-                            key={index}
-                            d="M 22,50 C 11,50 7,39 13,29 C 7,18 17,8 30,12 C 36,3 52,3 60,12 C 71,6 81,15 78,27 C 88,34 82,50 68,50 Z"
-                            transform={`translate(${layer.dx}, ${layer.dy})`}
-                            fill="url(#gc-side-grad)"
-                            opacity={layer.op * 0.6}
-                          />
-                        ))}
-
-                        {/* 背面 3D 轮廓外框 */}
-                        <path
-                          d="M 22,50 C 11,50 7,39 13,29 C 7,18 17,8 30,12 C 36,3 52,3 60,12 C 71,6 81,15 78,27 C 88,34 82,50 68,50 Z"
-                          transform="translate(8, -8)"
-                          fill="none"
-                          stroke="#bfdbfe"
-                          strokeWidth="1.2"
-                          opacity="0.8"
-                        />
-
-                        {/* 正面晶体云朵主体 (Glass Cloud Front Facade) */}
-                        <path
-                          d="M 22,50 C 11,50 7,39 13,29 C 7,18 17,8 30,12 C 36,3 52,3 60,12 C 71,6 81,15 78,27 C 88,34 82,50 68,50 Z"
-                          fill="url(#gc-front-glass)"
-                          stroke="url(#gc-rim-specular)"
-                          strokeWidth="1.6"
-                        />
-
-                        {/* 内部浓郁深蓝核 (对应参考图) */}
-                        <ellipse cx="46" cy="26" rx="20" ry="16" fill="url(#gc-inner-core)" />
-
-                        {/* 顶部高光弧线 (Refraction Edge Highlight) */}
-                        <path
-                          d="M 14,28 C 10,20 18,11 29,14 C 35,6 50,6 58,14 C 67,9 76,16 75,25"
-                          fill="none"
-                          stroke="#ffffff"
-                          strokeWidth="2.2"
-                          strokeLinecap="round"
-                          opacity="0.95"
-                        />
-
-                        {/* 左下侧微高光弧线 */}
-                        <path
-                          d="M 14,32 C 10,40 16,48 24,48"
-                          fill="none"
-                          stroke="#ffffff"
-                          strokeWidth="1.5"
-                          strokeLinecap="round"
-                          opacity="0.75"
-                        />
-                      </g>
-                    </svg>
+                  <div className="w-16 h-16 relative flex items-center justify-center -mt-2.5 pointer-events-none">
+                    <img
+                      src={userCloudIcon}
+                      alt="内网核心云图标"
+                      className="w-full h-full object-contain filter drop-shadow-[0_0_12px_rgba(56,189,248,0.7)]"
+                    />
                   </div>
                 )}
 
