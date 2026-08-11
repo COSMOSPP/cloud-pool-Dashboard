@@ -436,7 +436,7 @@ export default function App() {
               {/* 部门资源使用率 */}
               <motion.div variants={fadeUp} className="flex-[1.4] flex">
                 <Panel 
-                  title={`${selectedDept.name} · 资源使用率`} 
+                  title="资源使用率" 
                   className="w-full"
                   action={
                     <span className="px-2 py-0.5 rounded-full bg-emerald-500/15 text-emerald-400 text-[9px] border border-emerald-500/30 flex items-center gap-1">
@@ -564,7 +564,7 @@ export default function App() {
 
               {/* 部门告警统计 */}
               <motion.div variants={fadeUp} className="flex-[1] flex">
-                <Panel title={`${selectedDept.name} · 告警统计`} className="w-full">
+                <Panel title="告警统计" className="w-full">
                   <div className="flex items-center justify-between h-full px-2">
                     <div className="relative w-28 h-28 flex items-center justify-center shrink-0">
                       <ResponsiveContainer width="100%" height="100%">
@@ -608,7 +608,7 @@ export default function App() {
             <div className="flex-1 flex flex-col gap-2.5 min-w-0">
               <motion.div variants={fadeUp} className="flex-1 flex">
                 <Panel 
-                  title={`${selectedDept.name} · 虚拟机负载趋势`} 
+                  title="虚拟机负载趋势" 
                   className="w-full"
                   action={
                     <span className="px-2 py-0.5 rounded bg-cyan-500/20 text-cyan-300 text-[10px] border border-cyan-400/40 font-mono font-bold">
@@ -718,7 +718,7 @@ export default function App() {
               {/* 部门虚拟机资源 TOP5 */}
               <motion.div variants={fadeUp} className="flex-[0.9] flex">
                 <Panel 
-                  title={`${selectedDept.name} · 虚拟机资源 TOP5`} 
+                  title="虚拟机资源 TOP5" 
                   className="w-full"
                   action={
                     <div className="flex bg-[#040e21] p-0.5 rounded border border-[#1e3a5f] text-[9px]">
@@ -746,7 +746,7 @@ export default function App() {
                 </Panel>
               </motion.div>
 
-              {/* 部门应用资源情况 (优化字体与列排版、展示 6 行规范日常应用) */}
+              {/* 部门应用资源情况 (静态标题、删除右侧统计、组织汇总单独展示、表格仅展示应用) */}
               <motion.div variants={fadeUp} className="flex-[1.3] flex">
                 {(() => {
                   const appsList = getDepartmentAppsData(selectedDept.name);
@@ -754,86 +754,61 @@ export default function App() {
 
                   return (
                     <Panel
-                      title={`${selectedDept.name} · 应用资源情况`}
+                      title="应用资源情况"
                       className="w-full"
-                      action={
-                        <span className="px-2 py-0.5 rounded bg-emerald-500/20 text-emerald-300 text-[10px] border border-emerald-400/30 font-mono font-bold">
-                          {appsList.length}应用 / {totalDeptVms}台虚拟机
-                        </span>
-                      }
                     >
                       <div className="flex flex-col h-full overflow-hidden text-[10px]">
-                        {/* 表头 Header - 调整列宽间距 (gap-2.5) 与文字大小 */}
-                        <div className="grid grid-cols-12 gap-2.5 font-bold text-slate-300 border-b border-[#1e3a5f]/80 pb-2 px-2 bg-[#040f24]/90 text-[10px] items-center shrink-0">
-                          <div className="col-span-3 flex items-center gap-1">
-                            <span>组织 / 应用名称</span>
-                            <span className="text-[9px] text-slate-500">⇅</span>
+                        {/* 1. 独立展示的组织名称与统计模块 */}
+                        <div className="bg-[#061836]/90 border border-[#1e3a5f] rounded-md p-1.5 px-2 mb-1.5 flex items-center justify-between font-bold shrink-0 text-[10px]">
+                          <div className="flex items-center gap-1.5 overflow-hidden">
+                            <Building2 className="w-3.5 h-3.5 text-cyan-400 shrink-0" />
+                            <span className="text-slate-100 font-bold truncate">{selectedDept.name}</span>
+                            <span className="px-1.5 py-0.2 rounded bg-cyan-500/20 text-cyan-300 text-[8.5px] border border-cyan-500/30 shrink-0 font-mono">
+                              {appsList.length} 应用
+                            </span>
                           </div>
-                          <div className="col-span-2 text-center flex items-center justify-center gap-1">
-                            <span>虚拟机数量</span>
-                            <span className="text-[9px] text-slate-500">⇅</span>
-                          </div>
-                          <div className="col-span-2 flex items-center gap-1">
-                            <span>CPU / 利用率</span>
-                            <span className="text-[9px] text-slate-500">⇅</span>
-                          </div>
-                          <div className="col-span-2 flex items-center gap-1">
-                            <span>内存 / 利用率</span>
-                            <span className="text-[9px] text-slate-500">⇅</span>
-                          </div>
-                          <div className="col-span-3 flex items-center gap-1">
-                            <span>磁盘 / 利用率</span>
-                            <span className="text-[9px] text-slate-500">⇅</span>
+                          <div className="flex items-center gap-2.5 text-[9.5px] font-mono">
+                            <div className="text-slate-300">
+                              虚拟机: <span className="text-slate-100 font-bold">{totalDeptVms} 台</span>
+                            </div>
+                            <div className="text-slate-300">
+                              CPU: <span className="text-slate-100 font-bold">292核</span> <span className="text-cyan-300 font-bold">(62%)</span>
+                            </div>
+                            <div className="text-slate-300">
+                              内存: <span className="text-slate-100 font-bold">752GB</span> <span className="text-purple-300 font-bold">(68%)</span>
+                            </div>
+                            <div className="text-slate-300">
+                              磁盘: <span className="text-slate-100 font-bold">5300GB</span> <span className="text-emerald-300 font-bold">(56%)</span>
+                            </div>
                           </div>
                         </div>
 
-                        {/* 表格数据行列表 */}
-                        <div className="flex-1 overflow-y-auto space-y-1.5 pt-1.5 pr-0.5">
-                          {/* 父层 Summary Row: 部门汇总数据 */}
-                          <div className="bg-[#061836]/90 border border-[#1e3a5f] rounded-md p-2 grid grid-cols-12 gap-2.5 items-center font-bold hover:border-cyan-400/50 transition-all">
-                            <div className="col-span-3 flex items-center gap-1.5 overflow-hidden">
-                              <ChevronDown className="w-4 h-4 text-cyan-400 shrink-0" />
-                              <span className="text-slate-100 text-[11px] truncate">{selectedDept.name}</span>
-                              <span className="px-1.5 py-0.2 rounded bg-slate-700/60 text-slate-300 text-[9px] shrink-0 font-normal">
-                                {appsList.length}应用
-                              </span>
-                            </div>
-                            <div className="col-span-2 text-center font-mono text-slate-100 font-black text-[11px]">
-                              {totalDeptVms} 台
-                            </div>
-                            {/* CPU 汇总 */}
-                            <div className="col-span-2 space-y-0.5">
-                              <div className="flex items-center gap-1.5 font-mono text-[10px]">
-                                <span className="text-slate-100 font-bold">292 核</span>
-                                <span className="text-cyan-300 font-bold ml-auto">62%</span>
-                              </div>
-                              <div className="h-1.5 w-full bg-slate-800/80 rounded-full overflow-hidden border border-[#1e3a5f]/40 relative">
-                                <div className="h-full bg-gradient-to-r from-blue-600 to-cyan-400 rounded-full" style={{ width: '62%' }} />
-                              </div>
-                            </div>
-                            {/* 内存 汇总 */}
-                            <div className="col-span-2 space-y-0.5">
-                              <div className="flex items-center gap-1.5 font-mono text-[10px]">
-                                <span className="text-slate-100 font-bold">752 GB</span>
-                                <span className="text-cyan-300 font-bold ml-auto">68%</span>
-                              </div>
-                              <div className="h-1.5 w-full bg-slate-800/80 rounded-full overflow-hidden border border-[#1e3a5f]/40 relative">
-                                <div className="h-full bg-gradient-to-r from-purple-600 to-emerald-400 rounded-full" style={{ width: '68%' }} />
-                              </div>
-                            </div>
-                            {/* 磁盘 汇总 */}
-                            <div className="col-span-3 space-y-0.5">
-                              <div className="flex items-center gap-1.5 font-mono text-[10px]">
-                                <span className="text-slate-100 font-bold">5300 GB</span>
-                                <span className="text-cyan-300 font-bold ml-auto">56%</span>
-                              </div>
-                              <div className="h-1.5 w-full bg-slate-800/80 rounded-full overflow-hidden border border-[#1e3a5f]/40 relative">
-                                <div className="h-full bg-gradient-to-r from-teal-600 to-emerald-400 rounded-full" style={{ width: '56%' }} />
-                              </div>
-                            </div>
+                        {/* 2. 表头 Header (只展示应用名称和统计数量) */}
+                        <div className="grid grid-cols-12 gap-2 font-bold text-slate-300 border-b border-[#1e3a5f]/80 pb-1.5 px-2 bg-[#040f24]/90 text-[9.5px] items-center shrink-0">
+                          <div className="col-span-3 flex items-center gap-1">
+                            <span>应用名称</span>
+                            <span className="text-[8px] text-slate-500">⇅</span>
                           </div>
+                          <div className="col-span-2 text-center flex items-center justify-center gap-1">
+                            <span>虚拟机数量</span>
+                            <span className="text-[8px] text-slate-500">⇅</span>
+                          </div>
+                          <div className="col-span-2 flex items-center gap-1">
+                            <span>CPU / 利用率</span>
+                            <span className="text-[8px] text-slate-500">⇅</span>
+                          </div>
+                          <div className="col-span-2 flex items-center gap-1">
+                            <span>内存 / 利用率</span>
+                            <span className="text-[8px] text-slate-500">⇅</span>
+                          </div>
+                          <div className="col-span-3 flex items-center gap-1">
+                            <span>磁盘 / 利用率</span>
+                            <span className="text-[8px] text-slate-500">⇅</span>
+                          </div>
+                        </div>
 
-                          {/* 应用明细行（展示 6 行规范日常应用） */}
+                        {/* 3. 表格明细列表 (仅展示当前组织下的应用名称和统计) */}
+                        <div className="flex-1 overflow-y-auto space-y-1.2 pt-1 pr-0.5">
                           {appsList.map((app) => (
                             <div
                               key={app.id}
