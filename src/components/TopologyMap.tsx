@@ -63,7 +63,7 @@ export function TopologyMap() {
   ];
 
   return (
-    <div className="relative w-full h-full min-h-[560px] flex items-center justify-center p-2 overflow-hidden select-none">
+    <div className="relative w-full h-full min-h-[560px] flex items-center justify-center p-2 pt-7 overflow-hidden select-none">
       
       {/* 极简深色微发光背景 + 科技风底纹 */}
       <div className="absolute inset-0 bg-[#030a17] bg-[radial-gradient(ellipse_at_center,_rgba(6,182,212,0.12)_0%,_transparent_75%)] pointer-events-none" />
