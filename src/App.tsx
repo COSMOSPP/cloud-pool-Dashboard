@@ -211,16 +211,6 @@ function OrganizationSwitcher({ selectedDept, onSelectDept }: OrganizationSwitch
                     <Filter className="w-3 h-3 text-cyan-400" />
                     组织架构层次 (1级/2级/3级)
                   </span>
-                  <button
-                    onClick={() => {
-                      const rootNode = organizationTree[0];
-                      onSelectDept(rootNode);
-                      setIsOpen(false);
-                    }}
-                    className="text-[10px] text-cyan-400 hover:text-cyan-200 underline cursor-pointer"
-                  >
-                    重置为一级全域
-                  </button>
                 </div>
 
                 {/* 搜索框 */}
@@ -230,7 +220,7 @@ function OrganizationSwitcher({ selectedDept, onSelectDept }: OrganizationSwitch
                     type="text"
                     value={searchTerm}
                     onChange={(e) => setSearchTerm(e.target.value)}
-                    placeholder="搜索 1/2/3 级部门名称或代码..."
+                    placeholder="搜索 1/2/3 级部门名称..."
                     className="w-full bg-[#07162e] border border-[#1e3a5f] focus:border-cyan-400/90 rounded-xs pl-8 pr-7 py-1 text-xs text-slate-100 placeholder:text-slate-500 outline-none transition-colors"
                   />
                   {searchTerm && (
@@ -303,7 +293,6 @@ function OrganizationSwitcher({ selectedDept, onSelectDept }: OrganizationSwitch
                   <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
                   当前: <strong className="text-cyan-200">{selectedDept.name}</strong>
                 </span>
-                <span className="text-slate-500">代码: {selectedDept.code}</span>
               </div>
             </motion.div>
           )}
@@ -756,28 +745,19 @@ export default function App() {
                     <Panel
                       title="应用资源情况"
                       className="w-full"
+                      action={
+                        <span className="px-2 py-0.5 rounded bg-cyan-500/20 text-cyan-300 text-[10px] border border-cyan-400/30 font-mono font-bold">
+                          应用总数: {appsList.length}个
+                        </span>
+                      }
                     >
                       <div className="flex flex-col h-full overflow-hidden text-[10px]">
-                        {/* 1. 组织汇总指标卡格 (参考参考图卡片设计) */}
+                        {/* 1. 组织汇总指标卡格 (虚拟机、CPU、内存、磁盘，包含利用率) */}
                         <div className="grid grid-cols-4 gap-2 mb-2 shrink-0">
-                          {/* Card 1: 应用总数 */}
-                          <div className="bg-[#040e24]/90 border border-[#142d54] rounded-md p-2 flex flex-col justify-between hover:border-cyan-500/50 transition-all">
-                            <div className="flex items-center justify-between">
-                              <span className="text-[10px] font-extrabold text-slate-200">应用总数</span>
-                              <div className="w-5 h-5 rounded border border-cyan-400/50 bg-cyan-500/10 text-cyan-300 flex items-center justify-center shrink-0">
-                                <Layers className="w-3 h-3" />
-                              </div>
-                            </div>
-                            <div className="flex items-baseline gap-1 mt-1">
-                              <span className="text-base font-black font-mono text-slate-100">{appsList.length}</span>
-                              <span className="text-[9.5px] text-slate-400 font-mono">个</span>
-                            </div>
-                          </div>
-
-                          {/* Card 2: 虚拟机总数 */}
+                          {/* Card 1: 虚拟机 */}
                           <div className="bg-[#040e24]/90 border border-[#142d54] rounded-md p-2 flex flex-col justify-between hover:border-purple-500/50 transition-all">
                             <div className="flex items-center justify-between">
-                              <span className="text-[10px] font-extrabold text-slate-200">虚拟机总数</span>
+                              <span className="text-[10px] font-extrabold text-slate-200">虚拟机</span>
                               <div className="w-5 h-5 rounded border border-purple-400/50 bg-purple-500/10 text-purple-300 flex items-center justify-center shrink-0">
                                 <Server className="w-3 h-3" />
                               </div>
@@ -788,24 +768,38 @@ export default function App() {
                             </div>
                           </div>
 
-                          {/* Card 3: 虚拟 CPU 总数 */}
+                          {/* Card 2: CPU */}
                           <div className="bg-[#040e24]/90 border border-[#142d54] rounded-md p-2 flex flex-col justify-between hover:border-blue-500/50 transition-all">
                             <div className="flex items-center justify-between">
-                              <span className="text-[10px] font-extrabold text-slate-200">虚拟 CPU 总数</span>
+                              <span className="text-[10px] font-extrabold text-slate-200">CPU</span>
                               <div className="w-5 h-5 rounded border border-blue-400/50 bg-blue-500/10 text-blue-300 flex items-center justify-center shrink-0">
                                 <Cpu className="w-3 h-3" />
                               </div>
                             </div>
                             <div className="flex items-baseline gap-1 mt-1">
                               <span className="text-base font-black font-mono text-slate-100">292</span>
-                              <span className="text-[9.5px] text-slate-400 font-mono">核</span>
+                              <span className="text-[9.5px] text-slate-400 font-mono">核 (62%)</span>
                             </div>
                           </div>
 
-                          {/* Card 4: 虚拟磁盘总量 */}
+                          {/* Card 3: 内存 */}
+                          <div className="bg-[#040e24]/90 border border-[#142d54] rounded-md p-2 flex flex-col justify-between hover:border-purple-500/50 transition-all">
+                            <div className="flex items-center justify-between">
+                              <span className="text-[10px] font-extrabold text-slate-200">内存</span>
+                              <div className="w-5 h-5 rounded border border-purple-400/50 bg-purple-500/10 text-purple-300 flex items-center justify-center shrink-0">
+                                <Server className="w-3 h-3" />
+                              </div>
+                            </div>
+                            <div className="flex items-baseline gap-1 mt-1">
+                              <span className="text-base font-black font-mono text-slate-100">752</span>
+                              <span className="text-[9.5px] text-slate-400 font-mono">GB (68%)</span>
+                            </div>
+                          </div>
+
+                          {/* Card 4: 磁盘 */}
                           <div className="bg-[#040e24]/90 border border-[#142d54] rounded-md p-2 flex flex-col justify-between hover:border-emerald-500/50 transition-all">
                             <div className="flex items-center justify-between">
-                              <span className="text-[10px] font-extrabold text-slate-200">虚拟磁盘总量</span>
+                              <span className="text-[10px] font-extrabold text-slate-200">磁盘</span>
                               <div className="w-5 h-5 rounded border border-emerald-400/50 bg-emerald-500/10 text-emerald-300 flex items-center justify-center shrink-0">
                                 <HardDrive className="w-3 h-3" />
                               </div>
