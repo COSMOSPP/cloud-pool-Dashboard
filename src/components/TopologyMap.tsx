@@ -94,6 +94,48 @@ export function TopologyMap() {
             <feComposite in="SourceGraphic" in2="blur" operator="over" />
           </filter>
 
+          {/* L5 长方体平台渐变 */}
+          <linearGradient id="cuboid-top-l5" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stopColor="#6366f1" stopOpacity="0.45" />
+            <stop offset="100%" stopColor="#4338ca" stopOpacity="0.25" />
+          </linearGradient>
+          <linearGradient id="cuboid-side-left-l5" x1="0%" y1="0%" x2="0%" y2="100%">
+            <stop offset="0%" stopColor="#6366f1" stopOpacity="0.6" />
+            <stop offset="100%" stopColor="#1e1b4b" stopOpacity="0.85" />
+          </linearGradient>
+          <linearGradient id="cuboid-side-right-l5" x1="0%" y1="0%" x2="0%" y2="100%">
+            <stop offset="0%" stopColor="#4f46e5" stopOpacity="0.5" />
+            <stop offset="100%" stopColor="#1e1b4b" stopOpacity="0.75" />
+          </linearGradient>
+
+          {/* L6 长方体平台渐变 */}
+          <linearGradient id="cuboid-top-l6" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stopColor="#8b5cf6" stopOpacity="0.45" />
+            <stop offset="100%" stopColor="#6d28d9" stopOpacity="0.25" />
+          </linearGradient>
+          <linearGradient id="cuboid-side-left-l6" x1="0%" y1="0%" x2="0%" y2="100%">
+            <stop offset="0%" stopColor="#8b5cf6" stopOpacity="0.6" />
+            <stop offset="100%" stopColor="#2e1065" stopOpacity="0.85" />
+          </linearGradient>
+          <linearGradient id="cuboid-side-right-l6" x1="0%" y1="0%" x2="0%" y2="100%">
+            <stop offset="0%" stopColor="#7c3aed" stopOpacity="0.5" />
+            <stop offset="100%" stopColor="#2e1065" stopOpacity="0.75" />
+          </linearGradient>
+
+          {/* L7 长方体平台渐变 */}
+          <linearGradient id="cuboid-top-l7" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stopColor="#a855f7" stopOpacity="0.45" />
+            <stop offset="100%" stopColor="#7e22ce" stopOpacity="0.25" />
+          </linearGradient>
+          <linearGradient id="cuboid-side-left-l7" x1="0%" y1="0%" x2="0%" y2="100%">
+            <stop offset="0%" stopColor="#a855f7" stopOpacity="0.6" />
+            <stop offset="100%" stopColor="#3b0764" stopOpacity="0.85" />
+          </linearGradient>
+          <linearGradient id="cuboid-side-right-l7" x1="0%" y1="0%" x2="0%" y2="100%">
+            <stop offset="0%" stopColor="#9333ea" stopOpacity="0.5" />
+            <stop offset="100%" stopColor="#3b0764" stopOpacity="0.75" />
+          </linearGradient>
+
           {/* 科技背景点阵 Pattern */}
           <pattern id="dot-grid" x="0" y="0" width="30" height="30" patternUnits="userSpaceOnUse">
             <circle cx="15" cy="15" r="0.8" fill="#1e3a5f" opacity="0.6" />
@@ -107,55 +149,54 @@ export function TopologyMap() {
         <line x1="500" y1="20" x2="500" y2="540" stroke="rgba(56, 189, 248, 0.15)" strokeWidth="1" strokeDasharray="6 6" />
         <line x1="100" y1="280" x2="900" y2="280" stroke="rgba(56, 189, 248, 0.1)" strokeWidth="1" strokeDasharray="6 6" />
 
-        {/* ==================== 7层 3D 半透明发光圆盘 (舒展大方, 1到0 透明过度) ==================== */}
+        {/* ==================== 7层 3D 浮空平台 (L1-L4 圆盘, L5-L7 3D长方体) ==================== */}
         {ringPlatforms.map((ring) => {
           // 渐变透明度过度系数 (从顶层 0.85 递减至底层 0.5)
           const fadeOpacity = Math.max(0.5, 0.88 - (ring.layerIndex - 1) * 0.06);
+          const isCuboid = ring.layerIndex >= 5;
 
           return (
             <g key={`ring-platform-${ring.layerIndex}`} opacity={fadeOpacity}>
-              {/* 3D 盘面底座发光 */}
-              <ellipse
-                cx={ring.cx}
-                cy={ring.cy}
-                rx={ring.rx}
-                ry={ring.ry}
-                fill="url(#ring-surface-grad)"
-              />
+              {isCuboid ? (
+                /* L5 - L7 3D 长方体平台 (Isometric Cuboid - 统一蓝色渐变风格) */
+                <g key={`cuboid-${ring.layerIndex}`}>
+                  {/* 顶面 (Top Surface - 采用统一 cyan/blue 渐变) */}
+                  <polygon
+                    points={`${ring.cx},${ring.cy - ring.ry} ${ring.cx + ring.rx},${ring.cy} ${ring.cx},${ring.cy + ring.ry} ${ring.cx - ring.rx},${ring.cy}`}
+                    fill="url(#ring-surface-grad)"
+                  />
 
-              {/* 3D 盘面下沿厚度 (Lip Edge) */}
-              <path
-                d={`M ${ring.cx - ring.rx},${ring.cy} A ${ring.rx} ${ring.ry} 0 0 0 ${ring.cx + ring.rx},${ring.cy} L ${ring.cx + ring.rx},${ring.cy + 6} A ${ring.rx} ${ring.ry} 0 0 1 ${ring.cx - ring.rx},${ring.cy + 6} Z`}
-                fill="rgba(2, 132, 199, 0.28)"
-                stroke="rgba(56, 189, 248, 0.45)"
-                strokeWidth="0.9"
-              />
+                  {/* 左前侧面 (Left Front Face) */}
+                  <polygon
+                    points={`${ring.cx - ring.rx},${ring.cy} ${ring.cx},${ring.cy + ring.ry} ${ring.cx},${ring.cy + ring.ry + 6} ${ring.cx - ring.rx},${ring.cy + 6}`}
+                    fill="rgba(2, 132, 199, 0.18)"
+                  />
 
-              {/* 盘面霓虹发光外圈 */}
-              <ellipse
-                cx={ring.cx}
-                cy={ring.cy}
-                rx={ring.rx}
-                ry={ring.ry}
-                fill="none"
-                stroke={ring.color}
-                strokeWidth="1.6"
-                strokeDasharray={ring.layerIndex % 2 === 0 ? "12 6" : "none"}
-                filter="url(#cyan-glow)"
-                opacity="0.75"
-              />
+                  {/* 右前侧面 (Right Front Face) */}
+                  <polygon
+                    points={`${ring.cx},${ring.cy + ring.ry} ${ring.cx + ring.rx},${ring.cy} ${ring.cx + ring.rx},${ring.cy + 6} ${ring.cx},${ring.cy + ring.ry + 6}`}
+                    fill="rgba(3, 105, 161, 0.15)"
+                  />
+                </g>
+              ) : (
+                /* L1 - L4 3D 圆盘平台 (Ellipse Surface) */
+                <g key={`ellipse-${ring.layerIndex}`}>
+                  {/* 3D 盘面底座发光 */}
+                  <ellipse
+                    cx={ring.cx}
+                    cy={ring.cy}
+                    rx={ring.rx}
+                    ry={ring.ry}
+                    fill="url(#ring-surface-grad)"
+                  />
 
-              {/* 盘面内圈虚线 */}
-              <ellipse
-                cx={ring.cx}
-                cy={ring.cy}
-                rx={ring.rx * 0.72}
-                ry={ring.ry * 0.72}
-                fill="none"
-                stroke="rgba(125, 211, 252, 0.28)"
-                strokeWidth="0.8"
-                strokeDasharray="4 4"
-              />
+                  {/* 3D 盘面下沿厚度 (无外描边) */}
+                  <path
+                    d={`M ${ring.cx - ring.rx},${ring.cy} A ${ring.rx} ${ring.ry} 0 0 0 ${ring.cx + ring.rx},${ring.cy} L ${ring.cx + ring.rx},${ring.cy + 6} A ${ring.rx} ${ring.ry} 0 0 1 ${ring.cx - ring.rx},${ring.cy + 6} Z`}
+                    fill="rgba(2, 132, 199, 0.18)"
+                  />
+                </g>
+              )}
 
               {/* 侧边层级 Tag (L1 - L7) */}
               <g transform={`translate(${ring.cx - ring.rx - 46}, ${ring.cy - 9})`}>
