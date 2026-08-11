@@ -1,18 +1,18 @@
 import { motion } from 'motion/react';
 
 export function TopologyMap() {
-  // 节点配置与位置（自然舒展比例）
+  // 节点配置与位置（铺满饱满比例）
   const nodes = [
     // 前四层 (L1 - L4)
     { id: 'core', label: '内网核心', layer: 'L1 核心层', type: 'tower', x: 50, y: 8 },
-    { id: 'sw-storage', label: '存储交换机', layer: 'L2 汇聚层', type: 'glass-cube', x: 31, y: 21 },
-    { id: 'sw-compute', label: '计算交换机', layer: 'L2 汇聚层', type: 'matrix-cube', x: 69, y: 21 },
-    { id: 'acc-storage', label: '存储接入', layer: 'L3 接入层', type: 'cylinder-stack', x: 29, y: 34 },
-    { id: 'acc-compute', label: '计算接入', layer: 'L3 接入层', type: 'arch-block', x: 71, y: 34 },
-    { id: 'gw-storage', label: '存储网关', layer: 'L4 支撑层', type: 'cylinder-stack', x: 16, y: 48 },
-    { id: 'node-compute', label: '计算节点', layer: 'L4 支撑层', type: 'arch-block', x: 38, y: 48 },
-    { id: 'node-network', label: '网络节点', layer: 'L4 支撑层', type: 'molecular-mesh', x: 62, y: 48 },
-    { id: 'node-mgmt', label: '管理节点', layer: 'L4 支撑层', type: 'hourglass-crystal', x: 84, y: 48 },
+    { id: 'sw-storage', label: '存储交换机', layer: 'L2 汇聚层', type: 'glass-cube', x: 26, y: 21 },
+    { id: 'sw-compute', label: '计算交换机', layer: 'L2 汇聚层', type: 'matrix-cube', x: 74, y: 21 },
+    { id: 'acc-storage', label: '存储接入', layer: 'L3 接入层', type: 'cylinder-stack', x: 22, y: 34 },
+    { id: 'acc-compute', label: '计算接入', layer: 'L3 接入层', type: 'arch-block', x: 78, y: 34 },
+    { id: 'gw-storage', label: '存储网关', layer: 'L4 支撑层', type: 'cylinder-stack', x: 10, y: 48 },
+    { id: 'node-compute', label: '计算节点', layer: 'L4 支撑层', type: 'arch-block', x: 36, y: 48 },
+    { id: 'node-network', label: '网络节点', layer: 'L4 支撑层', type: 'molecular-mesh', x: 64, y: 48 },
+    { id: 'node-mgmt', label: '管理节点', layer: 'L4 支撑层', type: 'hourglass-crystal', x: 90, y: 48 },
 
     // 后三层 (L5 - L7)
     { id: 'sw-biz-mgmt', label: '业务管理交换机', layer: 'L5 业务管理', type: 'glass-cube', x: 50, y: 63 },
@@ -50,15 +50,15 @@ export function TopologyMap() {
     { source: 'sw-mgmt-agg', target: 'net-ops-mgmt' },
   ];
 
-  // 7层半透明 3D 浮空光环圆盘 (自然舒展开阔，层次递进 1->0 柔和透明)
+  // 7层半透明 3D 浮空平台 (舒展大气比例)
   const ringPlatforms = [
-    { layerIndex: 1, name: 'L1 核心层', cx: 500, cy: 45, rx: 140, ry: 22, color: '#38bdf8' },
-    { layerIndex: 2, name: 'L2 汇聚层', cx: 500, cy: 118, rx: 230, ry: 30, color: '#0ea5e9' },
-    { layerIndex: 3, name: 'L3 接入层', cx: 500, cy: 190, rx: 300, ry: 36, color: '#0284c7' },
-    { layerIndex: 4, name: 'L4 支撑层', cx: 500, cy: 269, rx: 390, ry: 44, color: '#0369a1' },
-    { layerIndex: 5, name: 'L5 业务管理', cx: 500, cy: 353, rx: 300, ry: 36, color: '#6366f1' },
-    { layerIndex: 6, name: 'L6 管理汇聚', cx: 500, cy: 425, rx: 230, ry: 30, color: '#8b5cf6' },
-    { layerIndex: 7, name: 'L7 运营管理', cx: 500, cy: 498, rx: 140, ry: 22, color: '#a855f7' },
+    { layerIndex: 1, name: 'L1 核心层', cx: 500, cy: 45, rx: 180, ry: 25, color: '#38bdf8' },
+    { layerIndex: 2, name: 'L2 汇聚层', cx: 500, cy: 118, rx: 300, ry: 34, color: '#0ea5e9' },
+    { layerIndex: 3, name: 'L3 接入层', cx: 500, cy: 190, rx: 380, ry: 42, color: '#0284c7' },
+    { layerIndex: 4, name: 'L4 支撑层', cx: 500, cy: 269, rx: 460, ry: 50, color: '#0369a1' },
+    { layerIndex: 5, name: 'L5 业务管理', cx: 500, cy: 353, rx: 380, ry: 42, color: '#6366f1' },
+    { layerIndex: 6, name: 'L6 管理汇聚', cx: 500, cy: 425, rx: 300, ry: 34, color: '#8b5cf6' },
+    { layerIndex: 7, name: 'L7 运营管理', cx: 500, cy: 498, rx: 180, ry: 25, color: '#a855f7' },
   ];
 
   return (
@@ -197,14 +197,6 @@ export function TopologyMap() {
                   />
                 </g>
               )}
-
-              {/* 侧边层级 Tag (L1 - L7) */}
-              <g transform={`translate(${ring.cx - ring.rx - 46}, ${ring.cy - 9})`}>
-                <rect x="0" y="0" width="40" height="18" rx="3" fill="#041229" stroke={ring.color} strokeWidth="1" opacity="0.85" />
-                <text x="20" y="12" fill="#7dd3fc" fontSize="9" fontWeight="bold" textAnchor="middle" fontFamily="sans-serif">
-                  {`L${ring.layerIndex} 层`}
-                </text>
-              </g>
             </g>
           );
         })}
@@ -274,13 +266,13 @@ export function TopologyMap() {
             </div>
           </motion.div>
 
-          {/* 3D Base Pedestal + 3D Volumetric Icon (自然大气比例 scale-84) */}
+          {/* 3D Base Pedestal + 3D Volumetric Icon (饱满舒展比例 scale-105) */}
           <motion.div 
-            className="relative flex items-center justify-center scale-[0.84]"
+            className="relative flex items-center justify-center scale-[1.05]"
             initial={{ scale: 0 }}
-            animate={{ scale: 0.84 }}
+            animate={{ scale: 1.05 }}
             transition={{ type: 'spring', stiffness: 220, damping: 18, delay: idx * 0.06 }}
-            whileHover={{ scale: 0.92, y: -4 }}
+            whileHover={{ scale: 1.15, y: -4 }}
           >
             {/* 3D Iso Rhombus Base Platform (菱形双层底座) */}
             <div className="relative w-28 h-20 flex items-center justify-center">
