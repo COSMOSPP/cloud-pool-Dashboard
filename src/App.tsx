@@ -463,7 +463,7 @@ export default function App() {
                               </div>
                             </div>
                             <div className="text-right">
-                              <div className="text-[8.5px] text-slate-400">配额使用率</div>
+                              <div className="text-[8.5px] text-slate-400">使用率</div>
                               <div className="text-xs font-black font-mono text-cyan-300">44.85 %</div>
                             </div>
                           </div>
@@ -485,7 +485,7 @@ export default function App() {
                               </div>
                             </div>
                             <div className="text-right">
-                              <div className="text-[8.5px] text-slate-400">配额使用率</div>
+                              <div className="text-[8.5px] text-slate-400">使用率</div>
                               <div className="text-xs font-black font-mono text-cyan-300">45.89 %</div>
                             </div>
                           </div>
@@ -507,7 +507,7 @@ export default function App() {
                               </div>
                             </div>
                             <div className="text-right">
-                              <div className="text-[8.5px] text-slate-400">配额使用率</div>
+                              <div className="text-[8.5px] text-slate-400">使用率</div>
                               <div className="text-xs font-black font-mono text-cyan-300">46.10 %</div>
                             </div>
                           </div>
@@ -874,8 +874,8 @@ export default function App() {
               visible: { transition: { staggerChildren: 0.1, delayChildren: 0.1 } }
             }}
           >
-            {/* 左侧栏 (24% 宽度): 部门资源使用率 + 部门告警统计 */}
-            <div className="w-[24%] flex flex-col gap-2.5 shrink-0">
+            {/* 左侧栏 (20% 宽度): 部门资源使用率 + 部门告警统计 */}
+            <div className="w-[20%] flex flex-col gap-2.5 shrink-0">
               {/* 部门资源使用率 */}
               <motion.div variants={fadeUp} className="flex-[1.4] flex">
                 <Panel 
@@ -884,7 +884,7 @@ export default function App() {
                   action={
                     <span className="px-2 py-0.5 rounded-full bg-emerald-500/15 text-emerald-400 text-[9px] border border-emerald-500/30 flex items-center gap-1">
                       <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
-                      资源运行正常
+                      运行正常
                     </span>
                   }
                 >
@@ -903,9 +903,9 @@ export default function App() {
                     const diskUnallocated = ((453.49 - 209.08) * scale).toFixed(2);
 
                     return (
-                      <div className="flex flex-col justify-between h-full py-0.5 space-y-1.5">
+                      <div className="flex flex-col justify-between h-full py-0.5 gap-2">
                         {/* Card 1: CPU使用率 */}
-                        <div className="bg-[#061836]/90 border border-[#1e3a5f]/80 rounded-md p-2 flex flex-col justify-between hover:border-cyan-400/60 transition-all">
+                        <div className="flex-1 flex flex-col justify-between bg-[#061836]/90 border border-[#1e3a5f]/80 rounded-md p-2.5 hover:border-cyan-400/60 transition-all gap-1">
                           <div className="flex items-center justify-between">
                             <div className="flex items-center gap-2">
                               <div className="w-6 h-6 rounded bg-blue-500/15 border border-blue-500/30 text-blue-300 flex items-center justify-center shrink-0">
@@ -917,11 +917,11 @@ export default function App() {
                               </div>
                             </div>
                             <div className="text-right">
-                              <div className="text-[9px] text-slate-400">配额使用率</div>
+                              <div className="text-[9px] text-slate-400">使用率</div>
                               <div className="text-sm font-black font-mono text-cyan-300">44.85 %</div>
                             </div>
                           </div>
-                          <div className="h-1.5 w-full bg-[#020917] rounded-full overflow-hidden border border-[#1e3a5f]/40 my-1 relative">
+                          <div className="h-1.5 w-full bg-[#020917] rounded-full overflow-hidden border border-[#1e3a5f]/40 relative">
                             <div className="h-full rounded-full bg-gradient-to-r from-[#0066ff] via-[#0099ff] to-[#00d2ff] transition-all duration-500" style={{ width: '44.85%' }} />
                           </div>
                           <div className="grid grid-cols-2 gap-1.5">
@@ -937,7 +937,7 @@ export default function App() {
                         </div>
 
                         {/* Card 2: 内存使用率 */}
-                        <div className="bg-[#061836]/90 border border-[#1e3a5f]/80 rounded-md p-2 flex flex-col justify-between hover:border-cyan-400/60 transition-all">
+                        <div className="flex-1 flex flex-col justify-between bg-[#061836]/90 border border-[#1e3a5f]/80 rounded-md p-2.5 hover:border-cyan-400/60 transition-all gap-1">
                           <div className="flex items-center justify-between">
                             <div className="flex items-center gap-2">
                               <div className="w-6 h-6 rounded bg-blue-500/15 border border-blue-500/30 text-blue-300 flex items-center justify-center shrink-0">
@@ -949,11 +949,11 @@ export default function App() {
                               </div>
                             </div>
                             <div className="text-right">
-                              <div className="text-[9px] text-slate-400">配额使用率</div>
+                              <div className="text-[9px] text-slate-400">使用率</div>
                               <div className="text-sm font-black font-mono text-cyan-300">45.89 %</div>
                             </div>
                           </div>
-                          <div className="h-1.5 w-full bg-[#020917] rounded-full overflow-hidden border border-[#1e3a5f]/40 my-1 relative">
+                          <div className="h-1.5 w-full bg-[#020917] rounded-full overflow-hidden border border-[#1e3a5f]/40 relative">
                             <div className="h-full rounded-full bg-gradient-to-r from-[#0066ff] via-[#0099ff] to-[#00d2ff] transition-all duration-500" style={{ width: '45.89%' }} />
                           </div>
                           <div className="grid grid-cols-2 gap-1.5">
@@ -969,7 +969,7 @@ export default function App() {
                         </div>
 
                         {/* Card 3: 存储使用率 */}
-                        <div className="bg-[#061836]/90 border border-[#1e3a5f]/80 rounded-md p-2 flex flex-col justify-between hover:border-cyan-400/60 transition-all">
+                        <div className="flex-1 flex flex-col justify-between bg-[#061836]/90 border border-[#1e3a5f]/80 rounded-md p-2.5 hover:border-cyan-400/60 transition-all gap-1">
                           <div className="flex items-center justify-between">
                             <div className="flex items-center gap-2">
                               <div className="w-6 h-6 rounded bg-blue-500/15 border border-blue-500/30 text-blue-300 flex items-center justify-center shrink-0">
@@ -981,11 +981,11 @@ export default function App() {
                               </div>
                             </div>
                             <div className="text-right">
-                              <div className="text-[9px] text-slate-400">配额使用率</div>
+                              <div className="text-[9px] text-slate-400">使用率</div>
                               <div className="text-sm font-black font-mono text-cyan-300">46.1 %</div>
                             </div>
                           </div>
-                          <div className="h-1.5 w-full bg-[#020917] rounded-full overflow-hidden border border-[#1e3a5f]/40 my-1 relative">
+                          <div className="h-1.5 w-full bg-[#020917] rounded-full overflow-hidden border border-[#1e3a5f]/40 relative">
                             <div className="h-full rounded-full bg-gradient-to-r from-[#0066ff] via-[#0099ff] to-[#00d2ff] transition-all duration-500" style={{ width: '46.1%' }} />
                           </div>
                           <div className="grid grid-cols-2 gap-1.5">
@@ -1156,8 +1156,8 @@ export default function App() {
               </motion.div>
             </div>
 
-            {/* 右侧栏 (30% 宽度): 部门虚拟机资源 TOP5 + 部门应用资源情况 (完美匹配参考图) */}
-            <div className="w-[30%] flex flex-col gap-2.5 shrink-0">
+            {/* 右侧栏 (35% 宽度): 部门虚拟机资源 TOP5 + 部门应用资源情况 */}
+            <div className="w-[35%] flex flex-col gap-2.5 shrink-0">
               {/* 部门虚拟机资源 TOP5 */}
               <motion.div variants={fadeUp} className="flex-[0.9] flex">
                 <Panel 
@@ -1260,7 +1260,7 @@ export default function App() {
                             </div>
                             <div className="flex items-baseline gap-1 mt-1">
                               <span className="text-base font-black font-mono text-slate-100">5300</span>
-                              <span className="text-[9.5px] text-slate-400 font-mono">GB</span>
+                              <span className="text-[9.5px] text-slate-400 font-mono">GB (56%)</span>
                             </div>
                           </div>
                         </div>

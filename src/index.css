@@ -1,1 +1,17 @@
 @import "tailwindcss";
+
+/* 彻底禁用图表与交互组件点击/选中时的浏览器默认高亮边框 */
+*:focus, *:active, *:focus-visible {
+  outline: none !important;
+  box-shadow: none !important;
+}
+
+.recharts-wrapper,
+.recharts-surface,
+.recharts-container,
+.recharts-responsive-container,
+[class*="recharts-"] {
+  outline: none !important;
+  box-shadow: none !important;
+  -webkit-tap-highlight-color: transparent;
+}
