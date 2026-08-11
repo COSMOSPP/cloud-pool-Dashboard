@@ -962,8 +962,8 @@ export default function App() {
                         key={i}
                         className="bg-[#061836]/80 border border-[#1e3a5f]/80 rounded-md p-2 flex flex-col justify-between items-center hover:border-cyan-400/60 transition-all text-center group"
                       >
-                        {/* 放大后的 3D 科技圆环（具呼吸感） */}
-                        <div className="flex-1 flex flex-col items-center justify-center w-full py-1">
+                        {/* 3D 科技圆环（顶对齐保持一致） */}
+                        <div className="w-full flex justify-center items-start pt-1 shrink-0">
                           <div className="relative w-16 h-16 flex items-center justify-center shrink-0">
                             <svg className="w-full h-full transform -rotate-90" viewBox="0 0 36 36">
                               <path
