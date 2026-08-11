@@ -954,22 +954,48 @@ export default function App() {
               </motion.div>
 
               {/* 模块 2: 资源分配率 (一级全域 3环图样式) */}
-              <motion.div variants={fadeUp} className="flex-[0.95] flex">
+              <motion.div variants={fadeUp} className="flex-[1.05] flex">
                 <Panel title="资源分配率" className="w-full">
                   <div className="grid grid-cols-3 gap-2 h-full py-0.5">
                     {resourceAllocationData.map((res, i) => (
-                      <div key={i} className="bg-[#061836]/80 border border-[#1e3a5f]/80 rounded-md p-1.5 flex flex-col justify-start items-center gap-0.5 hover:border-cyan-400/60 transition-all text-center">
-                        <div className="relative w-12 h-12 flex items-center justify-center shrink-0 my-0.5">
-                          <svg className="w-full h-full transform -rotate-90" viewBox="0 0 36 36">
-                            <path className="text-[#040f24]" strokeWidth="3.8" stroke="currentColor" fill="none" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" />
-                            <path stroke={res.color} strokeDasharray={`${res.percent}, 100`} strokeWidth="3.8" strokeLinecap="round" fill="none" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" />
-                          </svg>
-                          <div className="absolute flex flex-col items-center justify-center">
-                            <span className="text-[10px] font-black font-mono text-slate-100">{res.percent}%</span>
-                            <span className="text-[8.5px] font-bold text-cyan-300">{res.name}</span>
+                      <div
+                        key={i}
+                        className="bg-[#061836]/80 border border-[#1e3a5f]/80 rounded-md p-2 flex flex-col justify-between items-center hover:border-cyan-400/60 transition-all text-center group"
+                      >
+                        {/* 放大后的 3D 科技圆环（具呼吸感） */}
+                        <div className="flex-1 flex flex-col items-center justify-center w-full py-1">
+                          <div className="relative w-16 h-16 flex items-center justify-center shrink-0">
+                            <svg className="w-full h-full transform -rotate-90" viewBox="0 0 36 36">
+                              <path
+                                className="text-[#041126]"
+                                strokeWidth="3"
+                                stroke="currentColor"
+                                fill="none"
+                                d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"
+                              />
+                              <path
+                                stroke={res.color}
+                                strokeDasharray={`${res.percent}, 100`}
+                                strokeWidth="3.2"
+                                strokeLinecap="round"
+                                fill="none"
+                                style={{ filter: `drop-shadow(0 0 6px ${res.color})` }}
+                                d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"
+                              />
+                            </svg>
+                            <div className="absolute inset-0 flex flex-col items-center justify-center">
+                              <span className="text-[12px] font-black font-mono text-slate-100 tracking-tight group-hover:scale-105 transition-transform">
+                                {res.percent}%
+                              </span>
+                              <span className="text-[9px] font-bold text-cyan-300 tracking-wider">
+                                {res.name}
+                              </span>
+                            </div>
                           </div>
                         </div>
-                        <div className="w-full space-y-0.5 text-[9px] border-t border-[#1e3a5f]/50 pt-1">
+
+                        {/* 圆环下方内容模块（底部对齐） */}
+                        <div className="w-full space-y-1 text-[9.5px] border-t border-[#1e3a5f]/60 pt-1.5 mt-auto">
                           <div className="flex justify-between items-center">
                             <span className="text-slate-400">总量</span>
                             <span className="font-mono font-bold text-slate-200">{res.total}</span>
@@ -979,7 +1005,7 @@ export default function App() {
                             <span className="font-mono font-bold text-cyan-300">{res.allocated}</span>
                           </div>
                           {(res as any).cloudDisk && (
-                            <div className="pt-0.5 mt-0.5 border-t border-[#1e3a5f]/40 space-y-0.5">
+                            <div className="pt-1 mt-1 border-t border-[#1e3a5f]/40 space-y-1">
                               <div className="flex justify-between items-center">
                                 <span className="text-slate-400">云硬盘</span>
                                 <span className="font-mono font-bold text-slate-200">{(res as any).cloudDisk}</span>
