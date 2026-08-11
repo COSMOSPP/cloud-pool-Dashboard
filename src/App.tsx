@@ -1413,32 +1413,43 @@ export default function App() {
                           key={i}
                           className="bg-[#061836]/80 border border-[#1e3a5f]/80 rounded-md p-2 flex flex-col justify-between items-center hover:border-cyan-400/60 transition-all text-center group relative overflow-hidden"
                         >
-                          {/* 3D 科技圆环 */}
+                          {/* 科技感双圈圆环（外侧半透明清晰轨圈 + 内侧虚线刻度圈 + 彩色激活弧） */}
                           <div className="flex-1 flex flex-col items-center justify-center w-full py-1">
-                            <div className="relative w-15 h-15 flex items-center justify-center shrink-0">
+                            <div className="relative w-16 h-16 flex items-center justify-center shrink-0">
                               <svg className="w-full h-full transform -rotate-90" viewBox="0 0 36 36">
+                                {/* 1. 外部背景半透明深蓝轨道圈 (清晰且不突兀) */}
                                 <path
-                                  className="text-[#041126]"
-                                  strokeWidth="3"
-                                  stroke="currentColor"
+                                  stroke="#112747"
+                                  strokeWidth="3.6"
                                   fill="none"
                                   d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"
                                 />
+                                {/* 2. 内部精致虚线刻度圈 */}
+                                <circle
+                                  cx="18"
+                                  cy="18"
+                                  r="12.2"
+                                  stroke="rgba(80, 140, 210, 0.4)"
+                                  strokeWidth="0.8"
+                                  strokeDasharray="1.2 2.2"
+                                  fill="none"
+                                />
+                                {/* 3. 彩色激活进度弧 */}
                                 <path
                                   stroke={res.color}
                                   strokeDasharray={`${res.percent}, 100`}
-                                  strokeWidth="3.2"
+                                  strokeWidth="3.6"
                                   strokeLinecap="round"
                                   fill="none"
-                                  style={{ filter: `drop-shadow(0 0 6px ${res.color})` }}
+                                  style={{ filter: `drop-shadow(0 0 6px ${res.color}99)` }}
                                   d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"
                                 />
                               </svg>
                               <div className="absolute inset-0 flex flex-col items-center justify-center">
-                                <span className="text-[11.5px] font-black font-mono text-slate-100 tracking-tight group-hover:scale-105 transition-transform">
+                                <span className="text-[12px] font-black font-mono text-slate-100 tracking-tight group-hover:scale-105 transition-transform">
                                   {res.percent}%
                                 </span>
-                                <span className="text-[8.5px] font-bold text-cyan-300 tracking-wider">
+                                <span className="text-[8.5px] font-bold text-slate-300 tracking-wider">
                                   {res.name}
                                 </span>
                               </div>
