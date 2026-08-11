@@ -461,7 +461,7 @@ export default function App() {
 
                     return (
                       <div className="flex flex-col justify-between h-full py-0.5 space-y-1.5">
-                        {/* Card 1: CPU分配率 */}
+                        {/* Card 1: CPU使用率 */}
                         <div className="bg-[#061836]/90 border border-[#1e3a5f]/80 rounded-md p-2 flex flex-col justify-between hover:border-cyan-400/60 transition-all">
                           <div className="flex items-center justify-between">
                             <div className="flex items-center gap-2">
@@ -469,12 +469,12 @@ export default function App() {
                                 <Cpu className="w-3.5 h-3.5" />
                               </div>
                               <div>
-                                <div className="text-[11px] font-extrabold text-slate-200">CPU分配率</div>
+                                <div className="text-[11px] font-extrabold text-slate-200">CPU使用率</div>
                                 <div className="text-[9.5px] text-slate-400 font-mono">总量 {cpuTotal.toLocaleString()} 核</div>
                               </div>
                             </div>
                             <div className="text-right">
-                              <div className="text-[9px] text-slate-400">配额分配率</div>
+                              <div className="text-[9px] text-slate-400">配额使用率</div>
                               <div className="text-sm font-black font-mono text-cyan-300">44.85 %</div>
                             </div>
                           </div>
@@ -483,17 +483,17 @@ export default function App() {
                           </div>
                           <div className="grid grid-cols-2 gap-1.5">
                             <div className="bg-[#040f24]/80 border border-[#1e3a5f]/60 rounded p-1 text-center">
-                              <div className="text-[8.5px] text-slate-400">已分配</div>
+                              <div className="text-[8.5px] text-slate-400">已使用</div>
                               <div className="text-[10.5px] font-mono font-bold text-slate-100">{cpuAllocated.toLocaleString()} 核</div>
                             </div>
                             <div className="bg-[#040f24]/80 border border-[#1e3a5f]/60 rounded p-1 text-center">
-                              <div className="text-[8.5px] text-slate-400">未分配</div>
+                              <div className="text-[8.5px] text-slate-400">未使用</div>
                               <div className="text-[10.5px] font-mono font-bold text-slate-100">{cpuUnallocated.toLocaleString()} 核</div>
                             </div>
                           </div>
                         </div>
 
-                        {/* Card 2: 内存分配率 */}
+                        {/* Card 2: 内存使用率 */}
                         <div className="bg-[#061836]/90 border border-[#1e3a5f]/80 rounded-md p-2 flex flex-col justify-between hover:border-purple-400/60 transition-all">
                           <div className="flex items-center justify-between">
                             <div className="flex items-center gap-2">
@@ -501,12 +501,12 @@ export default function App() {
                                 <Server className="w-3.5 h-3.5" />
                               </div>
                               <div>
-                                <div className="text-[11px] font-extrabold text-slate-200">内存分配率</div>
+                                <div className="text-[11px] font-extrabold text-slate-200">内存使用率</div>
                                 <div className="text-[9.5px] text-slate-400 font-mono">总量 {memTotal} TB</div>
                               </div>
                             </div>
                             <div className="text-right">
-                              <div className="text-[9px] text-slate-400">配额分配率</div>
+                              <div className="text-[9px] text-slate-400">配额使用率</div>
                               <div className="text-sm font-black font-mono text-purple-300">45.89 %</div>
                             </div>
                           </div>
@@ -515,17 +515,17 @@ export default function App() {
                           </div>
                           <div className="grid grid-cols-2 gap-1.5">
                             <div className="bg-[#040f24]/80 border border-[#1e3a5f]/60 rounded p-1 text-center">
-                              <div className="text-[8.5px] text-slate-400">已分配</div>
+                              <div className="text-[8.5px] text-slate-400">已使用</div>
                               <div className="text-[10.5px] font-mono font-bold text-slate-100">{memAllocated} TB</div>
                             </div>
                             <div className="bg-[#040f24]/80 border border-[#1e3a5f]/60 rounded p-1 text-center">
-                              <div className="text-[8.5px] text-slate-400">未分配</div>
+                              <div className="text-[8.5px] text-slate-400">未使用</div>
                               <div className="text-[10.5px] font-mono font-bold text-slate-100">{memUnallocated} TB</div>
                             </div>
                           </div>
                         </div>
 
-                        {/* Card 3: 存储分配率 (删除了云硬盘和其他) */}
+                        {/* Card 3: 存储使用率 */}
                         <div className="bg-[#061836]/90 border border-[#1e3a5f]/80 rounded-md p-2 flex flex-col justify-between hover:border-teal-400/60 transition-all">
                           <div className="flex items-center justify-between">
                             <div className="flex items-center gap-2">
@@ -533,12 +533,12 @@ export default function App() {
                                 <HardDrive className="w-3.5 h-3.5" />
                               </div>
                               <div>
-                                <div className="text-[11px] font-extrabold text-slate-200">存储分配率</div>
+                                <div className="text-[11px] font-extrabold text-slate-200">存储使用率</div>
                                 <div className="text-[9.5px] text-slate-400 font-mono">总量 {diskTotal} TB</div>
                               </div>
                             </div>
                             <div className="text-right">
-                              <div className="text-[9px] text-slate-400">配额分配率</div>
+                              <div className="text-[9px] text-slate-400">配额使用率</div>
                               <div className="text-sm font-black font-mono text-teal-300">46.1 %</div>
                             </div>
                           </div>
@@ -547,11 +547,11 @@ export default function App() {
                           </div>
                           <div className="grid grid-cols-2 gap-1.5">
                             <div className="bg-[#040f24]/80 border border-[#1e3a5f]/60 rounded p-1 text-center">
-                              <div className="text-[8.5px] text-slate-400">已分配</div>
+                              <div className="text-[8.5px] text-slate-400">已使用</div>
                               <div className="text-[10.5px] font-mono font-bold text-slate-100">{diskAllocated} TB</div>
                             </div>
                             <div className="bg-[#040f24]/80 border border-[#1e3a5f]/60 rounded p-1 text-center">
-                              <div className="text-[8.5px] text-slate-400">未分配</div>
+                              <div className="text-[8.5px] text-slate-400">未使用</div>
                               <div className="text-[10.5px] font-mono font-bold text-slate-100">{diskUnallocated} TB</div>
                             </div>
                           </div>
@@ -746,8 +746,8 @@ export default function App() {
                 </Panel>
               </motion.div>
 
-              {/* 部门应用资源情况 (静态标题、删除右侧统计、组织汇总单独展示、表格仅展示应用) */}
-              <motion.div variants={fadeUp} className="flex-[1.3] flex">
+              {/* 部门应用资源情况 (重构科技感组织卡片与舒展表格行) */}
+              <motion.div variants={fadeUp} className="flex-[1.4] flex">
                 {(() => {
                   const appsList = getDepartmentAppsData(selectedDept.name);
                   const totalDeptVms = appsList.reduce((acc, a) => acc + a.vms, 0);
@@ -758,82 +758,109 @@ export default function App() {
                       className="w-full"
                     >
                       <div className="flex flex-col h-full overflow-hidden text-[10px]">
-                        {/* 1. 独立展示的组织名称与统计模块 */}
-                        <div className="bg-[#061836]/90 border border-[#1e3a5f] rounded-md p-1.5 px-2 mb-1.5 flex items-center justify-between font-bold shrink-0 text-[10px]">
-                          <div className="flex items-center gap-1.5 overflow-hidden">
-                            <Building2 className="w-3.5 h-3.5 text-cyan-400 shrink-0" />
-                            <span className="text-slate-100 font-bold truncate">{selectedDept.name}</span>
-                            <span className="px-1.5 py-0.2 rounded bg-cyan-500/20 text-cyan-300 text-[8.5px] border border-cyan-500/30 shrink-0 font-mono">
-                              {appsList.length} 应用
-                            </span>
-                          </div>
-                          <div className="flex items-center gap-2.5 text-[9.5px] font-mono">
-                            <div className="text-slate-300">
-                              虚拟机: <span className="text-slate-100 font-bold">{totalDeptVms} 台</span>
+                        {/* 1. 科技感组织汇总展示卡片 */}
+                        <div className="bg-gradient-to-r from-[#061c3f]/90 via-[#041430]/90 to-[#061c3f]/90 border border-[#1e3a5f] rounded-lg p-2 mb-2 shadow-[0_0_12px_rgba(6,182,212,0.06)] shrink-0">
+                          <div className="flex items-center justify-between gap-2">
+                            {/* 组织标识与应用标签 */}
+                            <div className="flex items-center gap-2 overflow-hidden shrink-0">
+                              <div className="w-6 h-6 rounded-md bg-cyan-500/15 border border-cyan-400/40 text-cyan-300 flex items-center justify-center shrink-0 shadow-[0_0_8px_rgba(6,182,212,0.2)]">
+                                <Building2 className="w-3.5 h-3.5" />
+                              </div>
+                              <div className="flex flex-col">
+                                <span className="text-slate-100 font-extrabold text-[11px] truncate tracking-wide">{selectedDept.name}</span>
+                                <span className="text-[8.5px] text-cyan-400 font-mono flex items-center gap-1">
+                                  <span className="w-1 h-1 rounded-full bg-cyan-400 animate-pulse"></span>
+                                  {appsList.length} 个部署应用
+                                </span>
+                              </div>
                             </div>
-                            <div className="text-slate-300">
-                              CPU: <span className="text-slate-100 font-bold">292核</span> <span className="text-cyan-300 font-bold">(62%)</span>
-                            </div>
-                            <div className="text-slate-300">
-                              内存: <span className="text-slate-100 font-bold">752GB</span> <span className="text-purple-300 font-bold">(68%)</span>
-                            </div>
-                            <div className="text-slate-300">
-                              磁盘: <span className="text-slate-100 font-bold">5300GB</span> <span className="text-emerald-300 font-bold">(56%)</span>
+
+                            {/* 4 大核心指标数据格 */}
+                            <div className="grid grid-cols-4 gap-1.5 flex-1 max-w-[70%]">
+                              {/* 1. 虚拟机 */}
+                              <div className="bg-[#030e22]/80 border border-[#1e3a5f]/60 rounded px-2 py-1 flex justify-between items-center">
+                                <span className="text-[8.5px] text-slate-400 shrink-0">虚拟机</span>
+                                <span className="text-[10px] font-mono font-bold text-slate-100">{totalDeptVms} 台</span>
+                              </div>
+                              {/* 2. CPU */}
+                              <div className="bg-[#030e22]/80 border border-[#1e3a5f]/60 rounded px-2 py-1 flex justify-between items-center">
+                                <span className="text-[8.5px] text-slate-400 shrink-0">CPU</span>
+                                <div className="flex items-center gap-1 font-mono text-[9.5px]">
+                                  <span className="font-bold text-slate-100">292核</span>
+                                  <span className="text-[8px] font-bold text-cyan-400 bg-cyan-500/15 px-1 py-0.1 rounded border border-cyan-500/30">62%</span>
+                                </div>
+                              </div>
+                              {/* 3. 内存 */}
+                              <div className="bg-[#030e22]/80 border border-[#1e3a5f]/60 rounded px-2 py-1 flex justify-between items-center">
+                                <span className="text-[8.5px] text-slate-400 shrink-0">内存</span>
+                                <div className="flex items-center gap-1 font-mono text-[9.5px]">
+                                  <span className="font-bold text-slate-100">752GB</span>
+                                  <span className="text-[8px] font-bold text-purple-400 bg-purple-500/15 px-1 py-0.1 rounded border border-purple-500/30">68%</span>
+                                </div>
+                              </div>
+                              {/* 4. 磁盘 */}
+                              <div className="bg-[#030e22]/80 border border-[#1e3a5f]/60 rounded px-2 py-1 flex justify-between items-center">
+                                <span className="text-[8.5px] text-slate-400 shrink-0">磁盘</span>
+                                <div className="flex items-center gap-1 font-mono text-[9.5px]">
+                                  <span className="font-bold text-slate-100">5300GB</span>
+                                  <span className="text-[8px] font-bold text-emerald-400 bg-emerald-500/15 px-1 py-0.1 rounded border border-emerald-500/30">56%</span>
+                                </div>
+                              </div>
                             </div>
                           </div>
                         </div>
 
                         {/* 2. 表头 Header (只展示应用名称和统计数量) */}
-                        <div className="grid grid-cols-12 gap-2 font-bold text-slate-300 border-b border-[#1e3a5f]/80 pb-1.5 px-2 bg-[#040f24]/90 text-[9.5px] items-center shrink-0">
+                        <div className="grid grid-cols-12 gap-2.5 font-bold text-slate-300 border-b border-[#1e3a5f]/80 pb-2 px-3 bg-[#040f24]/90 text-[10px] items-center shrink-0">
                           <div className="col-span-3 flex items-center gap-1">
                             <span>应用名称</span>
-                            <span className="text-[8px] text-slate-500">⇅</span>
+                            <span className="text-[8.5px] text-slate-500">⇅</span>
                           </div>
                           <div className="col-span-2 text-center flex items-center justify-center gap-1">
                             <span>虚拟机数量</span>
-                            <span className="text-[8px] text-slate-500">⇅</span>
+                            <span className="text-[8.5px] text-slate-500">⇅</span>
                           </div>
                           <div className="col-span-2 flex items-center gap-1">
                             <span>CPU / 利用率</span>
-                            <span className="text-[8px] text-slate-500">⇅</span>
+                            <span className="text-[8.5px] text-slate-500">⇅</span>
                           </div>
                           <div className="col-span-2 flex items-center gap-1">
                             <span>内存 / 利用率</span>
-                            <span className="text-[8px] text-slate-500">⇅</span>
+                            <span className="text-[8.5px] text-slate-500">⇅</span>
                           </div>
                           <div className="col-span-3 flex items-center gap-1">
                             <span>磁盘 / 利用率</span>
-                            <span className="text-[8px] text-slate-500">⇅</span>
+                            <span className="text-[8.5px] text-slate-500">⇅</span>
                           </div>
                         </div>
 
-                        {/* 3. 表格明细列表 (仅展示当前组织下的应用名称和统计) */}
-                        <div className="flex-1 overflow-y-auto space-y-1.2 pt-1 pr-0.5">
+                        {/* 3. 表格明细列表 (舒展的大空间卡片行排版) */}
+                        <div className="flex-1 overflow-y-auto space-y-2 pt-2 pr-0.5">
                           {appsList.map((app) => (
                             <div
                               key={app.id}
-                              className="pl-2.5 pr-1.5 py-1.5 grid grid-cols-12 gap-2 items-center border-b border-[#1e3a5f]/30 hover:bg-[#061836]/60 rounded text-slate-300 transition-colors"
+                              className="px-3 py-2 grid grid-cols-12 gap-2.5 items-center bg-[#04122d]/70 hover:bg-[#071b40] border border-[#1e3a5f]/60 rounded-md shadow-xs text-slate-300 transition-all group"
                             >
                               {/* 1. 应用名称 */}
-                              <div className="col-span-3 text-slate-200 font-medium text-[10px] truncate" title={app.name}>
+                              <div className="col-span-3 text-slate-100 font-semibold text-[10.5px] truncate group-hover:text-cyan-300 transition-colors" title={app.name}>
                                 {app.name}
                               </div>
                               {/* 2. 虚拟机数量 */}
-                              <div className="col-span-2 text-center font-mono text-slate-200 font-bold text-[9.5px]">
+                              <div className="col-span-2 text-center font-mono text-slate-200 font-bold text-[10px]">
                                 {app.vms} 台
                               </div>
                               {/* 3. CPU / 利用率 */}
-                              <div className="col-span-2 space-y-0.5">
+                              <div className="col-span-2 space-y-1">
                                 <div className="flex items-center justify-between font-mono text-[9.5px]">
                                   <span className="text-slate-200 font-bold shrink-0 whitespace-nowrap">{app.cpu}</span>
                                   <span className={cn(
-                                    "text-[8.5px] px-0.8 py-0.1 rounded font-bold shrink-0",
+                                    "text-[8.5px] px-1 py-0.1 rounded font-bold shrink-0",
                                     app.cpuPercent > 80 ? "bg-red-500/20 text-red-400 border border-red-500/30" : "text-cyan-300"
                                   )}>
                                     {app.cpuPercent}%
                                   </span>
                                 </div>
-                                <div className="h-1.2 w-full bg-slate-800/80 rounded-full overflow-hidden border border-[#1e3a5f]/40 relative">
+                                <div className="h-1.5 w-full bg-slate-800/80 rounded-full overflow-hidden border border-[#1e3a5f]/40 relative">
                                   <div
                                     className={cn(
                                       "h-full rounded-full transition-all duration-500",
@@ -844,17 +871,17 @@ export default function App() {
                                 </div>
                               </div>
                               {/* 4. 内存 / 利用率 */}
-                              <div className="col-span-2 space-y-0.5">
+                              <div className="col-span-2 space-y-1">
                                 <div className="flex items-center justify-between font-mono text-[9.5px]">
                                   <span className="text-slate-200 font-bold shrink-0 whitespace-nowrap">{app.mem}</span>
                                   <span className={cn(
-                                    "text-[8.5px] px-0.8 py-0.1 rounded font-bold shrink-0",
+                                    "text-[8.5px] px-1 py-0.1 rounded font-bold shrink-0",
                                     app.memPercent > 80 ? "bg-amber-500/20 text-amber-400 border border-amber-500/30" : "text-cyan-300"
                                   )}>
                                     {app.memPercent}%
                                   </span>
                                 </div>
-                                <div className="h-1.2 w-full bg-slate-800/80 rounded-full overflow-hidden border border-[#1e3a5f]/40 relative">
+                                <div className="h-1.5 w-full bg-slate-800/80 rounded-full overflow-hidden border border-[#1e3a5f]/40 relative">
                                   <div
                                     className={cn(
                                       "h-full rounded-full transition-all duration-500",
@@ -865,17 +892,17 @@ export default function App() {
                                 </div>
                               </div>
                               {/* 5. 磁盘 / 利用率 */}
-                              <div className="col-span-3 space-y-0.5">
+                              <div className="col-span-3 space-y-1">
                                 <div className="flex items-center justify-between font-mono text-[9.5px]">
                                   <span className="text-slate-200 font-bold shrink-0 whitespace-nowrap">{app.disk}</span>
                                   <span className={cn(
-                                    "text-[8.5px] px-0.8 py-0.1 rounded font-bold shrink-0",
+                                    "text-[8.5px] px-1 py-0.1 rounded font-bold shrink-0",
                                     app.diskPercent > 80 ? "bg-purple-500/20 text-purple-300 border border-purple-500/30" : "text-cyan-300"
                                   )}>
                                     {app.diskPercent}%
                                   </span>
                                 </div>
-                                <div className="h-1.2 w-full bg-slate-800/80 rounded-full overflow-hidden border border-[#1e3a5f]/40 relative">
+                                <div className="h-1.5 w-full bg-slate-800/80 rounded-full overflow-hidden border border-[#1e3a5f]/40 relative">
                                   <div
                                     className={cn(
                                       "h-full rounded-full transition-all duration-500",
