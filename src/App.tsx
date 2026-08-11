@@ -994,7 +994,7 @@ export default function App() {
                           </div>
                         </div>
 
-                        {/* 圆环下方内容模块（底部对齐） */}
+                        {/* 圆环下方内容模块（全对称 4 行规范对齐） */}
                         <div className="w-full space-y-1 text-[9.5px] border-t border-[#1e3a5f]/60 pt-1.5 mt-auto">
                           <div className="flex justify-between items-center">
                             <span className="text-slate-400">总量</span>
@@ -1004,18 +1004,16 @@ export default function App() {
                             <span className="text-slate-400">分配量</span>
                             <span className="font-mono font-bold text-cyan-300">{res.allocated}</span>
                           </div>
-                          {(res as any).cloudDisk && (
-                            <div className="pt-1 mt-1 border-t border-[#1e3a5f]/40 space-y-1">
-                              <div className="flex justify-between items-center">
-                                <span className="text-slate-400">云硬盘</span>
-                                <span className="font-mono font-bold text-slate-200">{(res as any).cloudDisk}</span>
-                              </div>
-                              <div className="flex justify-between items-center">
-                                <span className="text-slate-400">其他</span>
-                                <span className="font-mono font-bold text-slate-200">{(res as any).other}</span>
-                              </div>
+                          <div className="pt-1 mt-1 border-t border-[#1e3a5f]/40 space-y-1">
+                            <div className="flex justify-between items-center">
+                              <span className="text-slate-400">{res.subTitle1}</span>
+                              <span className="font-mono font-bold text-slate-200">{res.subVal1}</span>
                             </div>
-                          )}
+                            <div className="flex justify-between items-center">
+                              <span className="text-slate-400">{res.subTitle2}</span>
+                              <span className="font-mono font-bold text-slate-200">{res.subVal2}</span>
+                            </div>
+                          </div>
                         </div>
                       </div>
                     ))}
