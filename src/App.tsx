@@ -392,9 +392,14 @@ export default function App() {
   const [loadTab, setLoadTab] = useState<'host' | 'vm'>('host');
   const [hostTop5Tab, setHostTop5Tab] = useState<'cpu' | 'memory'>('cpu');
   const [vmTop5Tab, setVmTop5Tab] = useState<'cpu' | 'memory'>('cpu');
+  const [storagePage, setStoragePage] = useState<number>(0);
 
   useEffect(() => {
     setMounted(true);
+    const storageTimer = setInterval(() => {
+      setStoragePage((prev) => (prev === 0 ? 1 : 0));
+    }, 5000);
+    return () => clearInterval(storageTimer);
   }, []);
 
   if (!mounted) return null;
@@ -953,66 +958,103 @@ export default function App() {
                 </Panel>
               </motion.div>
 
-              {/* 模块 2: 资源分配率 (一级全域 3环图样式) */}
+              {/* 模块 2: 资源分配率 (一级全域 3环图样式 - 块存储具备切页滑点) */}
               <motion.div variants={fadeUp} className="flex-[1] flex">
                 <Panel title="资源分配率" className="w-full">
                   <div className="grid grid-cols-3 gap-2 h-full py-0.5">
-                    {resourceAllocationData.map((res, i) => (
-                      <div
-                        key={i}
-                        className="bg-[#061836]/80 border border-[#1e3a5f]/80 rounded-md p-2 flex flex-col justify-between items-center hover:border-cyan-400/60 transition-all text-center group"
-                      >
-                        {/* 3D 科技圆环（自然垂直居中与适度留白） */}
-                        <div className="flex-1 flex flex-col items-center justify-center w-full py-1">
-                          <div className="relative w-15 h-15 flex items-center justify-center shrink-0">
-                            <svg className="w-full h-full transform -rotate-90" viewBox="0 0 36 36">
-                              <path
-                                className="text-[#041126]"
-                                strokeWidth="3"
-                                stroke="currentColor"
-                                fill="none"
-                                d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"
-                              />
-                              <path
-                                stroke={res.color}
-                                strokeDasharray={`${res.percent}, 100`}
-                                strokeWidth="3.2"
-                                strokeLinecap="round"
-                                fill="none"
-                                style={{ filter: `drop-shadow(0 0 6px ${res.color})` }}
-                                d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"
-                              />
-                            </svg>
-                            <div className="absolute inset-0 flex flex-col items-center justify-center">
-                              <span className="text-[11.5px] font-black font-mono text-slate-100 tracking-tight group-hover:scale-105 transition-transform">
-                                {res.percent}%
-                              </span>
-                              <span className="text-[8.5px] font-bold text-cyan-300 tracking-wider">
-                                {res.name}
-                              </span>
+                    {resourceAllocationData.map((res, i) => {
+                      const isStorageCard = res.name === '块存储';
+                      return (
+                        <div
+                          key={i}
+                          className="bg-[#061836]/80 border border-[#1e3a5f]/80 rounded-md p-2 flex flex-col justify-between items-center hover:border-cyan-400/60 transition-all text-center group relative overflow-hidden"
+                        >
+                          {/* 3D 科技圆环 */}
+                          <div className="flex-1 flex flex-col items-center justify-center w-full py-1">
+                            <div className="relative w-15 h-15 flex items-center justify-center shrink-0">
+                              <svg className="w-full h-full transform -rotate-90" viewBox="0 0 36 36">
+                                <path
+                                  className="text-[#041126]"
+                                  strokeWidth="3"
+                                  stroke="currentColor"
+                                  fill="none"
+                                  d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"
+                                />
+                                <path
+                                  stroke={res.color}
+                                  strokeDasharray={`${res.percent}, 100`}
+                                  strokeWidth="3.2"
+                                  strokeLinecap="round"
+                                  fill="none"
+                                  style={{ filter: `drop-shadow(0 0 6px ${res.color})` }}
+                                  d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"
+                                />
+                              </svg>
+                              <div className="absolute inset-0 flex flex-col items-center justify-center">
+                                <span className="text-[11.5px] font-black font-mono text-slate-100 tracking-tight group-hover:scale-105 transition-transform">
+                                  {res.percent}%
+                                </span>
+                                <span className="text-[8.5px] font-bold text-cyan-300 tracking-wider">
+                                  {res.name}
+                                </span>
+                              </div>
                             </div>
                           </div>
-                        </div>
 
-                        {/* 圆环下方内容模块（结构紧凑均衡） */}
-                        <div className="w-full space-y-1 text-[9.5px] border-t border-[#1e3a5f]/60 pt-1.5 mt-auto">
-                          <div className="flex justify-between items-center">
-                            <span className="text-slate-400">总量</span>
-                            <span className="font-mono font-bold text-slate-200">{res.total}</span>
+                          {/* 圆环下方内容模块（统一 2 行布局，块存储支持切页点） */}
+                          <div className="w-full text-[9.5px] border-t border-[#1e3a5f]/60 pt-1.5 mt-auto">
+                            {!isStorageCard || storagePage === 0 ? (
+                              <div className="space-y-1">
+                                <div className="flex justify-between items-center">
+                                  <span className="text-slate-400">总量</span>
+                                  <span className="font-mono font-bold text-slate-200">{res.total}</span>
+                                </div>
+                                <div className="flex justify-between items-center">
+                                  <span className="text-slate-400">分配量</span>
+                                  <span className="font-mono font-bold text-cyan-300">{res.allocated}</span>
+                                </div>
+                              </div>
+                            ) : (
+                              <div className="space-y-1">
+                                <div className="flex justify-between items-center">
+                                  <span className="text-slate-400">云硬盘</span>
+                                  <span className="font-mono font-bold text-teal-300">{(res as any).cloudDisk}</span>
+                                </div>
+                                <div className="flex justify-between items-center">
+                                  <span className="text-slate-400">其他</span>
+                                  <span className="font-mono font-bold text-slate-300">{(res as any).other}</span>
+                                </div>
+                              </div>
+                            )}
+
+                            {/* 块存储卡片专属分页切页点 */}
+                            {isStorageCard ? (
+                              <div className="flex justify-center items-center gap-1.5 pt-1.5 mt-0.5">
+                                <button
+                                  onClick={() => setStoragePage(0)}
+                                  className={cn(
+                                    "h-1 rounded-full transition-all cursor-pointer",
+                                    storagePage === 0 ? "bg-cyan-400 w-3.5" : "bg-slate-600 hover:bg-slate-400 w-1"
+                                  )}
+                                  title="P1: 总量 / 分配量"
+                                />
+                                <button
+                                  onClick={() => setStoragePage(1)}
+                                  className={cn(
+                                    "h-1 rounded-full transition-all cursor-pointer",
+                                    storagePage === 1 ? "bg-cyan-400 w-3.5" : "bg-slate-600 hover:bg-slate-400 w-1"
+                                  )}
+                                  title="P2: 云硬盘 / 其他"
+                                />
+                              </div>
+                            ) : (
+                              /* 保持 CPU/内存 下方间距统一的隐形垫片 */
+                              <div className="h-1.5 mt-0.5" />
+                            )}
                           </div>
-                          <div className="flex justify-between items-center">
-                            <span className="text-slate-400">分配量</span>
-                            <span className="font-mono font-bold text-cyan-300">{res.allocated}</span>
-                          </div>
-                          {(res as any).cloudDisk && (
-                            <div className="flex justify-between items-center text-[8.5px] text-slate-400 border-t border-[#1e3a5f]/40 pt-1 mt-0.5">
-                              <span>云硬盘 <strong className="text-slate-200 font-mono font-normal">{(res as any).cloudDisk}</strong></span>
-                              <span>其他 <strong className="text-slate-200 font-mono font-normal">{(res as any).other}</strong></span>
-                            </div>
-                          )}
                         </div>
-                      </div>
-                    ))}
+                      );
+                    })}
                   </div>
                 </Panel>
               </motion.div>
