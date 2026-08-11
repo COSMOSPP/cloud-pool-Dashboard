@@ -314,14 +314,44 @@ export function TopologyMap() {
 
               {/* ---------------- 3D 实体图形 (根据 type 精细绘制 3D 几何组件) ---------------- */}
               <div className="absolute top-[-12px] flex items-center justify-center pointer-events-none">
-                {/* 1. 用户专属 3D 2.5D 云图标 (匹配用户最新参考图) */}
+                {/* 1. 3D 2.5D 云图标 (配色同计算交换机 #38bdf8/#0284c7/#7dd3fc，形状匹配参考图) */}
                 {node.type === 'glass-cloud' && (
-                  <div className="w-16 h-16 relative flex items-center justify-center -mt-2.5 pointer-events-none">
-                    <img
-                      src={userCloudIcon}
-                      alt="内网核心云图标"
-                      className="w-full h-full object-contain filter drop-shadow-[0_0_12px_rgba(56,189,248,0.7)]"
-                    />
+                  <div className="w-16 h-16 relative flex items-center justify-center -mt-2.5">
+                    <svg className="w-full h-full overflow-visible" viewBox="0 0 100 80">
+                      <defs>
+                        <linearGradient id="comp-cloud-front" x1="0%" y1="0%" x2="100%" y2="100%">
+                          <stop offset="0%" stopColor="#38bdf8" />
+                          <stop offset="100%" stopColor="#0284c7" />
+                        </linearGradient>
+
+                        <linearGradient id="comp-cloud-back" x1="0%" y1="0%" x2="100%" y2="100%">
+                          <stop offset="0%" stopColor="#bae6fd" />
+                          <stop offset="100%" stopColor="#7dd3fc" />
+                        </linearGradient>
+                      </defs>
+
+                      {/* 底部投影 */}
+                      <ellipse cx="48" cy="62" rx="30" ry="7" fill="#000" opacity="0.45" filter="blur(4px)" />
+
+                      <g filter="url(#cyan-glow)">
+                        {/* 1. 背面 3D 挤压厚度块 (浅蓝 #7dd3fc 匹配计算交换机顶面，向右上 3D 偏移) */}
+                        <path
+                          d="M 24,48 C 13,48 9,37 15,27 C 9,16 19,6 32,10 C 38,1 54,1 62,10 C 73,4 83,13 80,25 C 90,32 84,48 70,48 Z"
+                          transform="translate(8, -8)"
+                          fill="url(#comp-cloud-back)"
+                          stroke="#7dd3fc"
+                          strokeWidth="1"
+                        />
+
+                        {/* 2. 正面云朵主体 (青蓝 #38bdf8 -> #0284c7 匹配计算交换机正面，纯白高亮轮廓 stroke="#ffffff") */}
+                        <path
+                          d="M 24,48 C 13,48 9,37 15,27 C 9,16 19,6 32,10 C 38,1 54,1 62,10 C 73,4 83,13 80,25 C 90,32 84,48 70,48 Z"
+                          fill="url(#comp-cloud-front)"
+                          stroke="#ffffff"
+                          strokeWidth="2.5"
+                        />
+                      </g>
+                    </svg>
                   </div>
                 )}
 
