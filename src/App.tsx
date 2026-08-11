@@ -23,7 +23,7 @@ import {
   kpiData, infraData, nodeStatusCards, alarmSummary, 
   alarmTrendData, topAlarmEvents, costTrendData, bottomRealtimeMetrics, trendData,
   hostResourceStats, resourceAllocationData, loadTrendSeries,
-  alarmStatsData, hostTop5Data, vmTop5Data, departmentAppsData,
+  alarmStatsData, hostTop5Data, vmTop5Data, departmentAppsData, getDepartmentAppsData,
   organizationTree, getAllDepartments, getDepartmentPath, DepartmentNode
 } from './data';
 
@@ -746,157 +746,177 @@ export default function App() {
                 </Panel>
               </motion.div>
 
-              {/* 部门应用资源情况 (完美匹配参考图 5列树状架构) */}
+              {/* 部门应用资源情况 (优化字体与列排版、展示 6 行规范日常应用) */}
               <motion.div variants={fadeUp} className="flex-[1.3] flex">
-                <Panel 
-                  title={`${selectedDept.name} · 应用资源情况`} 
-                  className="w-full"
-                  action={
-                    <span className="px-2 py-0.5 rounded bg-emerald-500/20 text-emerald-300 text-[10px] border border-emerald-400/30 font-mono font-bold">
-                      2应用 / 23台虚拟机
-                    </span>
-                  }
-                >
-                  <div className="flex flex-col h-full overflow-hidden text-[9.5px]">
-                    {/* 表头 Header */}
-                    <div className="grid grid-cols-12 gap-1 font-bold text-slate-400 border-b border-[#1e3a5f]/80 pb-1.5 px-1 bg-[#040f24]/80 text-[9px] items-center shrink-0">
-                      <div className="col-span-3 flex items-center gap-0.5">
-                        <span>组织/应用名称</span>
-                        <span className="text-[8px] text-slate-500">⇅</span>
-                      </div>
-                      <div className="col-span-2 text-center flex items-center justify-center gap-0.5">
-                        <span>虚拟机数量</span>
-                        <span className="text-[8px] text-slate-500">⇅</span>
-                      </div>
-                      <div className="col-span-2 flex items-center gap-0.5">
-                        <span>CPU / 利用率</span>
-                        <span className="text-[8px] text-slate-500">⇅</span>
-                      </div>
-                      <div className="col-span-2 flex items-center gap-0.5">
-                        <span>内存 / 利用率</span>
-                        <span className="text-[8px] text-slate-500">⇅</span>
-                      </div>
-                      <div className="col-span-3 flex items-center gap-0.5">
-                        <span>磁盘 / 利用率</span>
-                        <span className="text-[8px] text-slate-500">⇅</span>
-                      </div>
-                    </div>
+                {(() => {
+                  const appsList = getDepartmentAppsData(selectedDept.name);
+                  const totalDeptVms = appsList.reduce((acc, a) => acc + a.vms, 0);
 
-                    <div className="flex-1 overflow-y-auto space-y-1.5 pt-1 pr-0.5">
-                      {/* 父层 Summary Row: 研发中心 */}
-                      <div className="bg-[#061836]/90 border border-[#1e3a5f] rounded-md p-1.5 grid grid-cols-12 gap-1 items-center font-bold hover:border-cyan-400/50 transition-all">
-                        <div className="col-span-3 flex items-center gap-1 overflow-hidden">
-                          <ChevronDown className="w-3.5 h-3.5 text-cyan-400 shrink-0" />
-                          <span className="text-slate-100 truncate">{selectedDept.name}</span>
-                          <span className="px-1 py-0.2 rounded bg-slate-700/60 text-slate-300 text-[8px] shrink-0 font-normal">2应用</span>
-                        </div>
-                        <div className="col-span-2 text-center font-mono text-slate-100 font-black">23 台</div>
-                        {/* CPU: 152核 / 77% */}
-                        <div className="col-span-2 space-y-0.5">
-                          <div className="flex justify-between items-center text-[8.5px] font-mono">
-                            <span className="text-slate-100 font-black">152 核</span>
-                            <span className="text-slate-400 font-normal">77%</span>
+                  return (
+                    <Panel
+                      title={`${selectedDept.name} · 应用资源情况`}
+                      className="w-full"
+                      action={
+                        <span className="px-2 py-0.5 rounded bg-emerald-500/20 text-emerald-300 text-[10px] border border-emerald-400/30 font-mono font-bold">
+                          {appsList.length}应用 / {totalDeptVms}台虚拟机
+                        </span>
+                      }
+                    >
+                      <div className="flex flex-col h-full overflow-hidden text-[10px]">
+                        {/* 表头 Header - 调整列宽间距 (gap-2.5) 与文字大小 */}
+                        <div className="grid grid-cols-12 gap-2.5 font-bold text-slate-300 border-b border-[#1e3a5f]/80 pb-2 px-2 bg-[#040f24]/90 text-[10px] items-center shrink-0">
+                          <div className="col-span-3 flex items-center gap-1">
+                            <span>组织 / 应用名称</span>
+                            <span className="text-[9px] text-slate-500">⇅</span>
                           </div>
-                          <div className="h-1.2 w-full bg-slate-800/80 rounded-full overflow-hidden">
-                            <div className="h-full bg-emerald-400 rounded-full" style={{ width: '77%' }} />
+                          <div className="col-span-2 text-center flex items-center justify-center gap-1">
+                            <span>虚拟机数量</span>
+                            <span className="text-[9px] text-slate-500">⇅</span>
                           </div>
-                        </div>
-                        {/* 内存: 320GB / 68% */}
-                        <div className="col-span-2 space-y-0.5">
-                          <div className="flex justify-between items-center text-[8.5px] font-mono">
-                            <span className="text-slate-100 font-black">320 GB</span>
-                            <span className="text-slate-400 font-normal">68%</span>
+                          <div className="col-span-2 flex items-center gap-1">
+                            <span>CPU / 利用率</span>
+                            <span className="text-[9px] text-slate-500">⇅</span>
                           </div>
-                          <div className="h-1.2 w-full bg-slate-800/80 rounded-full overflow-hidden">
-                            <div className="h-full bg-emerald-400 rounded-full" style={{ width: '68%' }} />
+                          <div className="col-span-2 flex items-center gap-1">
+                            <span>内存 / 利用率</span>
+                            <span className="text-[9px] text-slate-500">⇅</span>
                           </div>
-                        </div>
-                        {/* 磁盘: 2500GB / 48% */}
-                        <div className="col-span-3 space-y-0.5">
-                          <div className="flex justify-between items-center text-[8.5px] font-mono">
-                            <span className="text-slate-100 font-black">2500 GB</span>
-                            <span className="text-slate-400 font-normal">48%</span>
-                          </div>
-                          <div className="h-1.2 w-full bg-slate-800/80 rounded-full overflow-hidden">
-                            <div className="h-full bg-emerald-400 rounded-full" style={{ width: '48%' }} />
+                          <div className="col-span-3 flex items-center gap-1">
+                            <span>磁盘 / 利用率</span>
+                            <span className="text-[9px] text-slate-500">⇅</span>
                           </div>
                         </div>
-                      </div>
 
-                      {/* 子行 1: 代码托管平台 */}
-                      <div className="pl-3 pr-1 py-1.5 grid grid-cols-12 gap-1 items-center border-b border-[#1e3a5f]/30 hover:bg-[#061836]/60 rounded text-slate-300 transition-colors">
-                        <div className="col-span-3 pl-2 text-slate-200 font-medium truncate">代码托管平台</div>
-                        <div className="col-span-2 text-center font-mono text-slate-300">8 台</div>
-                        {/* CPU: 32核 / 45% */}
-                        <div className="col-span-2 space-y-0.5">
-                          <div className="flex justify-between items-center text-[8.5px] font-mono">
-                            <span className="text-slate-200 font-bold">32 核</span>
-                            <span className="text-slate-400">45%</span>
+                        {/* 表格数据行列表 */}
+                        <div className="flex-1 overflow-y-auto space-y-1.5 pt-1.5 pr-0.5">
+                          {/* 父层 Summary Row: 部门汇总数据 */}
+                          <div className="bg-[#061836]/90 border border-[#1e3a5f] rounded-md p-2 grid grid-cols-12 gap-2.5 items-center font-bold hover:border-cyan-400/50 transition-all">
+                            <div className="col-span-3 flex items-center gap-1.5 overflow-hidden">
+                              <ChevronDown className="w-4 h-4 text-cyan-400 shrink-0" />
+                              <span className="text-slate-100 text-[11px] truncate">{selectedDept.name}</span>
+                              <span className="px-1.5 py-0.2 rounded bg-slate-700/60 text-slate-300 text-[9px] shrink-0 font-normal">
+                                {appsList.length}应用
+                              </span>
+                            </div>
+                            <div className="col-span-2 text-center font-mono text-slate-100 font-black text-[11px]">
+                              {totalDeptVms} 台
+                            </div>
+                            {/* CPU 汇总 */}
+                            <div className="col-span-2 space-y-0.5">
+                              <div className="flex items-center gap-1.5 font-mono text-[10px]">
+                                <span className="text-slate-100 font-bold">292 核</span>
+                                <span className="text-cyan-300 font-bold ml-auto">62%</span>
+                              </div>
+                              <div className="h-1.5 w-full bg-slate-800/80 rounded-full overflow-hidden border border-[#1e3a5f]/40 relative">
+                                <div className="h-full bg-gradient-to-r from-blue-600 to-cyan-400 rounded-full" style={{ width: '62%' }} />
+                              </div>
+                            </div>
+                            {/* 内存 汇总 */}
+                            <div className="col-span-2 space-y-0.5">
+                              <div className="flex items-center gap-1.5 font-mono text-[10px]">
+                                <span className="text-slate-100 font-bold">752 GB</span>
+                                <span className="text-cyan-300 font-bold ml-auto">68%</span>
+                              </div>
+                              <div className="h-1.5 w-full bg-slate-800/80 rounded-full overflow-hidden border border-[#1e3a5f]/40 relative">
+                                <div className="h-full bg-gradient-to-r from-purple-600 to-emerald-400 rounded-full" style={{ width: '68%' }} />
+                              </div>
+                            </div>
+                            {/* 磁盘 汇总 */}
+                            <div className="col-span-3 space-y-0.5">
+                              <div className="flex items-center gap-1.5 font-mono text-[10px]">
+                                <span className="text-slate-100 font-bold">5300 GB</span>
+                                <span className="text-cyan-300 font-bold ml-auto">56%</span>
+                              </div>
+                              <div className="h-1.5 w-full bg-slate-800/80 rounded-full overflow-hidden border border-[#1e3a5f]/40 relative">
+                                <div className="h-full bg-gradient-to-r from-teal-600 to-emerald-400 rounded-full" style={{ width: '56%' }} />
+                              </div>
+                            </div>
                           </div>
-                          <div className="h-1.2 w-full bg-slate-800/80 rounded-full overflow-hidden">
-                            <div className="h-full bg-emerald-400 rounded-full" style={{ width: '45%' }} />
-                          </div>
-                        </div>
-                        {/* 内存: 64GB / 60% */}
-                        <div className="col-span-2 space-y-0.5">
-                          <div className="flex justify-between items-center text-[8.5px] font-mono">
-                            <span className="text-slate-200 font-bold">64 GB</span>
-                            <span className="text-slate-400">60%</span>
-                          </div>
-                          <div className="h-1.2 w-full bg-slate-800/80 rounded-full overflow-hidden">
-                            <div className="h-full bg-emerald-400 rounded-full" style={{ width: '60%' }} />
-                          </div>
-                        </div>
-                        {/* 磁盘: 500GB / 80% */}
-                        <div className="col-span-3 space-y-0.5">
-                          <div className="flex justify-between items-center text-[8.5px] font-mono">
-                            <span className="text-slate-200 font-bold">500 GB</span>
-                            <span className="text-slate-400">80%</span>
-                          </div>
-                          <div className="h-1.2 w-full bg-slate-800/80 rounded-full overflow-hidden">
-                            <div className="h-full bg-emerald-400 rounded-full" style={{ width: '80%' }} />
-                          </div>
-                        </div>
-                      </div>
 
-                      {/* 子行 2: 持续集成流水线 */}
-                      <div className="pl-3 pr-1 py-1.5 grid grid-cols-12 gap-1 items-center border-b border-[#1e3a5f]/30 hover:bg-[#061836]/60 rounded text-slate-300 transition-colors">
-                        <div className="col-span-3 pl-2 text-slate-200 font-medium truncate">持续集成流水线</div>
-                        <div className="col-span-2 text-center font-mono text-slate-300">15 台</div>
-                        {/* CPU: 120核 / 85% (高利用率红色进度条) */}
-                        <div className="col-span-2 space-y-0.5">
-                          <div className="flex justify-between items-center text-[8.5px] font-mono">
-                            <span className="text-slate-200 font-bold">120 核</span>
-                            <span className="text-red-400 font-bold">85%</span>
-                          </div>
-                          <div className="h-1.2 w-full bg-slate-800/80 rounded-full overflow-hidden">
-                            <div className="h-full bg-red-500 rounded-full" style={{ width: '85%' }} />
-                          </div>
-                        </div>
-                        {/* 内存: 256GB / 70% */}
-                        <div className="col-span-2 space-y-0.5">
-                          <div className="flex justify-between items-center text-[8.5px] font-mono">
-                            <span className="text-slate-200 font-bold">256 GB</span>
-                            <span className="text-slate-400">70%</span>
-                          </div>
-                          <div className="h-1.2 w-full bg-slate-800/80 rounded-full overflow-hidden">
-                            <div className="h-full bg-emerald-400 rounded-full" style={{ width: '70%' }} />
-                          </div>
-                        </div>
-                        {/* 磁盘: 2000GB / 40% */}
-                        <div className="col-span-3 space-y-0.5">
-                          <div className="flex justify-between items-center text-[8.5px] font-mono">
-                            <span className="text-slate-200 font-bold">2000 GB</span>
-                            <span className="text-slate-400">40%</span>
-                          </div>
-                          <div className="h-1.2 w-full bg-slate-800/80 rounded-full overflow-hidden">
-                            <div className="h-full bg-emerald-400 rounded-full" style={{ width: '40%' }} />
-                          </div>
+                          {/* 应用明细行（展示 6 行规范日常应用） */}
+                          {appsList.map((app) => (
+                            <div
+                              key={app.id}
+                              className="pl-2.5 pr-1.5 py-1.5 grid grid-cols-12 gap-2 items-center border-b border-[#1e3a5f]/30 hover:bg-[#061836]/60 rounded text-slate-300 transition-colors"
+                            >
+                              {/* 1. 应用名称 */}
+                              <div className="col-span-3 text-slate-200 font-medium text-[10px] truncate" title={app.name}>
+                                {app.name}
+                              </div>
+                              {/* 2. 虚拟机数量 */}
+                              <div className="col-span-2 text-center font-mono text-slate-200 font-bold text-[9.5px]">
+                                {app.vms} 台
+                              </div>
+                              {/* 3. CPU / 利用率 */}
+                              <div className="col-span-2 space-y-0.5">
+                                <div className="flex items-center justify-between font-mono text-[9.5px]">
+                                  <span className="text-slate-200 font-bold shrink-0 whitespace-nowrap">{app.cpu}</span>
+                                  <span className={cn(
+                                    "text-[8.5px] px-0.8 py-0.1 rounded font-bold shrink-0",
+                                    app.cpuPercent > 80 ? "bg-red-500/20 text-red-400 border border-red-500/30" : "text-cyan-300"
+                                  )}>
+                                    {app.cpuPercent}%
+                                  </span>
+                                </div>
+                                <div className="h-1.2 w-full bg-slate-800/80 rounded-full overflow-hidden border border-[#1e3a5f]/40 relative">
+                                  <div
+                                    className={cn(
+                                      "h-full rounded-full transition-all duration-500",
+                                      app.cpuPercent > 80 ? "bg-red-500" : "bg-gradient-to-r from-blue-600 via-indigo-500 to-cyan-400"
+                                    )}
+                                    style={{ width: `${app.cpuPercent}%` }}
+                                  />
+                                </div>
+                              </div>
+                              {/* 4. 内存 / 利用率 */}
+                              <div className="col-span-2 space-y-0.5">
+                                <div className="flex items-center justify-between font-mono text-[9.5px]">
+                                  <span className="text-slate-200 font-bold shrink-0 whitespace-nowrap">{app.mem}</span>
+                                  <span className={cn(
+                                    "text-[8.5px] px-0.8 py-0.1 rounded font-bold shrink-0",
+                                    app.memPercent > 80 ? "bg-amber-500/20 text-amber-400 border border-amber-500/30" : "text-cyan-300"
+                                  )}>
+                                    {app.memPercent}%
+                                  </span>
+                                </div>
+                                <div className="h-1.2 w-full bg-slate-800/80 rounded-full overflow-hidden border border-[#1e3a5f]/40 relative">
+                                  <div
+                                    className={cn(
+                                      "h-full rounded-full transition-all duration-500",
+                                      app.memPercent > 80 ? "bg-amber-500" : "bg-gradient-to-r from-purple-600 via-fuchsia-500 to-indigo-400"
+                                    )}
+                                    style={{ width: `${app.memPercent}%` }}
+                                  />
+                                </div>
+                              </div>
+                              {/* 5. 磁盘 / 利用率 */}
+                              <div className="col-span-3 space-y-0.5">
+                                <div className="flex items-center justify-between font-mono text-[9.5px]">
+                                  <span className="text-slate-200 font-bold shrink-0 whitespace-nowrap">{app.disk}</span>
+                                  <span className={cn(
+                                    "text-[8.5px] px-0.8 py-0.1 rounded font-bold shrink-0",
+                                    app.diskPercent > 80 ? "bg-purple-500/20 text-purple-300 border border-purple-500/30" : "text-cyan-300"
+                                  )}>
+                                    {app.diskPercent}%
+                                  </span>
+                                </div>
+                                <div className="h-1.2 w-full bg-slate-800/80 rounded-full overflow-hidden border border-[#1e3a5f]/40 relative">
+                                  <div
+                                    className={cn(
+                                      "h-full rounded-full transition-all duration-500",
+                                      app.diskPercent > 80 ? "bg-purple-500" : "bg-gradient-to-r from-teal-600 via-emerald-500 to-cyan-400"
+                                    )}
+                                    style={{ width: `${app.diskPercent}%` }}
+                                  />
+                                </div>
+                              </div>
+                            </div>
+                          ))}
                         </div>
                       </div>
-                    </div>
-                  </div>
-                </Panel>
+                    </Panel>
+                  );
+                })()}
               </motion.div>
             </div>
           </motion.div>

@@ -311,6 +311,60 @@ export const departmentAppsData = [
   { id: 5, name: '自动化运维调度平台', type: 'Python / Ansible', vms: '3台', status: '正常', health: 97 },
 ];
 
+export interface ApplicationResourceItem {
+  id: number;
+  name: string;
+  vms: number;
+  cpu: string;
+  cpuPercent: number;
+  mem: string;
+  memPercent: number;
+  disk: string;
+  diskPercent: number;
+}
+
+export function getDepartmentAppsData(deptName: string): ApplicationResourceItem[] {
+  if (deptName.includes('运维') || deptName.includes('Ops')) {
+    return [
+      { id: 1, name: '云平台警报监控中心', vms: 12, cpu: '48 核', cpuPercent: 58, mem: '96 GB', memPercent: 62, disk: '1200 GB', diskPercent: 68 },
+      { id: 2, name: 'CMDB 资源资产管理平台', vms: 6, cpu: '24 核', cpuPercent: 35, mem: '48 GB', memPercent: 40, disk: '400 GB', diskPercent: 30 },
+      { id: 3, name: '自动化运维编排集群', vms: 8, cpu: '32 核', cpuPercent: 42, mem: '64 GB', memPercent: 50, disk: '600 GB', diskPercent: 45 },
+      { id: 4, name: '堡垒机与安全审计系统', vms: 4, cpu: '16 核', cpuPercent: 28, mem: '32 GB', memPercent: 38, disk: '800 GB', diskPercent: 52 },
+      { id: 5, name: '镜像仓库与软件包管理', vms: 6, cpu: '24 核', cpuPercent: 60, mem: '48 GB', memPercent: 58, disk: '3000 GB', diskPercent: 82 },
+      { id: 6, name: '基础架构配置中心 Consul', vms: 4, cpu: '16 核', cpuPercent: 32, mem: '32 GB', memPercent: 44, disk: '300 GB', diskPercent: 35 },
+    ];
+  }
+  if (deptName.includes('数据') || deptName.includes('Data')) {
+    return [
+      { id: 1, name: '实时数据流计算 Spark/Flink', vms: 16, cpu: '128 核', cpuPercent: 88, mem: '384 GB', memPercent: 82, disk: '4000 GB', diskPercent: 75 },
+      { id: 2, name: '分布式数据库集群 Cockroach', vms: 12, cpu: '96 核', cpuPercent: 72, mem: '256 GB', memPercent: 78, disk: '6000 GB', diskPercent: 68 },
+      { id: 3, name: '数据仓库与离线 ETL 调度', vms: 10, cpu: '40 核', cpuPercent: 50, mem: '160 GB', memPercent: 60, disk: '5000 GB', diskPercent: 70 },
+      { id: 4, name: '商业智能分析报表 BI 平台', vms: 6, cpu: '24 核', cpuPercent: 38, mem: '48 GB', memPercent: 45, disk: '800 GB', diskPercent: 40 },
+      { id: 5, name: '特征挖掘与 AI 向量检索引擎', vms: 8, cpu: '64 核', cpuPercent: 78, mem: '128 GB', memPercent: 70, disk: '1500 GB', diskPercent: 58 },
+      { id: 6, name: '图计算与关系关联挖掘', vms: 6, cpu: '32 核', cpuPercent: 45, mem: '64 GB', memPercent: 52, disk: '1000 GB', diskPercent: 48 },
+    ];
+  }
+  if (deptName.includes('安全') || deptName.includes('Sec')) {
+    return [
+      { id: 1, name: '网络流量入侵检测系统 IDS', vms: 8, cpu: '48 核', cpuPercent: 65, mem: '96 GB', memPercent: 70, disk: '1500 GB', diskPercent: 60 },
+      { id: 2, name: '主机安全与微隔离客户端', vms: 6, cpu: '24 核', cpuPercent: 30, mem: '48 GB', memPercent: 35, disk: '500 GB', diskPercent: 25 },
+      { id: 3, name: 'SIEM 态势感知日志分析', vms: 10, cpu: '64 核', cpuPercent: 82, mem: '160 GB', memPercent: 76, disk: '4000 GB', diskPercent: 84 },
+      { id: 4, name: '漏洞扫描与合规治理平台', vms: 4, cpu: '16 核', cpuPercent: 40, mem: '32 GB', memPercent: 42, disk: '600 GB', diskPercent: 38 },
+      { id: 5, name: '密钥与敏感数据加密保险箱', vms: 4, cpu: '16 核', cpuPercent: 25, mem: '32 GB', memPercent: 30, disk: '300 GB', diskPercent: 20 },
+      { id: 6, name: '零信任身份访问控制 ZTNA', vms: 6, cpu: '24 核', cpuPercent: 44, mem: '48 GB', memPercent: 50, disk: '500 GB', diskPercent: 32 },
+    ];
+  }
+  // 默认（研发中心及其下属团队）
+  return [
+    { id: 1, name: '代码托管平台 GitLab', vms: 8, cpu: '32 核', cpuPercent: 45, mem: '64 GB', memPercent: 60, disk: '500 GB', diskPercent: 80 },
+    { id: 2, name: '持续集成流水线 CI/CD', vms: 15, cpu: '120 核', cpuPercent: 85, mem: '256 GB', memPercent: 70, disk: '2000 GB', diskPercent: 40 },
+    { id: 3, name: '统一身份认证中心 SSO', vms: 6, cpu: '24 核', cpuPercent: 35, mem: '48 GB', memPercent: 42, disk: '300 GB', diskPercent: 28 },
+    { id: 4, name: '微服务 API 网关服务', vms: 10, cpu: '40 核', cpuPercent: 62, mem: '80 GB', memPercent: 65, disk: '400 GB', diskPercent: 45 },
+    { id: 5, name: '分布式缓存服务 Redis', vms: 12, cpu: '48 核', cpuPercent: 58, mem: '192 GB', memPercent: 84, disk: '600 GB', diskPercent: 52 },
+    { id: 6, name: '实时日志检索分析 ELK', vms: 7, cpu: '28 核', cpuPercent: 48, mem: '112 GB', memPercent: 68, disk: '1500 GB', diskPercent: 72 },
+  ];
+}
+
 
 
 
