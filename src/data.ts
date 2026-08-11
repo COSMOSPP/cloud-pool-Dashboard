@@ -159,6 +159,33 @@ export const vmTop5Data = {
   ]
 };
 
+export const vmTop10Data = {
+  cpu: [
+    { rank: '01', name: '卫士通涉密计算机网络保密自监管分析处置平台04', value: 49 },
+    { rank: '02', name: '虚拟机微隔离管理系统', value: 39 },
+    { rank: '03', name: '江苏省电子政务内网-OA协同办公平台-redis-测试', value: 35 },
+    { rank: '04', name: '金山协同平台01', value: 31 },
+    { rank: '05', name: '内网一体化履职服务平台01', value: 28 },
+    { rank: '06', name: '大数据实时计算引擎 Worker02', value: 25 },
+    { rank: '07', name: '云原生 API 网关服务01', value: 22 },
+    { rank: '08', name: '分布式数据库集群 CockroachNode03', value: 20 },
+    { rank: '09', name: 'SIEM 态势感知日志分析引擎02', value: 17 },
+    { rank: '10', name: '统一身份认证中心 SSO 节点02', value: 14 },
+  ],
+  memory: [
+    { rank: '01', name: '江苏省机要密码综合业务管理平台-神通数据库-备', value: 85 },
+    { rank: '02', name: '金山协同平台02', value: 78 },
+    { rank: '03', name: '金山协同平台01', value: 72 },
+    { rank: '04', name: '卫士通涉密计算机网络保密自监管分析处置平台04', value: 68 },
+    { rank: '05', name: '奇安信天擎终端安全管理系统', value: 62 },
+    { rank: '06', name: '持续集成流水线 Jenkins Master', value: 58 },
+    { rank: '07', name: '代码托管平台 GitLab 主库', value: 54 },
+    { rank: '08', name: '分布式缓存 Redis 集群节点01', value: 50 },
+    { rank: '09', name: '微服务网关 Nginx 负载均衡器', value: 45 },
+    { rank: '10', name: '自动化运维 Ansible 节点01', value: 40 },
+  ]
+};
+
 export interface DepartmentNode {
   id: string;
   name: string;
