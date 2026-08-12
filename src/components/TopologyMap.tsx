@@ -1,5 +1,4 @@
 import { motion } from 'motion/react';
-import userCloudIcon from '../assets/cloud-icon-user.png';
 
 export function TopologyMap() {
   // 节点配置与位置（自然舒展比例）
@@ -16,7 +15,8 @@ export function TopologyMap() {
     { id: 'node-mgmt', label: '管理节点', layer: 'L4 支撑层', type: 'hourglass-crystal', x: 90, y: 48 },
 
     // 后三层 (L5 - L7)
-    { id: 'sw-biz-mgmt', label: '业务管理交换机', layer: 'L5 业务管理', type: 'glass-cube', x: 50, y: 63 },
+    { id: 'sw-biz-mgmt-1', label: '业务管理交换机', layer: 'L5 业务管理', type: 'glass-cube', x: 36, y: 63 },
+    { id: 'sw-biz-mgmt-2', label: '业务管理交换机', layer: 'L5 业务管理', type: 'glass-cube', x: 64, y: 63 },
     { id: 'sw-mgmt-agg', label: '管理汇聚交换机', layer: 'L6 管理汇聚', type: 'matrix-cube', x: 50, y: 76 },
     { id: 'net-ops-mgmt', label: '运营管理网', layer: 'L7 运营管理', type: 'cloud-network', x: 50, y: 89 },
   ];
@@ -39,13 +39,14 @@ export function TopologyMap() {
     { source: 'acc-storage', target: 'node-compute', dashed: true },
 
     // L4 -> L5 (业务管理交换机)
-    { source: 'gw-storage', target: 'sw-biz-mgmt' },
-    { source: 'node-compute', target: 'sw-biz-mgmt' },
-    { source: 'node-network', target: 'sw-biz-mgmt' },
-    { source: 'node-mgmt', target: 'sw-biz-mgmt' },
+    { source: 'gw-storage', target: 'sw-biz-mgmt-1' },
+    { source: 'node-compute', target: 'sw-biz-mgmt-1' },
+    { source: 'node-network', target: 'sw-biz-mgmt-2' },
+    { source: 'node-mgmt', target: 'sw-biz-mgmt-2' },
 
     // L5 -> L6 (管理汇聚交换机)
-    { source: 'sw-biz-mgmt', target: 'sw-mgmt-agg' },
+    { source: 'sw-biz-mgmt-1', target: 'sw-mgmt-agg' },
+    { source: 'sw-biz-mgmt-2', target: 'sw-mgmt-agg' },
 
     // L6 -> L7 (运营管理网)
     { source: 'sw-mgmt-agg', target: 'net-ops-mgmt' },
@@ -63,8 +64,32 @@ export function TopologyMap() {
   ];
 
   return (
-    <div className="relative w-full h-full min-h-[560px] flex items-center justify-center p-2 pt-7 overflow-hidden select-none">
+    <div className="relative w-full h-full min-h-[560px] flex items-center justify-center p-2 pt-7 translate-y-[20px] overflow-hidden select-none">
       
+      {/* 第二层中间：汇聚层 浅蓝背景无边框标注 */}
+      <div 
+        className="absolute left-1/2 -translate-x-1/2 -translate-y-1/2 pointer-events-none z-30"
+        style={{ top: 'calc(21% + 30px)' }}
+      >
+        <div className="px-3.5 py-0.5 bg-[#0284c7]/40 rounded-full backdrop-blur-md shadow-[0_0_12px_rgba(56,189,248,0.35)]">
+          <span className="text-[12px] font-extrabold text-white tracking-widest whitespace-nowrap drop-shadow-[0_0_4px_rgba(255,255,255,0.7)]">
+            汇聚层
+          </span>
+        </div>
+      </div>
+
+      {/* 第三层中间：接入层 浅蓝背景无边框标注 */}
+      <div 
+        className="absolute left-1/2 -translate-x-1/2 -translate-y-1/2 pointer-events-none z-30"
+        style={{ top: 'calc(34% + 38px)' }}
+      >
+        <div className="px-3.5 py-0.5 bg-[#0284c7]/40 rounded-full backdrop-blur-md shadow-[0_0_12px_rgba(56,189,248,0.35)]">
+          <span className="text-[12px] font-extrabold text-white tracking-widest whitespace-nowrap drop-shadow-[0_0_4px_rgba(255,255,255,0.7)]">
+            接入层
+          </span>
+        </div>
+      </div>
+
       {/* 极简深色微发光背景 + 科技风底纹 */}
       <div className="absolute inset-0 bg-[#030a17] bg-[radial-gradient(ellipse_at_center,_rgba(6,182,212,0.12)_0%,_transparent_75%)] pointer-events-none" />
 
