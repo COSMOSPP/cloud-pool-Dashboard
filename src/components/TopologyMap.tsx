@@ -4,7 +4,7 @@ export function TopologyMap() {
   // 节点配置与位置（自然舒展比例）
   const nodes = [
     // 前四层 (L1 - L4)
-    { id: 'core', label: '内网核心', layer: 'L1 核心层', type: 'glass-cloud', x: 50, y: 8 },
+    { id: 'core', label: 'xx核心', layer: 'L1 核心层', type: 'glass-cloud', x: 50, y: 8 },
     { id: 'sw-storage', label: '存储交换机', layer: 'L2 汇聚层', type: 'glass-cube', x: 26, y: 21 },
     { id: 'sw-compute', label: '计算交换机', layer: 'L2 汇聚层', type: 'matrix-cube', x: 74, y: 21 },
     { id: 'acc-storage', label: '存储接入', layer: 'L3 接入层', type: 'cylinder-stack', x: 22, y: 34 },
