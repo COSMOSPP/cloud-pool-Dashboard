@@ -637,10 +637,10 @@ export default function App() {
                       </div>
                     </div>
 
-                    {/* 4. 网络流量监控 */}
+                    {/* 4. xx流量监控 */}
                     <div className="bg-[#061836]/60 border border-[#1e3a5f]/60 rounded-md p-2 flex flex-col justify-between">
                       <div className="flex justify-between items-center text-xs">
-                        <span className="font-bold text-slate-200">网络流量监控 (Gbps)</span>
+                        <span className="font-bold text-slate-200">xx流量监控 (Gbps)</span>
                         <div className="flex gap-2 text-[9px] text-slate-400 font-mono">
                           <span className="flex items-center gap-1"><span className="w-2 h-2 rounded-full bg-emerald-400"></span>流入</span>
                           <span className="flex items-center gap-1"><span className="w-2 h-2 rounded-full bg-blue-400"></span>流出</span>
@@ -1123,10 +1123,10 @@ export default function App() {
                       </div>
                     </div>
 
-                    {/* 4. 网络流量监控 */}
+                    {/* 4. xx流量监控 */}
                     <div className="bg-[#061836]/60 border border-[#1e3a5f]/60 rounded-md p-2.5 flex flex-col justify-between">
                       <div className="flex justify-between items-center text-xs">
-                        <span className="font-bold text-slate-200">网络流量监控 (Gbps)</span>
+                        <span className="font-bold text-slate-200">xx流量监控 (Gbps)</span>
                         <div className="flex gap-2 text-[9px] text-slate-400 font-mono">
                           <span className="flex items-center gap-1"><span className="w-2 h-2 rounded-full bg-emerald-400"></span>流入</span>
                           <span className="flex items-center gap-1"><span className="w-2 h-2 rounded-full bg-blue-400"></span>流出</span>
@@ -1339,7 +1339,7 @@ export default function App() {
           </motion.div>
         ) : (
           /* ============================================================ */
-          /* 一级部门 (江苏省) 全域驾驶舱视图 (原全功能视图) */
+          /* 一级部门 (xx) 全域驾驶舱视图 (原全功能视图) */
           /* ============================================================ */
           <motion.div 
             className="flex-1 flex gap-2.5 min-h-0"
@@ -1573,7 +1573,7 @@ export default function App() {
 
                     <div className="bg-[#061836]/60 border border-[#1e3a5f]/60 rounded p-1.5 flex flex-col justify-between">
                       <div className="flex justify-between items-center text-[10px]">
-                        <span className="font-bold text-slate-300 truncate">网络流量监控</span>
+                        <span className="font-bold text-slate-300 truncate">xx流量监控</span>
                         <div className="flex gap-1.5 text-[8px] text-slate-400">
                           <span className="flex items-center gap-0.5"><span className="w-1.5 h-1.5 rounded-full bg-emerald-400"></span>流入</span>
                           <span className="flex items-center gap-0.5"><span className="w-1.5 h-1.5 rounded-full bg-blue-400"></span>流出</span>

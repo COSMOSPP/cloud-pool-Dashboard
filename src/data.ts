@@ -2,14 +2,14 @@ export const kpiData = [
   { title: '服务器总数', value: '528', unit: '台', trend: '+12.5%', iconName: 'Server' },
   { title: '计算节点', value: '320', unit: '台', trend: '+8.2%', iconName: 'Cpu' },
   { title: '存储节点', value: '128', unit: '台', trend: '+10.4%', iconName: 'HardDrive' },
-  { title: '网络节点', value: '80', unit: '个', trend: '+11.1%', iconName: 'Network' },
+  { title: 'xx节点', value: '80', unit: '个', trend: '+11.1%', iconName: 'Network' },
   { title: '虚拟机', value: '2,450', unit: '台', trend: '+6.8%', iconName: 'Box' },
   { title: '使用单位', value: '38', unit: '家', trend: '+9.6%', iconName: 'Building2' },
 ];
 
 export const infraData = [
   { name: '服务器健康度', value: 92, color: '#06b6d4' },
-  { name: '网络连通率', value: 99, color: '#3b82f6' },
+  { name: 'xx连通率', value: 99, color: '#3b82f6' },
   { name: '存储健康度', value: 85, color: '#8b5cf6' },
 ];
 
@@ -37,12 +37,12 @@ export const trendData = [
 ];
 
 export const nodeStatusCards = [
-  { name: '北京亦庄节点', location: '北京 · 亦庄', pue: '1.32', status: '正常' },
-  { name: '上海临港节点', location: '上海 · 临港', pue: '1.38', status: '正常' },
-  { name: '广州南沙节点', location: '广州 · 南沙', pue: '1.28', status: '正常' },
-  { name: '贵州贵安节点', location: '贵州 · 贵安', pue: '1.22', status: '正常' },
-  { name: '内蒙古和林格尔', location: '呼和浩特 · 和林', pue: '1.15', status: '正常' },
-  { name: '河北张北节点', location: '张家口 · 张北', pue: '1.18', status: '正常' },
+  { name: 'xx亦庄节点', location: 'xx · 亦庄', pue: '1.32', status: '正常' },
+  { name: 'xx临港节点', location: 'xx · 临港', pue: '1.38', status: '正常' },
+  { name: 'xx南沙节点', location: 'xx · 南沙', pue: '1.28', status: '正常' },
+  { name: 'xx贵安节点', location: 'xx · 贵安', pue: '1.22', status: '正常' },
+  { name: 'xx和林格尔', location: '呼和浩特 · 和林', pue: '1.15', status: '正常' },
+  { name: 'xx张北节点', location: '张家口 · 张北', pue: '1.18', status: '正常' },
 ];
 
 export const alarmSummary = {
@@ -67,7 +67,7 @@ export const topAlarmEvents = [
   { id: 2, name: 'UPS电源输出异常', level: '严重', levelClass: 'bg-red-500/20 text-red-400 border-red-500/40', time: '05-20 13:46', status: '处理中', statusClass: 'text-amber-400 font-bold' },
   { id: 3, name: '机柜A-102温度过高', level: '重要', levelClass: 'bg-amber-500/20 text-amber-400 border-amber-500/40', time: '05-20 13:15', status: '处理中', statusClass: 'text-amber-400 font-bold' },
   { id: 4, name: '市电输入电压异常', level: '重要', levelClass: 'bg-amber-500/20 text-amber-400 border-amber-500/40', time: '05-20 11:37', status: '已处置', statusClass: 'text-emerald-400 font-bold' },
-  { id: 5, name: '网络链路丢包率高', level: '一般', levelClass: 'bg-blue-500/20 text-blue-400 border-blue-500/40', time: '05-20 10:22', status: '已处置', statusClass: 'text-emerald-400 font-bold' },
+  { id: 5, name: 'xx链路丢包率高', level: '一般', levelClass: 'bg-blue-500/20 text-blue-400 border-blue-500/40', time: '05-20 10:22', status: '已处置', statusClass: 'text-emerald-400 font-bold' },
 ];
 
 export const costTrendData = [
@@ -144,27 +144,27 @@ export const hostTop5Data = {
 
 export const vmTop5Data = {
   cpu: [
-    { rank: '01', name: '卫士通涉密计算机网络保密自监管分析处置平台04', value: 49 },
+    { rank: '01', name: 'xxxx计算机xxxx自监管分析处置平台04', value: 49 },
     { rank: '02', name: '虚拟机微隔离管理系统', value: 19 },
-    { rank: '03', name: '江苏省电子政务内网-OA协同办公平台-redis-测试', value: 18 },
-    { rank: '04', name: '金山协同平台01', value: 18 },
+    { rank: '03', name: 'xx电子xx内网-OA协同办公平台-redis-测试', value: 18 },
+    { rank: '04', name: 'xx协同平台01', value: 18 },
     { rank: '05', name: '内网一体化履职服务平台01', value: 14 },
   ],
   memory: [
-    { rank: '01', name: '江苏省机要密码综合业务管理平台-神通数据库-备', value: 63 },
-    { rank: '02', name: '金山协同平台02', value: 60 },
-    { rank: '03', name: '金山协同平台01', value: 59 },
-    { rank: '04', name: '卫士通涉密计算机网络保密自监管分析处置平台04', value: 51 },
-    { rank: '05', name: '奇安信天擎终端安全管理系统', value: 43 },
+    { rank: '01', name: 'xx机要密码综合业务管理平台-xx数据库-备', value: 63 },
+    { rank: '02', name: 'xx协同平台02', value: 60 },
+    { rank: '03', name: 'xx协同平台01', value: 59 },
+    { rank: '04', name: 'xxxx计算机xxxx自监管分析处置平台04', value: 51 },
+    { rank: '05', name: 'xx天擎终端安全管理系统', value: 43 },
   ]
 };
 
 export const vmTop10Data = {
   cpu: [
-    { rank: '01', name: '卫士通涉密计算机网络保密自监管分析处置平台04', value: 49 },
+    { rank: '01', name: 'xxxx计算机xxxx自监管分析处置平台04', value: 49 },
     { rank: '02', name: '虚拟机微隔离管理系统', value: 39 },
-    { rank: '03', name: '江苏省电子政务内网-OA协同办公平台-redis-测试', value: 35 },
-    { rank: '04', name: '金山协同平台01', value: 31 },
+    { rank: '03', name: 'xx电子xx内网-OA协同办公平台-redis-测试', value: 35 },
+    { rank: '04', name: 'xx协同平台01', value: 31 },
     { rank: '05', name: '内网一体化履职服务平台01', value: 28 },
     { rank: '06', name: '大数据实时计算引擎 Worker02', value: 25 },
     { rank: '07', name: '云原生 API 网关服务01', value: 22 },
@@ -173,11 +173,11 @@ export const vmTop10Data = {
     { rank: '10', name: '统一身份认证中心 SSO 节点02', value: 14 },
   ],
   memory: [
-    { rank: '01', name: '江苏省机要密码综合业务管理平台-神通数据库-备', value: 85 },
-    { rank: '02', name: '金山协同平台02', value: 78 },
-    { rank: '03', name: '金山协同平台01', value: 72 },
-    { rank: '04', name: '卫士通涉密计算机网络保密自监管分析处置平台04', value: 68 },
-    { rank: '05', name: '奇安信天擎终端安全管理系统', value: 62 },
+    { rank: '01', name: 'xx机要密码综合业务管理平台-xx数据库-备', value: 85 },
+    { rank: '02', name: 'xx协同平台02', value: 78 },
+    { rank: '03', name: 'xx协同平台01', value: 72 },
+    { rank: '04', name: 'xxxx计算机xxxx自监管分析处置平台04', value: 68 },
+    { rank: '05', name: 'xx天擎终端安全管理系统', value: 62 },
     { rank: '06', name: '持续集成流水线 Jenkins Master', value: 58 },
     { rank: '07', name: '代码托管平台 GitLab 主库', value: 54 },
     { rank: '08', name: '分布式缓存 Redis 集群节点01', value: 50 },
@@ -201,7 +201,7 @@ export interface DepartmentNode {
 export const organizationTree: DepartmentNode[] = [
   {
     id: 'org-root',
-    name: '江苏省',
+    name: 'xx',
     level: 1,
     code: 'HQ-001',
     scaleFactor: 1.0,
@@ -286,7 +286,7 @@ export const organizationTree: DepartmentNode[] = [
         children: [
           {
             id: 'org-sec-net',
-            name: '网络安全防护组',
+            name: 'xx安全防护组',
             level: 3,
             code: 'SEC-401',
             parentId: 'org-sec',
@@ -310,11 +310,11 @@ export function getAllDepartments(nodes: DepartmentNode[] = organizationTree): D
   return list;
 }
 
-// 获取部门完整路径（如 ["江苏省", "研发中心", "前端平台组"]）
+// 获取部门完整路径（如 ["xx", "研发中心", "前端平台组"]）
 export function getDepartmentPath(deptId: string, nodes: DepartmentNode[] = organizationTree): string[] {
   const all = getAllDepartments(nodes);
   const target = all.find((d) => d.id === deptId);
-  if (!target) return ['江苏省'];
+  if (!target) return ['xx'];
 
   const path: string[] = [target.name];
   let current = target;
@@ -334,7 +334,7 @@ export const departmentAppsData = [
   { id: 1, name: '前端微服务组件库平台', type: 'Node.js / React', vms: '4台', status: '正常', health: 99 },
   { id: 2, name: '云原生后端 API 网关', type: 'Go / Kubernetes', vms: '6台', status: '正常', health: 98 },
   { id: 3, name: '大数据实时计算引擎', type: 'Spark / Flink', vms: '8台', status: '正常', health: 95 },
-  { id: 4, name: '网络安全防护防火墙', type: 'Linux / DPDK', vms: '2台', status: '正常', health: 100 },
+  { id: 4, name: 'xx安全防护防火墙', type: 'Linux / DPDK', vms: '2台', status: '正常', health: 100 },
   { id: 5, name: '自动化运维调度平台', type: 'Python / Ansible', vms: '3台', status: '正常', health: 97 },
 ];
 
@@ -373,11 +373,11 @@ export function getDepartmentAppsData(deptName: string): ApplicationResourceItem
   }
   if (deptName.includes('安全') || deptName.includes('Sec')) {
     return [
-      { id: 1, name: '网络流量入侵检测系统 IDS', vms: 8, cpu: '48 核', cpuPercent: 65, mem: '96 GB', memPercent: 70, disk: '1500 GB', diskPercent: 60 },
+      { id: 1, name: 'xx流量入侵检测系统 IDS', vms: 8, cpu: '48 核', cpuPercent: 65, mem: '96 GB', memPercent: 70, disk: '1500 GB', diskPercent: 60 },
       { id: 2, name: '主机安全与微隔离客户端', vms: 6, cpu: '24 核', cpuPercent: 30, mem: '48 GB', memPercent: 35, disk: '500 GB', diskPercent: 25 },
       { id: 3, name: 'SIEM 态势感知日志分析', vms: 10, cpu: '64 核', cpuPercent: 82, mem: '160 GB', memPercent: 76, disk: '4000 GB', diskPercent: 84 },
       { id: 4, name: '漏洞扫描与合规治理平台', vms: 4, cpu: '16 核', cpuPercent: 40, mem: '32 GB', memPercent: 42, disk: '600 GB', diskPercent: 38 },
-      { id: 5, name: '密钥与敏感数据加密保险箱', vms: 4, cpu: '16 核', cpuPercent: 25, mem: '32 GB', memPercent: 30, disk: '300 GB', diskPercent: 20 },
+      { id: 5, name: '密钥与敏感数据xx保险箱', vms: 4, cpu: '16 核', cpuPercent: 25, mem: '32 GB', memPercent: 30, disk: '300 GB', diskPercent: 20 },
       { id: 6, name: '零信任身份访问控制 ZTNA', vms: 6, cpu: '24 核', cpuPercent: 44, mem: '48 GB', memPercent: 50, disk: '500 GB', diskPercent: 32 },
     ];
   }

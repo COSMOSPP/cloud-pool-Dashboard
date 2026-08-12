@@ -11,7 +11,7 @@ export function TopologyMap() {
     { id: 'acc-compute', label: '计算接入', layer: 'L3 接入层', type: 'arch-block', x: 78, y: 34 },
     { id: 'gw-storage', label: '存储网关', layer: 'L4 支撑层', type: 'cylinder-stack', x: 10, y: 48 },
     { id: 'node-compute', label: '计算节点', layer: 'L4 支撑层', type: 'arch-block', x: 36, y: 48 },
-    { id: 'node-network', label: '网络节点', layer: 'L4 支撑层', type: 'molecular-mesh', x: 64, y: 48 },
+    { id: 'node-network', label: 'xx节点', layer: 'L4 支撑层', type: 'molecular-mesh', x: 64, y: 48 },
     { id: 'node-mgmt', label: '管理节点', layer: 'L4 支撑层', type: 'hourglass-crystal', x: 90, y: 48 },
 
     // 后三层 (L5 - L7)
