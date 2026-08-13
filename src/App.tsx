@@ -637,10 +637,10 @@ export default function App() {
                       </div>
                     </div>
 
-                    {/* 4. xx流量监控 */}
+                    {/* 4. 网络流量监控 */}
                     <div className="bg-[#061836]/60 border border-[#1e3a5f]/60 rounded-md p-2 flex flex-col justify-between">
                       <div className="flex justify-between items-center text-xs">
-                        <span className="font-bold text-slate-200">xx流量监控 (Gbps)</span>
+                        <span className="font-bold text-slate-200">网络流量监控 (Gbps)</span>
                         <div className="flex gap-2 text-[9px] text-slate-400 font-mono">
                           <span className="flex items-center gap-1"><span className="w-2 h-2 rounded-full bg-emerald-400"></span>流入</span>
                           <span className="flex items-center gap-1"><span className="w-2 h-2 rounded-full bg-blue-400"></span>流出</span>
@@ -663,11 +663,11 @@ export default function App() {
               </motion.div>
             </div>
 
-            {/* 下半部分 (等高对齐): 虚拟机 CPU TOP10 + 虚拟机 内存 TOP10 + 应用资源情况，三者高度一致 */}
+            {/* 下半部分 (等高对齐): 虚拟机 CPU使用率 TOP10 + 虚拟机 内存使用率 TOP10 + 应用资源情况，三者高度一致 */}
             <div className="flex-1 flex gap-2.5 min-h-0">
-              {/* 1. 虚拟机 CPU TOP10 (自动循环无缝动态滚动) */}
+              {/* 1. 虚拟机 CPU使用率 TOP10 (自动循环无缝动态滚动) */}
               <motion.div variants={fadeUp} className="w-[23%] flex shrink-0">
-                <Panel title="虚拟机 CPU TOP10" className="w-full">
+                <Panel title="虚拟机 CPU使用率 TOP10" className="w-full">
                   <div className="h-full overflow-hidden relative">
                     <div className="flex flex-col gap-1 text-[9px] animate-auto-scroll">
                       {[...vmTop10Data.cpu, ...vmTop10Data.cpu].map((item, idx) => (
@@ -689,9 +689,9 @@ export default function App() {
                 </Panel>
               </motion.div>
 
-              {/* 2. 虚拟机 内存 TOP10 (自动循环无缝动态滚动) */}
+              {/* 2. 虚拟机 内存使用率 TOP10 (自动循环无缝动态滚动) */}
               <motion.div variants={fadeUp} className="w-[23%] flex shrink-0">
-                <Panel title="虚拟机 内存 TOP10" className="w-full">
+                <Panel title="虚拟机 内存使用率 TOP10" className="w-full">
                   <div className="h-full overflow-hidden relative">
                     <div className="flex flex-col gap-1 text-[9px] animate-auto-scroll" style={{ animationDuration: '24s' }}>
                       {[...vmTop10Data.memory, ...vmTop10Data.memory].map((item, idx) => (
@@ -1123,10 +1123,10 @@ export default function App() {
                       </div>
                     </div>
 
-                    {/* 4. xx流量监控 */}
+                    {/* 4. 网络流量监控 */}
                     <div className="bg-[#061836]/60 border border-[#1e3a5f]/60 rounded-md p-2.5 flex flex-col justify-between">
                       <div className="flex justify-between items-center text-xs">
-                        <span className="font-bold text-slate-200">xx流量监控 (Gbps)</span>
+                        <span className="font-bold text-slate-200">网络流量监控 (Gbps)</span>
                         <div className="flex gap-2 text-[9px] text-slate-400 font-mono">
                           <span className="flex items-center gap-1"><span className="w-2 h-2 rounded-full bg-emerald-400"></span>流入</span>
                           <span className="flex items-center gap-1"><span className="w-2 h-2 rounded-full bg-blue-400"></span>流出</span>
@@ -1578,7 +1578,7 @@ export default function App() {
 
                     <div className="bg-[#061836]/60 border border-[#1e3a5f]/60 rounded p-1.5 flex flex-col justify-between">
                       <div className="flex justify-between items-center text-[10px]">
-                        <span className="font-bold text-slate-300 truncate">xx流量监控</span>
+                        <span className="font-bold text-slate-300 truncate">网络流量监控</span>
                         <div className="flex gap-1.5 text-[8px] text-slate-400">
                           <span className="flex items-center gap-0.5"><span className="w-1.5 h-1.5 rounded-full bg-emerald-400"></span>流入</span>
                           <span className="flex items-center gap-0.5"><span className="w-1.5 h-1.5 rounded-full bg-blue-400"></span>流出</span>
