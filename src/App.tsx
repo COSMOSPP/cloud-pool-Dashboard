@@ -23,7 +23,7 @@ import {
   kpiData, infraData, nodeStatusCards, alarmSummary, 
   alarmTrendData, topAlarmEvents, costTrendData, bottomRealtimeMetrics, trendData,
   hostResourceStats, resourceAllocationData, loadTrendSeries,
-  alarmStatsData, hostTop5Data, vmTop5Data, vmTop10Data, departmentAppsData, getDepartmentAppsData,
+  alarmStatsData, hostTop5Data, hostTop10Data, vmTop5Data, vmTop10Data, departmentAppsData, getDepartmentAppsData,
   organizationTree, getAllDepartments, getDepartmentPath, DepartmentNode
 } from './data';
 
@@ -1151,10 +1151,10 @@ export default function App() {
 
             {/* 右侧栏 (35% 宽度): 部门虚拟机资源 TOP5 + 部门应用资源情况 */}
             <div className="w-[35%] flex flex-col gap-2.5 shrink-0">
-              {/* 部门虚拟机资源 TOP5 */}
+              {/* 部门虚拟机资源使用率 TOP10 */}
               <motion.div variants={fadeUp} className="flex-[0.9] flex">
                 <Panel 
-                  title="虚拟机资源 TOP5" 
+                  title="虚拟机资源使用率 TOP10" 
                   className="w-full"
                   action={
                     <div className="flex bg-[#040e21] p-0.5 rounded border border-[#1e3a5f] text-[9px]">
@@ -1163,21 +1163,26 @@ export default function App() {
                     </div>
                   }
                 >
-                  <div className="flex flex-col justify-between h-full py-0.5 space-y-1 text-[10px]">
-                    {(vmTop5Tab === 'cpu' ? vmTop5Data.cpu : vmTop5Data.memory).map((item) => (
-                      <div key={item.rank} className="bg-[#061836]/60 border border-[#1e3a5f]/60 rounded p-1.5 flex flex-col gap-1 hover:border-cyan-400/50 transition-all">
-                        <div className="flex justify-between items-center">
-                          <span className="flex items-center gap-1.5 truncate text-slate-200 font-medium" title={item.name}>
-                            <span className="px-1 py-0.2 rounded bg-blue-500/20 text-cyan-300 font-mono text-[9px] border border-cyan-500/30">{item.rank}</span>
-                            <span className="truncate">{item.name}</span>
-                          </span>
-                          <span className="font-mono font-bold text-cyan-300 shrink-0 ml-1">{item.value}%</span>
-                        </div>
-                        <div className="h-1.5 w-full bg-[#020917] rounded-full overflow-hidden border border-[#1e3a5f]/40 relative">
-                          <div className="h-full rounded-full bg-gradient-to-r from-[#0066ff] via-[#0099ff] to-[#00d2ff] transition-all duration-500" style={{ width: `${item.value}%` }} />
-                        </div>
-                      </div>
-                    ))}
+                  <div className="absolute inset-2.5 overflow-hidden">
+                    <div key={vmTop5Tab} className="animate-auto-scroll flex flex-col w-full text-[9.5px]">
+                      {(() => {
+                        const list = vmTop5Tab === 'cpu' ? vmTop10Data.cpu : vmTop10Data.memory;
+                        return [...list, ...list].map((item, index) => (
+                          <div key={`${item.rank}-${index}`} className="mb-1 bg-[#061836]/60 border border-[#1e3a5f]/60 rounded px-2 py-1 flex flex-col gap-0.5 hover:border-cyan-400/50 hover:bg-[#09224c]/80 transition-all shrink-0">
+                            <div className="flex justify-between items-center">
+                              <span className="flex items-center gap-1.5 truncate text-slate-200 font-medium" title={item.name}>
+                                <span className="px-1 py-0.1 rounded bg-blue-500/20 text-cyan-300 font-mono text-[8.5px] border border-cyan-500/30 font-bold">{item.rank}</span>
+                                <span className="truncate">{item.name}</span>
+                              </span>
+                              <span className="font-mono font-bold text-cyan-300 shrink-0 ml-1 text-[9.5px]">{item.value}%</span>
+                            </div>
+                            <div className="h-1 w-full bg-[#020917] rounded-full overflow-hidden border border-[#1e3a5f]/40 relative">
+                              <div className="h-full rounded-full bg-gradient-to-r from-[#0066ff] via-[#0099ff] to-[#00d2ff] transition-all duration-500" style={{ width: `${item.value}%` }} />
+                            </div>
+                          </div>
+                        ));
+                      })()}
+                    </div>
                   </div>
                 </Panel>
               </motion.div>
@@ -1636,30 +1641,74 @@ export default function App() {
                 </Panel>
               </motion.div>
 
-              {/* Card 2: 宿主机资源 TOP5 */}
+              {/* Card 2: 宿主机资源使用率 TOP10 */}
               <motion.div variants={fadeUp} className="flex-[1.2] flex">
-                <Panel title="宿主机资源 TOP5" className="w-full" action={<div className="flex bg-[#040e21] p-0.5 rounded border border-[#1e3a5f] text-[9px]"><button onClick={() => setHostTop5Tab('cpu')} className={cn("px-1.5 py-0.2 rounded transition-colors cursor-pointer", hostTop5Tab === 'cpu' ? "bg-cyan-500 text-slate-950 font-bold" : "text-slate-400 hover:text-slate-200")}>CPU</button><button onClick={() => setHostTop5Tab('memory')} className={cn("px-1.5 py-0.2 rounded transition-colors cursor-pointer", hostTop5Tab === 'memory' ? "bg-cyan-500 text-slate-950 font-bold" : "text-slate-400 hover:text-slate-200")}>内存</button></div>}>
-                  <div className="flex flex-col justify-between h-full py-0.5 space-y-1 text-[10px]">
-                    {(hostTop5Tab === 'cpu' ? hostTop5Data.cpu : hostTop5Data.memory).map((item) => (
-                      <div key={item.rank} className="bg-[#061836]/60 border border-[#1e3a5f]/60 rounded p-1.5 flex flex-col gap-1 hover:border-cyan-400/50 transition-all">
-                        <div className="flex justify-between items-center"><span className="flex items-center gap-1.5 truncate text-slate-200 font-medium"><span className="px-1 py-0.2 rounded bg-blue-500/20 text-cyan-300 font-mono text-[9px] border border-cyan-500/30">{item.rank}</span><span className="truncate">{item.name}</span></span><span className="font-mono font-bold text-cyan-300 shrink-0 ml-1">{item.value}%</span></div>
-                        <div className="h-1.5 w-full bg-[#020917] rounded-full overflow-hidden border border-[#1e3a5f]/40 relative"><div className="h-full rounded-full bg-gradient-to-r from-[#0066ff] via-[#0099ff] to-[#00d2ff] transition-all duration-500" style={{ width: `${item.value}%` }} /></div>
-                      </div>
-                    ))}
+                <Panel 
+                  title="宿主机资源使用率 TOP10" 
+                  className="w-full" 
+                  action={
+                    <div className="flex bg-[#040e21] p-0.5 rounded border border-[#1e3a5f] text-[9px]">
+                      <button onClick={() => setHostTop5Tab('cpu')} className={cn("px-1.5 py-0.2 rounded transition-colors cursor-pointer", hostTop5Tab === 'cpu' ? "bg-cyan-500 text-slate-950 font-bold" : "text-slate-400 hover:text-slate-200")}>CPU</button>
+                      <button onClick={() => setHostTop5Tab('memory')} className={cn("px-1.5 py-0.2 rounded transition-colors cursor-pointer", hostTop5Tab === 'memory' ? "bg-cyan-500 text-slate-950 font-bold" : "text-slate-400 hover:text-slate-200")}>内存</button>
+                    </div>
+                  }
+                >
+                  <div className="absolute inset-2.5 overflow-hidden">
+                    <div key={hostTop5Tab} className="animate-auto-scroll flex flex-col w-full text-[9.5px]">
+                      {(() => {
+                        const list = hostTop5Tab === 'cpu' ? hostTop10Data.cpu : hostTop10Data.memory;
+                        return [...list, ...list].map((item, index) => (
+                          <div key={`${item.rank}-${index}`} className="mb-1 bg-[#061836]/60 border border-[#1e3a5f]/60 rounded px-2 py-1 flex flex-col gap-0.5 hover:border-cyan-400/50 hover:bg-[#09224c]/80 transition-all shrink-0">
+                            <div className="flex justify-between items-center">
+                              <span className="flex items-center gap-1.5 truncate text-slate-200 font-medium" title={item.name}>
+                                <span className="px-1 py-0.1 rounded bg-blue-500/20 text-cyan-300 font-mono text-[8.5px] border border-cyan-500/30 font-bold">{item.rank}</span>
+                                <span className="truncate">{item.name}</span>
+                              </span>
+                              <span className="font-mono font-bold text-cyan-300 shrink-0 ml-1 text-[9.5px]">{item.value}%</span>
+                            </div>
+                            <div className="h-1 w-full bg-[#020917] rounded-full overflow-hidden border border-[#1e3a5f]/40 relative">
+                              <div className="h-full rounded-full bg-gradient-to-r from-[#0066ff] via-[#0099ff] to-[#00d2ff] transition-all duration-500" style={{ width: `${item.value}%` }} />
+                            </div>
+                          </div>
+                        ));
+                      })()}
+                    </div>
                   </div>
                 </Panel>
               </motion.div>
 
-              {/* Card 3: 虚拟机资源 TOP5 */}
+              {/* Card 3: 虚拟机资源使用率 TOP10 */}
               <motion.div variants={fadeUp} className="flex-[1.2] flex">
-                <Panel title="虚拟机资源 TOP5" className="w-full" action={<div className="flex bg-[#040e21] p-0.5 rounded border border-[#1e3a5f] text-[9px]"><button onClick={() => setVmTop5Tab('cpu')} className={cn("px-1.5 py-0.2 rounded transition-colors cursor-pointer", vmTop5Tab === 'cpu' ? "bg-cyan-500 text-slate-950 font-bold" : "text-slate-400 hover:text-slate-200")}>CPU</button><button onClick={() => setVmTop5Tab('memory')} className={cn("px-1.5 py-0.2 rounded transition-colors cursor-pointer", vmTop5Tab === 'memory' ? "bg-cyan-500 text-slate-950 font-bold" : "text-slate-400 hover:text-slate-200")}>内存</button></div>}>
-                  <div className="flex flex-col justify-between h-full py-0.5 space-y-1 text-[10px]">
-                    {(vmTop5Tab === 'cpu' ? vmTop5Data.cpu : vmTop5Data.memory).map((item) => (
-                      <div key={item.rank} className="bg-[#061836]/60 border border-[#1e3a5f]/60 rounded p-1.5 flex flex-col gap-1 hover:border-cyan-400/50 transition-all">
-                        <div className="flex justify-between items-center"><span className="flex items-center gap-1.5 truncate text-slate-200 font-medium" title={item.name}><span className="px-1 py-0.2 rounded bg-blue-500/20 text-cyan-300 font-mono text-[9px] border border-cyan-500/30">{item.rank}</span><span className="truncate">{item.name}</span></span><span className="font-mono font-bold text-cyan-300 shrink-0 ml-1">{item.value}%</span></div>
-                        <div className="h-1.5 w-full bg-[#020917] rounded-full overflow-hidden border border-[#1e3a5f]/40 relative"><div className="h-full rounded-full bg-gradient-to-r from-[#0066ff] via-[#0099ff] to-[#00d2ff] transition-all duration-500" style={{ width: `${item.value}%` }} /></div>
-                      </div>
-                    ))}
+                <Panel 
+                  title="虚拟机资源使用率 TOP10" 
+                  className="w-full" 
+                  action={
+                    <div className="flex bg-[#040e21] p-0.5 rounded border border-[#1e3a5f] text-[9px]">
+                      <button onClick={() => setVmTop5Tab('cpu')} className={cn("px-1.5 py-0.2 rounded transition-colors cursor-pointer", vmTop5Tab === 'cpu' ? "bg-cyan-500 text-slate-950 font-bold" : "text-slate-400 hover:text-slate-200")}>CPU</button>
+                      <button onClick={() => setVmTop5Tab('memory')} className={cn("px-1.5 py-0.2 rounded transition-colors cursor-pointer", vmTop5Tab === 'memory' ? "bg-cyan-500 text-slate-950 font-bold" : "text-slate-400 hover:text-slate-200")}>内存</button>
+                    </div>
+                  }
+                >
+                  <div className="absolute inset-2.5 overflow-hidden">
+                    <div key={vmTop5Tab} className="animate-auto-scroll flex flex-col w-full text-[9.5px]">
+                      {(() => {
+                        const list = vmTop5Tab === 'cpu' ? vmTop10Data.cpu : vmTop10Data.memory;
+                        return [...list, ...list].map((item, index) => (
+                          <div key={`${item.rank}-${index}`} className="mb-1 bg-[#061836]/60 border border-[#1e3a5f]/60 rounded px-2 py-1 flex flex-col gap-0.5 hover:border-cyan-400/50 hover:bg-[#09224c]/80 transition-all shrink-0">
+                            <div className="flex justify-between items-center">
+                              <span className="flex items-center gap-1.5 truncate text-slate-200 font-medium" title={item.name}>
+                                <span className="px-1 py-0.1 rounded bg-blue-500/20 text-cyan-300 font-mono text-[8.5px] border border-cyan-500/30 font-bold">{item.rank}</span>
+                                <span className="truncate">{item.name}</span>
+                              </span>
+                              <span className="font-mono font-bold text-cyan-300 shrink-0 ml-1 text-[9.5px]">{item.value}%</span>
+                            </div>
+                            <div className="h-1 w-full bg-[#020917] rounded-full overflow-hidden border border-[#1e3a5f]/40 relative">
+                              <div className="h-full rounded-full bg-gradient-to-r from-[#0066ff] via-[#0099ff] to-[#00d2ff] transition-all duration-500" style={{ width: `${item.value}%` }} />
+                            </div>
+                          </div>
+                        ));
+                      })()}
+                    </div>
                   </div>
                 </Panel>
               </motion.div>

@@ -2,7 +2,7 @@ export const kpiData = [
   { title: '服务器总数', value: '528', unit: '台', trend: '+12.5%', iconName: 'Server' },
   { title: '计算节点', value: '320', unit: '台', trend: '+8.2%', iconName: 'Cpu' },
   { title: '存储节点', value: '128', unit: '台', trend: '+10.4%', iconName: 'HardDrive' },
-  { title: 'xx节点', value: '80', unit: '个', trend: '+11.1%', iconName: 'Network' },
+  { title: '网络节点', value: '80', unit: '个', trend: '+11.1%', iconName: 'Network' },
   { title: '虚拟机', value: '2,450', unit: '台', trend: '+6.8%', iconName: 'Box' },
   { title: '使用单位', value: '38', unit: '家', trend: '+9.6%', iconName: 'Building2' },
 ];
@@ -125,13 +125,18 @@ export const alarmStatsData = {
   ]
 };
 
-export const hostTop5Data = {
+export const hostTop10Data = {
   cpu: [
     { rank: '01', name: '计算虚拟化节点2-172.18.0.12', value: 24 },
-    { rank: '02', name: '计算虚拟化节点7-172.18.0.17', value: 18 },
-    { rank: '03', name: '计算虚拟化节点6-172.18.0.16', value: 18 },
-    { rank: '04', name: '计算虚拟化节点4-172.18.0.14', value: 17 },
+    { rank: '02', name: '计算虚拟化节点7-172.18.0.17', value: 21 },
+    { rank: '03', name: '计算虚拟化节点6-172.18.0.16', value: 19 },
+    { rank: '04', name: '计算虚拟化节点4-172.18.0.14', value: 18 },
     { rank: '05', name: '计算虚拟化节点12-172.18.0.33', value: 17 },
+    { rank: '06', name: '计算虚拟化节点1-172.18.0.11', value: 15 },
+    { rank: '07', name: '计算虚拟化节点5-172.18.0.15', value: 14 },
+    { rank: '08', name: '计算虚拟化节点8-172.18.0.18', value: 12 },
+    { rank: '09', name: '计算虚拟化节点9-172.18.0.19', value: 10 },
+    { rank: '10', name: '计算虚拟化节点10-172.18.0.20', value: 8 },
   ],
   memory: [
     { rank: '01', name: '计算虚拟化节点13-172.18.0.34', value: 84 },
@@ -139,8 +144,15 @@ export const hostTop5Data = {
     { rank: '03', name: '计算虚拟化节点6-172.18.0.16', value: 76 },
     { rank: '04', name: '计算虚拟化节点3-172.18.0.13', value: 69 },
     { rank: '05', name: '计算虚拟化节点4-172.18.0.14', value: 62 },
+    { rank: '06', name: '计算虚拟化节点8-172.18.0.18', value: 58 },
+    { rank: '07', name: '计算虚拟化节点9-172.18.0.19', value: 53 },
+    { rank: '08', name: '计算虚拟化节点10-172.18.0.20', value: 47 },
+    { rank: '09', name: '计算虚拟化节点11-172.18.0.21', value: 42 },
+    { rank: '10', name: '计算虚拟化节点1-172.18.0.11', value: 38 },
   ]
 };
+
+export const hostTop5Data = hostTop10Data;
 
 export const vmTop5Data = {
   cpu: [
